@@ -4,10 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from "typeorm";
+import { Post } from "./post.entity";
 
 @Entity()
 @Unique(["email"])
@@ -39,6 +41,12 @@ export class User {
   @UpdateDateColumn()
   public updatedAt!: Date;
 
+  @OneToMany(() => Post, (post) => post.user)
+  public posts!: Post[];
+
+  // @OneToMany(() => Comment, (comment) => comment.user)
+  // public comments!: Comment[];
+
   public hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
   }
@@ -47,3 +55,4 @@ export class User {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }
+export default User;

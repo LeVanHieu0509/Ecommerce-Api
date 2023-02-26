@@ -22,7 +22,7 @@
       "winston": "^3.8.2"
    },
    "scripts": {
-      "start": "ts-node src/app.ts",
+      "start": "nodemon ts-node src/app.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }

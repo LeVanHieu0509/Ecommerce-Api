@@ -1,4 +1,4 @@
-import { User } from "../models/entities/user.entity";
+import { User } from "../modules/entities/user.entity";
 
 export interface IUserRepository {
   get(): Promise<User[] | null>;

@@ -1,6 +1,6 @@
 import EventEmitter = require("events");
 import { createConnection } from "typeorm";
-import { User } from "../models/entities/user.entity";
+import { User } from "../modules/entities/user.entity";
 import { Logger } from "../../lib/logger";
 import config from "../config/config";
 var sql = require("mssql");

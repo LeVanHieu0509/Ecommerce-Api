@@ -1,4 +1,3 @@
-import { Request, Response, Router } from "express";
 import user from "./auth";
 
 function route(app) {

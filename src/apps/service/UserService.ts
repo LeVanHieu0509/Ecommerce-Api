@@ -1,11 +1,9 @@
-import { IUserRepository } from "./UserRepository";
-import { User } from "../models/entities/user.entity";
-import { getRepository } from "typeorm";
-import { Request } from "express";
-import { IUser } from "../models/User";
+import { AppDataSource } from "../../data-source";
 import APIError from "../global/response/apierror";
 import Err from "../global/response/errorcode";
-import { AppDataSource } from "../../data-source";
+import { User } from "../modules/entities/user.entity";
+import { IUser } from "../models/User";
+import { IUserRepository } from "./UserRepository";
 
 export class UserService implements IUserRepository {
   async get(): Promise<User[] | null> {
@@ -21,7 +19,7 @@ export class UserService implements IUserRepository {
   async getById(id: any): Promise<User | null> {
     const userRepository = AppDataSource.getRepository(User);
     try {
-      const user = await userRepository.findOneOrFail(id);
+      const user = await userRepository.findOneBy(id);
       return user;
     } catch (error) {
       return null;
@@ -49,7 +47,7 @@ export class UserService implements IUserRepository {
     const userRepository = AppDataSource.getRepository(User);
     let user: User;
     try {
-      user = await userRepository.findOneOrFail(id);
+      user = await userRepository.findOneBy(id);
       if (user) {
         userRepository.delete(id);
       }
@@ -58,12 +56,12 @@ export class UserService implements IUserRepository {
       return null;
     }
   }
-  async showListUser(): Promise<User[] | null> {
-    const userRepository = AppDataSource.getRepository(User);
-    let user: User[];
-    try {
-      user = await userRepository.find();
 
+  async findBy(value: any): Promise<User[] | null> {
+    const userRepository = AppDataSource.getRepository(User);
+
+    try {
+      const user = await userRepository.findBy(value);
       return user;
     } catch (error) {
       return null;
