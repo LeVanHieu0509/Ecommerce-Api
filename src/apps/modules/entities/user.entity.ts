@@ -1,5 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import { IsNotEmpty, Length } from "class-validator";
+import { Field, ObjectType } from "type-graphql";
 import {
   Column,
   CreateDateColumn,
@@ -9,43 +10,57 @@ import {
   Unique,
   UpdateDateColumn,
 } from "typeorm";
+import Article from "./article.entity";
+import Comment from "./comment.entity";
 import { Post } from "./post.entity";
 
+ObjectType();
 @Entity()
 @Unique(["email"])
 export class User {
+  @Field((_type) => Number)
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @Column()
+  @Field()
+  @Column({ type: "varchar" })
   @Length(4, 100)
   public username!: string;
 
-  @Column()
+  @Field()
+  @Column({ type: "varchar" })
   @Length(4, 100)
   public email!: string;
 
-  @Column()
+  @Field()
+  @Column({ type: "nvarchar" })
   @Length(4, 100)
   public password!: string;
 
-  @Column()
+  @Field()
+  @Column({ type: "nvarchar" })
   @IsNotEmpty()
   public role!: string;
 
-  @Column()
+  @Field()
   @CreateDateColumn()
   public createdAt!: Date;
 
-  @Column()
+  @Field()
   @UpdateDateColumn()
   public updatedAt!: Date;
 
+  @Field((_type) => [Post])
   @OneToMany(() => Post, (post) => post.user)
   public posts!: Post[];
 
-  // @OneToMany(() => Comment, (comment) => comment.user)
-  // public comments!: Comment[];
+  @Field((_type) => [Comment])
+  @OneToMany(() => Comment, (comment) => comment.user)
+  public comments!: Comment[];
+
+  @Field((_type) => [Article])
+  @OneToMany(() => Article, (artcles) => artcles.user)
+  public artcles!: Article[];
 
   public hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);

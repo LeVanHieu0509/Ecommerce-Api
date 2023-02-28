@@ -1,5 +1,6 @@
 var express = require("express");
 const path = require("path");
+import * as dotenv from "dotenv";
 import { Request, Response } from "express";
 import { User } from "./apps/modules/entities/user.entity";
 import { AppDataSource } from "./data-source";
@@ -7,6 +8,7 @@ import { Photo } from "./apps/modules/entities/photo.entity";
 var bodyParser = require("body-parser");
 const route = require("./routes");
 // establish database connection
+dotenv.config();
 
 AppDataSource.initialize()
   .then(() => {
