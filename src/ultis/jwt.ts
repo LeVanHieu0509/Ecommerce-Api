@@ -1,0 +1,25 @@
+import * as jwt from "jsonwebtoken";
+import errorHandler from "./error";
+
+export const signJwt = (payload, key, options) => {
+  return jwt.sign(
+    payload,
+    process.env[key] || "e1ab3176-c260-4856-8e47-96a4b8e816a5",
+    {
+      ...(options && options),
+      algorithm: "HS256",
+    }
+  );
+};
+
+export const verifyJwt = (token, key) => {
+  try {
+    const decode = jwt.verify(
+      token,
+      process.env[key] || "e1ab3176-c260-4856-8e47-96a4b8e816a5"
+    );
+    return decode;
+  } catch (error) {
+    errorHandler(error);
+  }
+};

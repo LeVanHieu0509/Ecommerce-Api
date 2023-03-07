@@ -14,7 +14,7 @@ import Article from "./article.entity";
 import Comment from "./comment.entity";
 import { Post } from "./post.entity";
 
-ObjectType();
+@ObjectType()
 @Entity()
 @Unique(["email"])
 export class User {
@@ -23,22 +23,21 @@ export class User {
   public id!: number;
 
   @Field()
-  @Column({ type: "varchar" })
+  @Column({ type: "varchar", nullable: true })
   @Length(4, 100)
   public username!: string;
 
   @Field()
-  @Column({ type: "varchar" })
+  @Column()
   @Length(4, 100)
   public email!: string;
 
   @Field()
-  @Column({ type: "nvarchar" })
-  @Length(4, 100)
+  @Column({ type: "varchar", nullable: true })
   public password!: string;
 
   @Field()
-  @Column({ type: "nvarchar" })
+  @Column({ type: "varchar", nullable: true })
   @IsNotEmpty()
   public role!: string;
 
@@ -51,14 +50,14 @@ export class User {
   public updatedAt!: Date;
 
   @Field((_type) => [Post])
-  @OneToMany(() => Post, (post) => post.user)
-  public posts!: Post[];
+  @OneToMany((_type) => Post, (post: Post) => post.user)
+  public post!: Post[];
 
-  @Field((_type) => [Comment])
+  @Field((_type) => Comment)
   @OneToMany(() => Comment, (comment) => comment.user)
   public comments!: Comment[];
 
-  @Field((_type) => [Article])
+  @Field((_type) => Article)
   @OneToMany(() => Article, (artcles) => artcles.user)
   public artcles!: Article[];
 

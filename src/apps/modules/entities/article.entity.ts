@@ -1,6 +1,5 @@
-import { Comment } from "./comment.entity";
-import * as bcrypt from "bcryptjs";
-import { IsNotEmpty, Length } from "class-validator";
+import { Length } from "class-validator";
+import { Field, ObjectType } from "type-graphql";
 import {
   Column,
   CreateDateColumn,
@@ -8,11 +7,10 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from "typeorm";
+import { Comment } from "./comment.entity";
 import User from "./user.entity";
-import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
 @Entity()

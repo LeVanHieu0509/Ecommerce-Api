@@ -19,15 +19,13 @@ services:
             MYSQL_DATABASE: test
             MYSQL_USER: sa
             MYSQL_PASSWORD: Levanhieu1
-    mongo:
-        image: mongo
-        container_name: global-mongo-service
-        restart: unless-stopped
-        volumes:
-            - mongo_data:/data/configdb
-            - mongo_data:/data/db
+    redis:
+        image: redis:alpine
+        container_name: redis
         ports:
-            - 27017:27017        
+        - '6379:6379'
+        volumes:
+        - redisDB:/data       
 volumes:
     db-data: {}
-    mongo_data: {}
+    redisDB:

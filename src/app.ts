@@ -1,60 +1,67 @@
 var express = require("express");
 const path = require("path");
 import * as dotenv from "dotenv";
-import { Request, Response } from "express";
-import { User } from "./apps/modules/entities/user.entity";
-import { AppDataSource } from "./data-source";
-import { Photo } from "./apps/modules/entities/photo.entity";
-var bodyParser = require("body-parser");
-const route = require("./routes");
-// establish database connection
+import * as TypeORM from "typeorm";
+import buildSchema from "./apps/modules/graphql/schema";
+import cors = require("cors");
+import { ApolloServer } from "apollo-server-express";
+import Container from "typedi";
+import { GraphQLError, GraphQLFormattedError } from "graphql";
+
 dotenv.config();
+// establish database connection
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error during Data Source initialization:", err);
-  });
+TypeORM.useContainer(Container);
 
-// create and setup express app
+const bootstrap = async () => {
+  try {
+    var app = express();
 
-var app = express();
-app.use(express.json());
+    // create TypeORM connection
+    await TypeORM.createConnection()
+      .then(() => console.log("okkk"))
+      .catch((err) => {
+        console.log("FAILLL", err);
+      });
 
-app.use(bodyParser.urlencoded({ extended: true })); //if false then parse only strings
-app.use(bodyParser.json());
-// Static file
-app.use(express.static(path.join(__dirname, "public")));
+    const schema = await buildSchema(Container);
 
-route(app);
+    // Ở đây set origin: [/localhost*/] là để tất cả các app frontEnd khác ở localhost có thể gọi tới api của app này.
+    // Nếu ko set sẽ bị lỗi Cross-domain.
+    const corsConfig = {
+      methods: "GET, HEAD, PUT,PATCH,POST,DELETE,OPTIONS",
+      credentials: true,
+      origin: [/localhost*/],
+    };
 
-app.get("/", (req, res) => {
-  res.json("home");
-});
+    app.use(cors(corsConfig));
 
-// app.put("/users/:id", async function (req: Request, res: Response) {
-//   const user = await AppDataSource.getRepository(User).findOneBy({
-//     id: req.params.id,
-//   });
-//   AppDataSource.getRepository(User).merge(user, req.body);
-//   const results = await AppDataSource.getRepository(User).save(user);
-//   return res.send(results);
-// });
+    //Apolo server sẽ tạo graphql server,
+    //playGround: true: có thể test các schema trực tiếp tại localhost localhos:
+    const server = new ApolloServer({
+      schema,
+      context: ({ req, res }) => ({ req, res }),
+      debug: true,
+      playground: true,
+      formatError: (error: GraphQLError): GraphQLFormattedError => {
+        if (error && error.extensions) {
+          error.extensions.code = "GRAPHQL_VALIDATION_FAILED";
+        }
+        return error;
+      },
+    });
 
-// app.delete("/users/:id", async function (req: Request, res: Response) {
-//   const results = await AppDataSource.getRepository(User).delete(req.params.id);
-//   return res.send(results);
-// });
+    server.applyMiddleware({ app, cors: corsConfig });
 
-//   const [photos, photosCount] = await photoRepository.findAndCount();
-//   console.log("All photos: ", photos);
-//   console.log("Photos count: ", photosCount);
-//   res.json(allPhotos);
-// });
+    let port = 3000;
+    app.listen({ port }, () => {
+      console.log(
+        `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
+      );
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// start express server
-var server = app.listen(5000, function () {
-  console.log("Server is running..");
-});
+bootstrap();
