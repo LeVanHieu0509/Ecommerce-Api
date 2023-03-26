@@ -5,6 +5,8 @@ import path from "path";
 import route from "./routes";
 import express, { Response } from "express";
 import redisClient from "./ultis/connectRedis";
+import { graphqlHTTP } from "express-graphql";
+import buildSchema from "./apps/modules/graphql/schema";
 
 const config: Config = {
   server: "localhost",
@@ -22,6 +24,36 @@ app.use(bodyParser.json());
 // Static file
 app.use(express.static(path.join(__dirname, "public")));
 route(app);
+
+//middleware
+// Ví dụ: giả sử chúng tôi muốn máy chủ của mình ghi lại địa chỉ IP của mọi yêu cầu và
+// chúng tôi cũng muốn viết một API trả về địa chỉ IP của người gọi.
+// Chúng ta có thể thực hiện cái trước với phần mềm trung gian và cái sau bằng cách truy cập requestđối tượng trong trình phân giải.
+// Đây là mã máy chủ thực hiện điều này:
+const loggingMiddleware = (req, res, next) => {
+  console.log("ip:", req.ip);
+  next();
+};
+var schema: any = buildSchema(`
+  type Query {
+    ip: String
+  }
+`);
+
+var root = {
+  ip: function (args, request) {
+    return request.ip;
+  },
+};
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
+app.use(loggingMiddleware);
 
 // HEALTH CHECKER
 app.get("/api/healthchecker", async (_, res: Response) => {

@@ -1,15 +1,14 @@
-import { DeletePost } from "./posts/delete/DeletePost";
-import { UpdatePost } from "./posts/update/UpdatePost";
 import { buildSchema } from "type-graphql";
-import { CreatePost } from "./posts/create/CreatePost";
+import { CreateProduct } from "./food-product/create/CreateProduct";
+import { AuthFood } from "./food-user/query/Auth-Food";
 
-import { GetPosts } from "./posts/query/GetPosts";
-import { Auth } from "./user/query/Auth";
+import { CreateCategory } from "./food-category/create/CreateCategory";
+import { CreateOrder } from "./food-order/create/CreateOrder";
 
 export default (Container: any) => {
   return buildSchema({
     container: Container,
-    resolvers: [Auth],
+    resolvers: [AuthFood, CreateCategory, CreateProduct, CreateOrder],
     emitSchemaFile: true,
     validate: false,
   });

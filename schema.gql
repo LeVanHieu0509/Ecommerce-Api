@@ -4,15 +4,16 @@
 # -----------------------------------------------
 
 type Article {
-  body: String!
+  bio: String!
   comment: [Comment!]!
+  content: String!
   createdAt: DateTime!
-  description: String!
   favoriteCount: Float!
   id: Float!
+  name: String!
+  post: [Post!]!
   slug: String!
   tagList: String!
-  title: String!
   updatedAt: DateTime!
   user: [User!]!
 }
@@ -20,6 +21,15 @@ type Article {
 type AuthResponse {
   access_token: String!
   user: User!
+}
+
+type CategoryFood {
+  createdAt: DateTime!
+  id: Float!
+  image: String!
+  product_food: [ProductFood!]!
+  title: String!
+  updatedAt: DateTime!
 }
 
 type Comment {
@@ -30,6 +40,24 @@ type Comment {
   text: String!
   updatedAt: DateTime!
   user: User!
+}
+
+input CreateCategoryInput {
+  image: String!
+  title: String!
+}
+
+input CreateOrderInput {
+  product_id: Float!
+  user_id: Float!
+}
+
+input CreateProductInput {
+  category_id: Float!
+  description: String!
+  image: String!
+  price: Float!
+  title: String!
 }
 
 """
@@ -43,18 +71,42 @@ input LoginInput {
 }
 
 type Mutation {
-  signup(data: SigninInput!): User!
+  CreateCategory(data: CreateCategoryInput!): CategoryFood!
+  createOrder(data: CreateOrderInput!): OrderFood!
+  createProduct(data: CreateProductInput!): ProductFood!
+  signup(data: SigninInput!): UserFood!
+}
+
+type OrderFood {
+  product_food: ProductFood!
+  user_food: UserFood!
 }
 
 type Post {
+  articles: Article!
   comments: Comment!
+  content: String!
   createdAt: DateTime!
+  excerpt: String!
+  featuredImage: String!
   id: Float!
-  text: String!
+  slug: String!
+  Stages: String!
   title: String!
   updatedAt: DateTime!
-  url: String!
   user: User!
+}
+
+type ProductFood {
+  category_food: CategoryFood!
+  createdAt: DateTime!
+  description: String!
+  id: Float!
+  image: String!
+  order_food: [OrderFood!]!
+  price: Float!
+  title: String!
+  updatedAt: DateTime!
 }
 
 type Query {
@@ -62,9 +114,7 @@ type Query {
 }
 
 input SigninInput {
-  email: String!
   password: String!
-  role: String!
   username: String!
 }
 
@@ -77,6 +127,15 @@ type User {
   password: String!
   post: [Post!]!
   role: String!
+  updatedAt: DateTime!
+  username: String!
+}
+
+type UserFood {
+  createdAt: DateTime!
+  id: Float!
+  order_food: [OrderFood!]!
+  password: String!
   updatedAt: DateTime!
   username: String!
 }

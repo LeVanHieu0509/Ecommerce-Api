@@ -19,9 +19,12 @@ export class CreatePost {
     // và sử dụng các method của TypeOrm.
     const post = postRepository.create({
       title: inputData.title,
-      text: inputData.text,
-      url: inputData.url,
       user: user_id,
+      slug: "",
+      excerpt: "",
+      featuredImage: "",
+      Stages: "",
+      content: "",
     });
 
     await postRepository.save(post);

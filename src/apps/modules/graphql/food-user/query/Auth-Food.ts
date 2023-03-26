@@ -1,15 +1,24 @@
+import { UserFood } from "../../../entities/food_user";
 import { SigninInput } from "./SigninInput";
 import { bcrypt } from "bcryptjs";
-import { UserRepository } from "./../../../../repositories/UserRepositories";
 import { getCustomRepository } from "typeorm";
-import { User } from "./../../../entities/user.entity";
-import { Arg, Args, Ctx, Info, Mutation, Query, Resolver, Root } from "type-graphql";
+import {
+  Arg,
+  Args,
+  Ctx,
+  Info,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 import { GraphQLResolveInfo } from "graphql";
 import { signJwt } from "../../../../../ultis/jwt";
 import LoginInput from "./Logininput";
 import AuthResponse from "./AuthResponse";
 import { omit } from "lodash";
 import errorHandler from "../../../../../ultis/error";
+import { UserFoodRepository } from "../../../../repositories/food-app/UserFoodRepositories";
 
 const accessTokenExpireIn = 15;
 const refreshTokenExpireIn = 60;
@@ -56,7 +65,7 @@ function isHashed(password?: string) {
   return password.split("$").length === 4;
 }
 
-function hashPassword(password: string) {
+export function hashPassword(password: string) {
   return new Promise<string | null>((resolve, reject) => {
     if (!password || isHashed(password)) {
       resolve(null);
@@ -71,34 +80,40 @@ function hashPassword(password: string) {
   });
 }
 
-@Resolver((_type: any) => User)
-export class Auth {
-  @Mutation((_type) => User)
+@Resolver((_type: any) => UserFood)
+export class AuthFood {
+  @Mutation((_type) => UserFood)
   public async signup(
     @Arg("data") inputData: SigninInput,
     @Ctx() { conn }: any,
     @Info() info: GraphQLResolveInfo
   ) {
-    const { email, password, role, username } = inputData;
+    try {
+      const { password, username } = inputData;
 
-    const userRepository = getCustomRepository(UserRepository);
-    const isUser = await userRepository.findOne({ username: username });
-    if (!isUser) {
-      throw new Error("user invalid");
+      const userRepository = getCustomRepository(UserFoodRepository);
+
+      const isUser = await userRepository.findOne({ username });
+      console.log(isUser);
+      if (isUser) {
+        throw new Error("User valied");
+      } else {
+        //const pass = await hashPassword(password);
+
+        const user = userRepository.create({
+          password,
+          username,
+        });
+        await userRepository.save(user);
+
+        return {
+          status: 200,
+          ...omit(user, "password"),
+        };
+      }
+    } catch (error) {
+      errorHandler("Authorarize");
     }
-
-    const user = userRepository.create({
-      email,
-      password,
-      role,
-      username,
-    });
-    await userRepository.save(user);
-
-    return {
-      status: 200,
-      user,
-    };
   }
 
   @Query((_type) => AuthResponse)
@@ -108,12 +123,16 @@ export class Auth {
     @Info() info: GraphQLResolveInfo
   ) {
     try {
-      const { username } = inputData;
-      const userRepository = getCustomRepository(UserRepository);
+      const { username, password } = inputData;
+      const userRepository = getCustomRepository(UserFoodRepository);
       const user = await userRepository.findOne({ username });
 
-      user.password = undefined;
+      if (!user) {
+        throw new Error("user invalid");
+      }
+
       // Create a session and tokens
+
       const { access_token, refresh_token } = await signTokens(user);
 
       // Add refreshToken to cookie
@@ -129,8 +148,7 @@ export class Auth {
         access_token,
       };
     } catch (error) {
-      errorHandler(error);
+      errorHandler("authorarize");
     }
   }
-
 }

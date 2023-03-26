@@ -14,6 +14,8 @@ import { InjectRepository } from "typeorm-typedi-extensions";
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
 import PostFilterArgs from "./postArgs";
+import PostArgsPanigation from "./postArgsPanigation";
+import { getCustomRepository } from "typeorm";
 
 @Resolver((_type) => Post)
 export class GetPosts {
@@ -70,5 +72,18 @@ export class GetPosts {
     });
 
     return user;
+  }
+
+  // @Query((_type) => [Post])
+  // async getPanigationPost(@Args() { skip, take }: PostArgsPanigation) {
+  //   const postRepository = getCustomRepository(PostRepository);
+  //   const post = await postRepository.find({
+  //     skip: skip,
+  //     take: take,
+  //   });
+  // }
+  @Query((_type) => [Post])
+  recipes(@Args() { skip, take }: any) {
+    return this.postRepository.find({ skip, take });
   }
 }
