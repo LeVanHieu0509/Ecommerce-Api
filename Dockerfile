@@ -1,10 +1,11 @@
-FROM node:carbon
-# Create app directory
-WORKDIR /usr/src/app
-# Bundle app source
-COPY . .
-# npm install
-RUN  npm install
-# Run npm install --global grpc --unsafe-perm
-EXPOSE 3000 9204
-CMD [ "npm", "run", "start" ]
+FROM node:14.15.4-alpine3.12
+
+RUN mkdir -p /opt/app
+
+EXPOSE 3000
+
+WORKDIR /opt
+COPY package.json package-lock.json ./
+RUN npm install && npm cache clean --force
+
+CMD [ "node", "app.js" ]

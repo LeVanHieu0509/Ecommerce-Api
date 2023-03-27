@@ -3,7 +3,7 @@ import { OrderFood } from "./../../../entities/food_order";
 
 //Class này nhằm để định nghĩa được dữ liệu đầu vào của graphql
 @InputType() //@InputType sẽ sinh ra kiểu GraphQLInputType
-export class CreateOrderInput implements Partial<OrderFood> {
+export class CreateOrderInput {
   //parameter input of post when create
   @Field()
   public product_id!: number;

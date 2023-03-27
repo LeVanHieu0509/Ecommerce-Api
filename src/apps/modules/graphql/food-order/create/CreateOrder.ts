@@ -6,7 +6,6 @@ import { UserFoodRepository } from "./../../../../repositories/food-app/UserFood
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { getCustomRepository } from "typeorm";
 import { CreateOrderInput } from "./CreateOrderInput";
-
 @Resolver((_type) => OrderFood) //sẽ biến class CreateGroup thành một rest API
 export class CreateOrder {
   @Mutation((_type) => OrderFood) //Định nghĩa method create Post thành một graphql mutation
@@ -36,12 +35,10 @@ export class CreateOrder {
         user_food = user;
       }
     }
-    console.log(product_food, user_food);
+
     const orderRepository = getCustomRepository(OrderFoodRepository); //getCustomRepository: Sử dụng hàm này để tạo một thực thể và sử dụng các method của typeORM
     // và sử dụng các method của TypeOrm.
     const order = orderRepository.create({
-      product_id,
-      user_id,
       product_food,
       user_food,
     });

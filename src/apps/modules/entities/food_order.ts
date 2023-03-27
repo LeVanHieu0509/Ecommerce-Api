@@ -16,11 +16,9 @@ import UserFood from "./food_user";
 @ObjectType()
 @Entity()
 export class OrderFood {
-  @Column()
-  public product_id: number;
-
-  @Column()
-  public user_id: number;
+  @Field((_type) => Number)
+  @PrimaryGeneratedColumn()
+  public id!: number;
 
   @Field((_type) => UserFood)
   @ManyToOne(

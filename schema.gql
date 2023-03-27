@@ -78,6 +78,7 @@ type Mutation {
 }
 
 type OrderFood {
+  id: Float!
   product_food: ProductFood!
   user_food: UserFood!
 }
@@ -110,6 +111,7 @@ type ProductFood {
 }
 
 type Query {
+  getProducts: [ProductFood!]!
   login(data: LoginInput!): AuthResponse!
 }
 
