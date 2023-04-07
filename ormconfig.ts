@@ -18,13 +18,17 @@ module.exports = {
     encrypt: false,
     useUTC: true,
   },
-
+  maxPoolSize: 90, // đặt giới hạn số kết nối trong pool
   pool: {
     max: 100,
     min: 0,
     idleTimeoutMillis: 3600000,
   },
 };
+// //   maxPoolSize: Khi kết nối đồng thời thì sẽ giới hạn lại mức cho phép
+//---- Giải thích: Mặc định là 100, là tập hợp của các kết nối có thể tái sử dụng,
+// Nếu sử dung sẽ tăng lên được hiệu suất.
+// Nếu vượt quá: Sẽ ko vượt qua thay vào đó thì nó sẽ cho vào hàng đợi, nếu có kết nối nào free thì nó sẽ cho thằng tiếp vào để xử lý.
 
 // //  type: "mssql",
 // //   host: "localhost", //Máy chủ sql

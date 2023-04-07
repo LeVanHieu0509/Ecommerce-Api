@@ -1,3 +1,4 @@
+import { GetCategory } from "./food-category/query/GetProduct";
 import { buildSchema } from "type-graphql";
 import { CreateProduct } from "./food-product/create/CreateProduct";
 import { AuthFood } from "./food-user/query/Auth-Food";
@@ -11,9 +12,13 @@ export default (Container: any) => {
     container: Container,
     resolvers: [
       AuthFood,
+
       CreateCategory,
+      GetCategory,
+
       CreateProduct,
       GetProduct,
+
       CreateOrder,
     ],
     emitSchemaFile: true,

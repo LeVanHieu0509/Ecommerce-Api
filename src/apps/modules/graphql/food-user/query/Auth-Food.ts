@@ -94,7 +94,7 @@ export class AuthFood {
       const userRepository = getCustomRepository(UserFoodRepository);
 
       const isUser = await userRepository.findOne({ username });
-      console.log(isUser);
+
       if (isUser) {
         throw new Error("User valied");
       } else {
@@ -144,11 +144,12 @@ export class AuthFood {
       });
 
       return {
+        cookie: res.cookie,
         user: omit(user, ["password"]),
         access_token,
       };
     } catch (error) {
-      errorHandler("authorarize");
+      errorHandler("authorize");
     }
   }
 }

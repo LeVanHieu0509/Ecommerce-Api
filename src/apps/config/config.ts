@@ -1,45 +1,45 @@
 import { IDatabase } from "./typescript";
 
+function env(key: string, defaulValue?: any) {
+  return process.env[key] ?? defaulValue;
+}
+
 const config: { [key: string]: IDatabase } = {
   development: {
-    database: process.env.DB_NAME,
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    password: process.env.DB_PASS,
-    port: process.env.DB_PORT,
-    username: process.env.DB_USER,
+    portApp: env("DEV_APP_PORT"),
+    host: env("DB_HOST"),
+    port: parseInt(env("DB_PORT", 1433)),
+    username: env("DB_USER"),
+    password: env("DB_PASS"),
+    database: env("DB_NAME"),
   },
   production: {
-    database: <string>process.env.DB_NAME,
-    dialect: <string>process.env.DB_DIALECT,
-    host: <string>process.env.DB_HOST,
-    password: <string>process.env.DB_PASS,
-    port: <string>process.env.DB_PORT,
-    username: <string>process.env.DB_USER,
+    host: env("DB_HOST"),
+    port: parseInt(env("DB_PORT", 1433)),
+    username: env("DB_USER"),
+    password: env("DB_PASS"),
+    database: env("DB_NAME"),
   },
   stage: {
-    database: <string>process.env.DB_NAME,
-    dialect: <string>process.env.DB_DIALECT,
-    host: <string>process.env.DB_HOST,
-    password: <string>process.env.DB_PASS,
-    port: <string>process.env.DB_PORT,
-    username: <string>process.env.DB_USER,
+    host: env("DB_HOST"),
+    port: parseInt(env("DB_PORT", 1433)),
+    username: env("DB_USER"),
+    password: env("DB_PASS"),
+    database: env("DB_NAME"),
   },
   test: {
-    database: <string>process.env.DB_NAME,
-    dialect: <string>process.env.DB_DIALECT,
-    host: <string>process.env.DB_HOST,
-    password: <string>process.env.DB_PASS,
-    port: <string>process.env.DB_PORT,
-    username: <string>process.env.DB_USER,
+    host: env("DB_HOST"),
+    port: parseInt(env("DB_PORT", 1433)),
+    username: env("DB_USER"),
+    password: env("DB_PASS"),
+    database: env("DB_NAME"),
   },
   uat: {
-    database: <string>process.env.DB_NAME,
-    dialect: <string>process.env.DB_DIALECT,
-    host: <string>process.env.DB_HOST,
-    password: <string>process.env.DB_PASS,
-    port: <string>process.env.DB_PORT,
-    username: <string>process.env.DB_USER,
+    host: env("DB_HOST"),
+    port: parseInt(env("DB_PORT", 1433)),
+    username: env("DB_USER"),
+    password: env("DB_PASS"),
+    database: env("DB_NAME"),
   },
 };
 export default config;

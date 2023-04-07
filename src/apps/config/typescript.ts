@@ -1,8 +1,8 @@
 export interface IDatabase {
+  portApp?: string;
   database: string;
-  dialect: string;
   host: string;
   password: string;
-  port: string;
+  port: number | string;
   username: string;
 }

@@ -111,6 +111,7 @@ type ProductFood {
 }
 
 type Query {
+  getCategories: [CategoryFood!]!
   getProducts: [ProductFood!]!
   login(data: LoginInput!): AuthResponse!
 }

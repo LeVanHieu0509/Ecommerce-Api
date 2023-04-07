@@ -1,6 +1,7 @@
 import user from "./user";
 import post from "./post";
 import auth from "./auth";
+import home from "./home";
 
 function route(app) {
   app.use(
@@ -25,6 +26,13 @@ function route(app) {
     },
     post
   );
+  app.use(
+    "/api",
+    function (req, res, next) {
+      next();
+    },
+    home
+  );
 }
 
-export default route
+export default route;

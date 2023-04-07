@@ -1,12 +1,18 @@
-var express = require("express");
-const path = require("path");
+import { ApolloServer } from "apollo-server-express";
+import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
+import express from "express";
+import { GraphQLError, GraphQLFormattedError } from "graphql";
+import morgan from "morgan";
+import path from "path";
+import Container from "typedi";
 import * as TypeORM from "typeorm";
 import buildSchema from "./apps/modules/graphql/schema";
+import route from "./routes";
 import cors = require("cors");
-import { ApolloServer } from "apollo-server-express";
-import Container from "typedi";
-import { GraphQLError, GraphQLFormattedError } from "graphql";
+import helmet from "helmet";
+
+import compression from "compression";
 
 dotenv.config();
 // establish database connection
@@ -17,12 +23,29 @@ const bootstrap = async () => {
   try {
     var app = express();
 
-    // create TypeORM connection
-    await TypeORM.createConnection()
-      .then(() => console.log("okkk"))
-      .catch((err) => {
-        console.log("FAILLL", err);
-      });
+    //init middleware
+    //morgan: Là thư viện nó có thể in ra được các log khi mà một người dùng chạy một request.
+    // /morgan("combined") -- //Trạng thái đầy đủ, bao gồm các thông tin, địa chỉ IP của client, ngày giờ yêu cầu được gửi tới server.
+    // /morgan("common") -- Bao gồm thông tin địa chỉ Ip cuả client, ngày giờ yêu cầu được gửi tới server
+    // /morgan("short") -- Bao gồm các thông tin về phương thức HTTP, đường dẫn yêu cầu, mã trạng thái phản hồi, kích thước phản hồi và thời gian xử lý yêu cầu
+    // /morgan("tiny") -- Bao gồm thông tin về phương thức HTTP: GET /api 500 30 - 3.691 ms
+    app.use(morgan("combined")); //Trạng thái code được tô màu đầu ra ngắn gọn.
+    app.use(helmet()); //Bảo vệ bên thứ 3 đọc cookie
+    app.use(compression()); //Khi vận chuyển quá nhiều data sẽ tốn băng thông, tốn cho người dùng thì nó sẽ giảm đi 100 lần dung lượng
+
+    app.use(bodyParser.urlencoded({ extended: true })); //if false then parse only strings
+    app.use(bodyParser.json());
+
+    // Static file
+    app.use(express.static(path.join(__dirname, "public")));
+
+    route(app);
+    // create init database
+    require("./dbs/init.sqlserver.ts");
+
+    //Kiểm tra server quá tải
+    const { checkOverLoad } = require("./helpers/check.connect");
+    checkOverLoad();
 
     const schema = await buildSchema(Container);
 
@@ -54,10 +77,12 @@ const bootstrap = async () => {
     server.applyMiddleware({ app, cors: corsConfig });
 
     let port = 3000;
-    app.listen({ port }, () => {
-      console.log(
-        `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
-      );
+    const serverVip = app.listen({ port }, () => {
+      console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
+    });
+
+    process.on("SIGINT", () => {
+      serverVip.close(() => console.log("Exit Server Express"));
     });
   } catch (error) {
     console.log(error);
