@@ -1,6 +1,7 @@
 import * as jwt from "jsonwebtoken";
 
-const createTokenPair = async (payload, publicKey, privateKey) => {
+const createTokenPair = async (payload: any, publicKey: any, privateKey: any) => {
+  console.log(payload, publicKey, privateKey);
   try {
     const accessToken = await jwt.sign(payload, publicKey, {
       algorithm: "RS256",
@@ -17,7 +18,9 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     });
 
     return { accessToken, refreshToken };
-  } catch (e) {}
+  } catch (e) {
+    console.log("createTokenPair", e);
+  }
 };
 
 export default createTokenPair;

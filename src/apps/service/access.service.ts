@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { bcrypt } from "bcryptjs";
+import bcrypt from "bcrypt";
 import crypto from "crypto";
 
 import { IUser } from "./../models/User";
@@ -23,7 +23,7 @@ class AccessService {
     try {
       //check email exist?
       const userRepository = getCustomRepository(UserFoodRepository);
-      const user = userRepository.findOneOrFail(username);
+      const user = await userRepository.findOne({ username });
 
       if (user) {
         return new APIError("User Already exists", Err.EmailAlreadyExists);
@@ -31,39 +31,53 @@ class AccessService {
 
       const passwordHash = await bcrypt.hash(password, 10);
 
-      const newUser = await userRepository.create({
+      const newUser = userRepository.create({
         username: username,
         password: passwordHash,
         email: email,
         roles: [RoleUser.USER],
       });
 
+      await userRepository.save(newUser);
+
       if (newUser) {
         //create token == private key, public key
-        const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
-          modulusLength: 4096,
+
+        // typescript version
+        const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+          modulusLength: 1024,
+          publicKeyEncoding: {
+            type: "pkcs1",
+            format: "pem",
+          },
+          privateKeyEncoding: {
+            type: "pkcs1",
+            format: "pem",
+          },
         });
 
         const publicKeyString = await KeyTokenService.createKeyToken({
           userId: newUser.id,
           publicKey: publicKey,
         });
-
+        console.log("publicKeyString", publicKeyString);
         if (!publicKeyString) {
           ResponseTemplate.error("Invalid PublickeyString", "failed", 200);
         }
 
+        const publicKeyObject = crypto.createPublicKey(publicKeyString);
+
         //create tokened pair
-        const tokens = await createTokenPair({ userId: newUser.id, email }, publicKey, privateKey);
+        const tokens = await createTokenPair({ userId: newUser.id, email }, publicKeyObject, privateKey);
 
         console.log("Create token success", tokens);
 
-        return ResponseTemplate.success({ data: { status: 200, user: omit(user, "password"), tokens } }, "success");
+        return ResponseTemplate.success({ status: 200, user: omit(newUser, "password"), tokens }, "1");
       } else {
-        ResponseTemplate.success({ data: { status: 200, data: null } }, "failed");
+        ResponseTemplate.success({ status: 200, data: null }, "-1");
       }
     } catch (e) {
-      ResponseTemplate.userAlreadyExist();
+      return ResponseTemplate.error("try catch error", e, 404);
     }
   };
 }

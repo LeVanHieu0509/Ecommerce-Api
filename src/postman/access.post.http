@@ -3,4 +3,4 @@
 GET http://localhost:3000/api
 
 ###
-POST {{{{url_dev}}}}/shop/signup
+POST {{url_dev}}/shop/signup
