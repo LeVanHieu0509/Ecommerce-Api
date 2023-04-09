@@ -2,6 +2,7 @@ import user from "./user";
 import post from "./post";
 import auth from "./auth";
 import home from "./home";
+import access from "./access/index";
 
 function route(app) {
   app.use(
@@ -32,6 +33,13 @@ function route(app) {
       next();
     },
     home
+  );
+  app.use(
+    "/v1/api",
+    function (req, res, next) {
+      next();
+    },
+    access
   );
 }
 

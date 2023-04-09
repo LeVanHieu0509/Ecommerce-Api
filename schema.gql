@@ -65,6 +65,15 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+type Keys {
+  createdAt: DateTime!
+  id: Float!
+  publicKey: String!
+  refreshToken: String!
+  updatedAt: DateTime!
+  user_food: UserFood!
+}
+
 input LoginInput {
   password: String!
   username: String!
@@ -136,7 +145,9 @@ type User {
 
 type UserFood {
   createdAt: DateTime!
+  email: String!
   id: Float!
+  keys: [Keys!]!
   order_food: [OrderFood!]!
   password: String!
   updatedAt: DateTime!

@@ -33,8 +33,8 @@ const bootstrap = async () => {
     app.use(helmet()); //Bảo vệ bên thứ 3 đọc cookie
     app.use(compression()); //Khi vận chuyển quá nhiều data sẽ tốn băng thông, tốn cho người dùng thì nó sẽ giảm đi 100 lần dung lượng
 
-    app.use(bodyParser.urlencoded({ extended: true })); //if false then parse only strings
-    app.use(bodyParser.json());
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     // Static file
     app.use(express.static(path.join(__dirname, "public")));
@@ -44,8 +44,8 @@ const bootstrap = async () => {
     require("./dbs/init.sqlserver.ts");
 
     //Kiểm tra server quá tải
-    const { checkOverLoad } = require("./helpers/check.connect");
-    checkOverLoad();
+    // const { checkOverLoad } = require("./helpers/check.connect");
+    // checkOverLoad();
 
     const schema = await buildSchema(Container);
 
