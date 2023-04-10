@@ -1,8 +1,9 @@
-import user from "./user";
-import post from "./post";
+import { apiKey, permission } from "../apps/auth/checkAuth";
+import access from "./access/index";
 import auth from "./auth";
 import home from "./home";
-import access from "./access/index";
+import post from "./post";
+import user from "./user";
 
 function route(app) {
   app.use(
@@ -34,6 +35,9 @@ function route(app) {
     },
     home
   );
+
+  app.use(apiKey);
+  app.use(permission("0000"));
   app.use(
     "/v1/api",
     function (req, res, next) {

@@ -13,6 +13,7 @@ import cors = require("cors");
 import helmet from "helmet";
 
 import compression from "compression";
+import APIError from "./apps/global/response/apierror";
 
 dotenv.config();
 // establish database connection
@@ -42,6 +43,22 @@ const bootstrap = async () => {
     route(app);
     // create init database
     require("./dbs/init.sqlserver.ts");
+
+    //handle error
+    //handling error
+    app.use((req, res, next) => {
+      const error = new APIError("Not Found", 1237, 404);
+      next(error);
+    });
+
+    app.use((error, req, res, next) => {
+      const statusCode = error.status || 500;
+      return res.status(statusCode).json({
+        status: "error",
+        code: statusCode,
+        message: error.message || "Internal Server Error",
+      });
+    });
 
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");

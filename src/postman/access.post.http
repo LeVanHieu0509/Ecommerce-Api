@@ -4,3 +4,10 @@ GET http://localhost:3000/api
 
 ###
 POST {{url_dev}}/shop/signup
+Content-Type: application/json
+
+{
+    "username": "fasa",
+    "email": "levanhieu10",
+    "password":"hieu1"
+}

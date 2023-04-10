@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import bcrypt from "bcrypt";
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 import { IUser } from "./../models/User";
 import { getCustomRepository } from "typeorm";
@@ -41,38 +41,13 @@ class AccessService {
       await userRepository.save(newUser);
 
       if (newUser) {
-        //create token == private key, public key
-
-        // typescript version
-        const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-          modulusLength: 1024,
-          publicKeyEncoding: {
-            type: "pkcs1",
-            format: "pem",
-          },
-          privateKeyEncoding: {
-            type: "pkcs1",
-            format: "pem",
-          },
-        });
-
-        const publicKeyString = await KeyTokenService.createKeyToken({
-          userId: newUser.id,
-          publicKey: publicKey,
-        });
-        console.log("publicKeyString", publicKeyString);
-        if (!publicKeyString) {
-          ResponseTemplate.error("Invalid PublickeyString", "failed", 200);
-        }
-
-        const publicKeyObject = crypto.createPublicKey(publicKeyString);
-
         //create tokened pair
-        const tokens = await createTokenPair({ userId: newUser.id, email }, publicKeyObject, privateKey);
+        const { accessToken, refreshToken } = await createTokenPair({ userId: newUser.id, email: newUser.email });
 
-        console.log("Create token success", tokens);
-
-        return ResponseTemplate.success({ status: 200, user: omit(newUser, "password"), tokens }, "1");
+        return ResponseTemplate.success(
+          { status: 200, user: omit(newUser, "password"), tokens: { accessToken, refreshToken } },
+          "1"
+        );
       } else {
         ResponseTemplate.success({ status: 200, data: null }, "-1");
       }
