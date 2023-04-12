@@ -7,14 +7,12 @@ export const checkJwt = (req: Request, res: any, next: any) => {
   //     message: "auth token not provide",
   //   });
   // }
-  console.log(res.body);
 
   const token = req.headers["authorization"].split(" ")[1];
 
   if (!token) res.sendStatus(401);
 
   jwt.verify(token, "uashduha213", (err, data) => {
-    console.log(data);
     if (!token) res.sendStatus(401);
     next();
   });

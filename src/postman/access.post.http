@@ -3,11 +3,12 @@
 GET http://localhost:3000/api
 
 ###
-POST {{url_dev}}/shop/signup
+POST http://localhost:3000/v1/api/shop/signup
 Content-Type: application/json
+x-api-key: 03c6c3f593ebbc287b27cb4d70d9c005583da179ce8b3337635d0c29204d915727b9957c30490a531c23afa121bf0f55274882028cc3135808f9e600a383ff81
 
 {
-    "username": "fasa",
+    "username": "fasda",
     "email": "levanhieu10",
     "password":"hieu1"
 }

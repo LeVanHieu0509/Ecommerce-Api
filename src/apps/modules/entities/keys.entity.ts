@@ -27,8 +27,16 @@ export class Keys {
   public publicKey!: string;
 
   @Field((_type) => String)
+  @Column({ type: "varchar", nullable: true })
+  public privatekey!: string;
+
+  @Field((_type) => String)
+  @Column({ type: "varchar", nullable: true })
+  public refreshToken!: string;
+
+  @Field((_type) => String)
   @Column({ type: "simple-array", nullable: true })
-  public refreshToken!: string[];
+  public refreshTokensUsed!: string[]; //đã được sử dụng
 
   @Field()
   @Column()

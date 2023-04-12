@@ -17,3 +17,9 @@ enum Episode {
 type Starship = {
   name: String;
 };
+
+export interface LoginInput {
+  email: string;
+  password: number | string;
+  refreshToken: string;
+}

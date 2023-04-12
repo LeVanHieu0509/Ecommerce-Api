@@ -68,8 +68,10 @@ scalar DateTime
 type Keys {
   createdAt: DateTime!
   id: Float!
+  privatekey: String!
   publicKey: String!
   refreshToken: String!
+  refreshTokensUsed: String!
   updatedAt: DateTime!
   user_food: UserFood!
 }

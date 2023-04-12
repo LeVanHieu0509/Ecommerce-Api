@@ -1,21 +1,9 @@
+import { GraphQLResolveInfo } from "graphql";
+import { Arg, Args, Ctx, Info, Query, Resolver, Root } from "type-graphql";
+import { InjectRepository } from "typeorm-typedi-extensions";
 import { PostRepository } from "../../../../repositories/PostRepositories";
 import { Post } from "../../../entities/post.entity";
-import {
-  Arg,
-  Args,
-  ArgsType,
-  Ctx,
-  Info,
-  Query,
-  Resolver,
-  Root,
-} from "type-graphql";
-import { InjectRepository } from "typeorm-typedi-extensions";
-import { Service } from "typedi";
-import { GraphQLResolveInfo } from "graphql";
 import PostFilterArgs from "./postArgs";
-import PostArgsPanigation from "./postArgsPanigation";
-import { getCustomRepository } from "typeorm";
 
 @Resolver((_type) => Post)
 export class GetPosts {
@@ -37,8 +25,6 @@ export class GetPosts {
     @Ctx() { conn }: any,
     @Info() info: GraphQLResolveInfo
   ): Promise<Post[]> {
-    console.log("args", post.id, take);
-
     const user = await conn.db.query.post({
       skip: skip,
       take: take,

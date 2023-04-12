@@ -1,15 +1,17 @@
-import { omit } from "lodash";
 import bcrypt from "bcrypt";
+import { omit } from "lodash";
 import crypto from "node:crypto";
 
-import { IUser } from "./../models/User";
 import { getCustomRepository } from "typeorm";
+import { AuthFailureError, BadRequestError } from "../../core/error.response";
+import createTokenPair from "../auth/authUtils";
+import ResponseTemplate from "../global/response";
 import APIError from "../global/response/apierror";
 import Err from "../global/response/errorcode";
 import { UserFoodRepository } from "../repositories/food-app/UserFoodRepositories";
+import { IUser } from "./../models/User";
 import KeyTokenService from "./keyToken.service";
-import createTokenPair from "../auth/authUtils";
-import ResponseTemplate from "../global/response";
+import { findByEmail } from "./user.service";
 
 const RoleUser = {
   USER: "USER",
@@ -19,6 +21,31 @@ const RoleUser = {
 };
 
 class AccessService {
+  public static login = async ({ email, password, refreshToken }: any) => {
+    const foundUser = await findByEmail({ email });
+    if (!foundUser) throw new BadRequestError("User not registered");
+
+    const match = await bcrypt.compare(password, foundUser.password);
+    console.log("match", match);
+    if (!match) throw new AuthFailureError("Authentication Error");
+
+    const privateKey = crypto.randomBytes(64).toString("hex");
+    const publicKey = crypto.randomBytes(64).toString("hex");
+
+    const tokens = await createTokenPair({ userId: foundUser.id, email }, publicKey, privateKey);
+
+    await KeyTokenService.createKeyToken({
+      userId: foundUser.id,
+      refreshToken: tokens.refreshToken,
+      privateKey,
+      publicKey,
+    });
+
+    return {
+      tokens,
+    };
+  };
+
   public static signUp = async ({ username, email, password, roles }: IUser) => {
     try {
       //check email exist?
@@ -42,7 +69,17 @@ class AccessService {
 
       if (newUser) {
         //create tokened pair
-        const { accessToken, refreshToken } = await createTokenPair({ userId: newUser.id, email: newUser.email });
+        const privateKey = crypto.randomBytes(64).toString("hex");
+        const publicKey = crypto.randomBytes(64).toString("hex");
+
+        const { accessToken, refreshToken } = await createTokenPair(
+          {
+            userId: newUser.id,
+            email: newUser.email,
+          },
+          privateKey,
+          publicKey
+        );
 
         return ResponseTemplate.success(
           { status: 200, user: omit(newUser, "password"), tokens: { accessToken, refreshToken } },

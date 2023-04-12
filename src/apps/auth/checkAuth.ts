@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import ResponseTemplate from "../global/response";
-import APIError from "../global/response/apierror";
 import findById from "../service/apiKey.service";
 
 interface RequestCustom extends Request {
@@ -51,10 +49,4 @@ const permission = (permission) => {
   };
 };
 
-const asyncHandler = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-};
-
-export { apiKey, permission, asyncHandler };
+export { apiKey, permission };
