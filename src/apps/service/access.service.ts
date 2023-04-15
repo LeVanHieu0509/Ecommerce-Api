@@ -1,10 +1,9 @@
 import bcrypt from "bcrypt";
 import { omit } from "lodash";
 import crypto from "node:crypto";
-
 import { getCustomRepository } from "typeorm";
 import { AuthFailureError, BadRequestError } from "../../core/error.response";
-import createTokenPair from "../auth/authUtils";
+import { createTokenPair } from "../auth/authUtils";
 import ResponseTemplate from "../global/response";
 import APIError from "../global/response/apierror";
 import Err from "../global/response/errorcode";
@@ -21,12 +20,17 @@ const RoleUser = {
 };
 
 class AccessService {
+  public static logout = async ({ keystore }) => {
+    const delKey = await KeyTokenService.removeKeyById(keystore.id);
+    return delKey;
+  };
+
   public static login = async ({ email, password, refreshToken }: any) => {
     const foundUser = await findByEmail({ email });
     if (!foundUser) throw new BadRequestError("User not registered");
 
     const match = await bcrypt.compare(password, foundUser.password);
-    console.log("match", match);
+
     if (!match) throw new AuthFailureError("Authentication Error");
 
     const privateKey = crypto.randomBytes(64).toString("hex");
@@ -42,6 +46,7 @@ class AccessService {
     });
 
     return {
+      user: { email: foundUser.email, username: foundUser.username },
       tokens,
     };
   };

@@ -2,8 +2,23 @@ import { NextFunction, Request, Response } from "express";
 import { CREATED, SuccessResponse } from "../../core/success.response";
 import AccessService from "../service/access.service";
 
+interface RequestCustom extends Request {
+  keyStore: any;
+}
 class AccessController {
-  public static login = async (req: Request, res: Response, next: NextFunction) => {
+  public static logout = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    try {
+      new SuccessResponse({
+        message: "Logout Success",
+        statusCode: 200,
+        metadata: await AccessService.logout(req.keyStore),
+      }).send(res);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public static login = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
       new SuccessResponse({
         message: "Login ok!",
@@ -14,7 +29,7 @@ class AccessController {
     }
   };
 
-  public static signUp = async (req: Request, res: Response, next: NextFunction) => {
+  public static signUp = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
       new CREATED({
         message: "Registeded ok!",

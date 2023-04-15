@@ -1,12 +1,14 @@
 import { NextFunction, Request } from "express";
 import * as jwt from "jsonwebtoken";
-import { defaults, clone } from "lodash";
+import { clone, defaults } from "lodash";
 import { AuthFailureError, NotFoundError } from "../../core/error.response";
 import { asyncHandler } from "../../helpers/asyncHandler";
-import errorHandler from "../../ultis/error";
-import { signJwt } from "../../ultis/jwt";
+import { signJwt, verifyJwt } from "../../ultis/jwt";
 import KeyTokenService from "../service/keyToken.service";
 
+interface RequestCustom extends Request {
+  keyStore: any;
+}
 const HEADER = {
   API_KEY: "x-api-key",
   CLIENT_ID: "x-client-id",
@@ -50,7 +52,8 @@ const createTokenPair = async (user, privateKey, publicKey) => {
   }
 };
 
-const authentication = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+//Bắt frontend phải truyền đúng param
+const authentication = asyncHandler(async (req: RequestCustom, res: Response, next: NextFunction) => {
   //1. Check user id missing???
   //2. get accessToken
   //3. verify token
@@ -71,7 +74,13 @@ const authentication = asyncHandler(async (req: Request, res: Response, next: Ne
   if (!accessToken) throw new AuthFailureError("Invalid Request");
 
   try {
-  } catch (error) {}
+    const decodeUser = verifyJwt(accessToken, "JWT_ACCESS_TOKEN_PRIVATE_KEY");
+    if (userId !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
+
+    req.keyStore = keyStore;
+  } catch (error) {
+    throw error;
+  }
 });
 
-export default createTokenPair;
+export { createTokenPair, authentication };

@@ -31,6 +31,12 @@ class KeyTokenService {
     const keys = await keysRepository.findOne({ user_food: userId });
     return keys;
   };
+
+  public static removeKeyById = async (id) => {
+    const keysRepository = getCustomRepository(KeysRepository);
+    const deleteKey = await keysRepository.remove(id);
+    return deleteKey;
+  };
 }
 
 export default KeyTokenService;

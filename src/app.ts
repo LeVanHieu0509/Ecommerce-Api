@@ -1,8 +1,8 @@
 import { ApolloServer } from "apollo-server-express";
-import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import express from "express";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
+import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import Container from "typedi";
@@ -10,7 +10,6 @@ import * as TypeORM from "typeorm";
 import buildSchema from "./apps/modules/graphql/schema";
 import route from "./routes";
 import cors = require("cors");
-import helmet from "helmet";
 
 import compression from "compression";
 import APIError from "./apps/global/response/apierror";
@@ -43,22 +42,6 @@ const bootstrap = async () => {
     route(app);
     // create init database
     require("./dbs/init.sqlserver.ts");
-
-    //handle error
-    //handling error
-    app.use((req, res, next) => {
-      const error = new APIError("Not Found", 1237, 404);
-      next(error);
-    });
-
-    app.use((error, req, res, next) => {
-      const statusCode = error.status || 500;
-      return res.status(statusCode).json({
-        status: "error",
-        code: statusCode,
-        message: error.message || "Internal Server Error",
-      });
-    });
 
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
@@ -96,6 +79,22 @@ const bootstrap = async () => {
     let port = 3000;
     const serverVip = app.listen({ port }, () => {
       console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
+    });
+
+    //handle error
+    //handling error
+    app.use((req, res, next) => {
+      const error = new APIError("Not Found", 1237, 404);
+      next(error);
+    });
+
+    app.use((error, req, res, next) => {
+      const statusCode = error.status || 500;
+      return res.status(statusCode).json({
+        status: "error",
+        code: statusCode,
+        message: error.message || "Internal Server Error",
+      });
     });
 
     process.on("SIGINT", () => {
