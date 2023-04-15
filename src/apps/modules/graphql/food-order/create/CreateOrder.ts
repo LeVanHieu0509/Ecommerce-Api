@@ -44,6 +44,7 @@ export class CreateOrder {
     });
 
     await orderRepository.save(order);
+
     return {
       ...order,
     };

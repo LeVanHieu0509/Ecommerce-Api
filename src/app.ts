@@ -30,7 +30,7 @@ const bootstrap = async () => {
     // /morgan("short") -- Bao gồm các thông tin về phương thức HTTP, đường dẫn yêu cầu, mã trạng thái phản hồi, kích thước phản hồi và thời gian xử lý yêu cầu
     // /morgan("tiny") -- Bao gồm thông tin về phương thức HTTP: GET /api 500 30 - 3.691 ms
     app.use(morgan("combined")); //Trạng thái code được tô màu đầu ra ngắn gọn.
-    app.use(helmet()); //Bảo vệ bên thứ 3 đọc cookie
+    // app.use(helmet()); //Bảo vệ bên thứ 3 đọc cookie
     app.use(compression()); //Khi vận chuyển quá nhiều data sẽ tốn băng thông, tốn cho người dùng thì nó sẽ giảm đi 100 lần dung lượng
 
     app.use(express.json());
@@ -39,7 +39,6 @@ const bootstrap = async () => {
     // Static file
     app.use(express.static(path.join(__dirname, "public")));
 
-    route(app);
     // create init database
     require("./dbs/init.sqlserver.ts");
 
@@ -75,26 +74,10 @@ const bootstrap = async () => {
     });
 
     server.applyMiddleware({ app, cors: corsConfig });
-
+    route(app);
     let port = 3000;
     const serverVip = app.listen({ port }, () => {
       console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
-    });
-
-    //handle error
-    //handling error
-    app.use((req, res, next) => {
-      const error = new APIError("Not Found", 1237, 404);
-      next(error);
-    });
-
-    app.use((error, req, res, next) => {
-      const statusCode = error.status || 500;
-      return res.status(statusCode).json({
-        status: "error",
-        code: statusCode,
-        message: error.message || "Internal Server Error",
-      });
     });
 
     process.on("SIGINT", () => {

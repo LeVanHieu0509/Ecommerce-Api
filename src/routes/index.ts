@@ -1,4 +1,5 @@
 import { apiKey, permission } from "../apps/auth/checkAuth";
+import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
 import auth from "./auth";
 import home from "./home";
@@ -36,8 +37,8 @@ function route(app) {
     home
   );
 
-  app.use(apiKey);
-  app.use(permission("0000"));
+  // app.use(apiKey);
+  // app.use(permission("0000"));
   app.use(
     "/v1/api",
     function (req, res, next) {
@@ -45,6 +46,20 @@ function route(app) {
     },
     access
   );
+
+  app.use((req, res, next) => {
+    const error = new APIError("Not Found", 1237, 404);
+    next(error);
+  });
+
+  app.use((error, req, res, next) => {
+    const statusCode = error.status || 500;
+    return res.status(statusCode).json({
+      status: "error",
+      code: statusCode,
+      message: error.message || "Internal Server Error",
+    });
+  });
 }
 
 export default route;

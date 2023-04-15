@@ -27,11 +27,11 @@ class AccessService {
 
   public static login = async ({ email, password, refreshToken }: any) => {
     const foundUser = await findByEmail({ email });
-    if (!foundUser) throw new BadRequestError("User not registered");
+    if (!foundUser) return { status: "-1", message: "login failed" };
 
     const match = await bcrypt.compare(password, foundUser.password);
 
-    if (!match) throw new AuthFailureError("Authentication Error");
+    if (!match) return { status: "-1", message: "login failed" };
 
     const privateKey = crypto.randomBytes(64).toString("hex");
     const publicKey = crypto.randomBytes(64).toString("hex");
@@ -46,25 +46,29 @@ class AccessService {
     });
 
     return {
-      user: { email: foundUser.email, username: foundUser.username },
+      status: "1",
+      user: { id: foundUser.id, email: foundUser.email, username: foundUser.username },
       tokens,
     };
   };
 
-  public static signUp = async ({ username, email, password, roles }: IUser) => {
+  public static signUp = async ({ email, password, roles }: IUser) => {
     try {
       //check email exist?
       const userRepository = getCustomRepository(UserFoodRepository);
-      const user = await userRepository.findOne({ username });
+      const user = await userRepository.findOne({ email });
 
       if (user) {
-        return new APIError("User Already exists", Err.EmailAlreadyExists);
+        return {
+          message: "User Already exists",
+          status: "2",
+        };
       }
 
       const passwordHash = await bcrypt.hash(password, 10);
 
       const newUser = userRepository.create({
-        username: username,
+        username: email,
         password: passwordHash,
         email: email,
         roles: [RoleUser.USER],
@@ -86,15 +90,21 @@ class AccessService {
           publicKey
         );
 
-        return ResponseTemplate.success(
-          { status: 200, user: omit(newUser, "password"), tokens: { accessToken, refreshToken } },
-          "1"
-        );
+        return {
+          message: "Register success",
+          status: "1",
+        };
       } else {
-        ResponseTemplate.success({ status: 200, data: null }, "-1");
+        return {
+          message: "Register failed",
+          status: "-2",
+        };
       }
     } catch (e) {
-      return ResponseTemplate.error("try catch error", e, 404);
+      return {
+        message: e,
+        status: 404,
+      };
     }
   };
 }

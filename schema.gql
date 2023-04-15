@@ -65,6 +65,10 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+input GetOrderInput {
+  user_id: Float!
+}
+
 type Keys {
   createdAt: DateTime!
   id: Float!
@@ -123,6 +127,7 @@ type ProductFood {
 
 type Query {
   getCategories: [CategoryFood!]!
+  getOrders(data: GetOrderInput!): [OrderFood!]!
   getProducts: [ProductFood!]!
   login(data: LoginInput!): AuthResponse!
 }
