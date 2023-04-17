@@ -32,6 +32,13 @@ type CategoryFood {
   updatedAt: DateTime!
 }
 
+type CheckoutFood {
+  bill_price: Float!
+  id: Float!
+  status: String!
+  user_food: UserFood!
+}
+
 type Comment {
   articles: Article!
   createdAt: DateTime!
@@ -45,6 +52,12 @@ type Comment {
 input CreateCategoryInput {
   image: String!
   title: String!
+}
+
+input CreateCheckoutInput {
+  bill_price: Float!
+  status: String!
+  user_id: Float!
 }
 
 input CreateOrderInput {
@@ -64,6 +77,10 @@ input CreateProductInput {
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input DeleteOrderInput {
+  id_order: Float!
+}
 
 input GetOrderInput {
   user_id: Float!
@@ -87,8 +104,10 @@ input LoginInput {
 
 type Mutation {
   CreateCategory(data: CreateCategoryInput!): CategoryFood!
+  createCheckout(data: CreateCheckoutInput!): CheckoutFood!
   createOrder(data: CreateOrderInput!): OrderFood!
   createProduct(data: CreateProductInput!): ProductFood!
+  deleteOrder(data: DeleteOrderInput!): OrderFood!
   signup(data: SigninInput!): UserFood!
 }
 
