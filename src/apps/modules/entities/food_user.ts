@@ -1,3 +1,4 @@
+import { FavoriteFood } from "./food_favorite";
 import { CategoryFood } from "./food_category";
 import { ProductFood } from "./food_product";
 import * as bcrypt from "bcryptjs";
@@ -42,6 +43,10 @@ export class UserFood {
   @Field((_type) => [OrderFood])
   @OneToMany((_type) => OrderFood, (order_food: OrderFood) => order_food.user_food)
   public order_food!: OrderFood[];
+
+  @Field((_type) => [FavoriteFood])
+  @OneToMany((_type) => FavoriteFood, (favorite_food: FavoriteFood) => favorite_food.user_food)
+  public favorite_food!: FavoriteFood[];
 
   @Field((_type) => [Keys])
   @OneToMany((_type) => Keys, (key: Keys) => key.user_food)

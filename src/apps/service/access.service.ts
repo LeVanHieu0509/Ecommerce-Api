@@ -20,8 +20,9 @@ const RoleUser = {
 };
 
 class AccessService {
-  public static logout = async ({ keystore }) => {
+  public static logout = async (keystore) => {
     const delKey = await KeyTokenService.removeKeyById(keystore.id);
+
     return delKey;
   };
 

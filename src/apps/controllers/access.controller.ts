@@ -8,11 +8,14 @@ interface RequestCustom extends Request {
 class AccessController {
   public static logout = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
+      console.log("req.keyStore", req.keyStore);
       new SuccessResponse({
         message: "Logout Success",
         statusCode: 200,
         metadata: await AccessService.logout(req.keyStore),
       }).send(res);
+
+      res.json().status(200);
     } catch (error) {
       next(error);
     }

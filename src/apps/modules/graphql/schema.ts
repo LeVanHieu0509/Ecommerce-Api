@@ -1,6 +1,8 @@
 import { buildSchema } from "type-graphql";
 import { GetCategory } from "./food-category/query/GetProduct";
 import { CheckoutOrder } from "./food-checkout/create/CreateCheckout";
+import { CreateFavorite } from "./food-favorite/create/CreateFavorite";
+import { GetFavoriteFood } from "./food-favorite/query/GetFavorites";
 import { CreateProduct } from "./food-product/create/CreateProduct";
 import { AuthFood } from "./food-user/query/Auth-Food";
 
@@ -27,6 +29,9 @@ export default (Container: any) => {
       DeleteOrder,
 
       CheckoutOrder,
+
+      CreateFavorite,
+      GetFavoriteFood,
     ],
     emitSchemaFile: true,
     validate: false,

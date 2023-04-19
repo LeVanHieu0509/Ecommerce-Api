@@ -38,11 +38,11 @@ export function verify(token: string) {
 
 const createTokenPair = async (user, privateKey, publicKey) => {
   try {
-    const accessToken = signJwt({ user: user.userId }, "JWT_ACCESS_PRIVATE_KEY", {
+    const accessToken = signJwt({ userId: user.userId }, "JWT_ACCESS_PRIVATE_KEY", {
       expiresIn: "15m",
     });
 
-    const refreshToken = signJwt({ user: user.userId }, "JWT_REFRESH_PRIVATE_KEY", {
+    const refreshToken = signJwt({ userId: user.userId }, "JWT_REFRESH_PRIVATE_KEY", {
       expiresIn: "60m",
     });
 
@@ -66,6 +66,7 @@ const authentication = asyncHandler(async (req: RequestCustom, res: Response, ne
   if (!userId) throw new AuthFailureError("Invalid Request");
 
   //----2----//
+
   const keyStore = await KeyTokenService.findByUserId(userId);
   if (!keyStore) throw new NotFoundError("Not found keystore");
 
@@ -75,9 +76,11 @@ const authentication = asyncHandler(async (req: RequestCustom, res: Response, ne
 
   try {
     const decodeUser = verifyJwt(accessToken, "JWT_ACCESS_TOKEN_PRIVATE_KEY");
-    if (userId !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
+
+    if (Number(userId) !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
 
     req.keyStore = keyStore;
+    next();
   } catch (error) {
     throw error;
   }

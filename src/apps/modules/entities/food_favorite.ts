@@ -1,11 +1,11 @@
 import { Field, ObjectType } from "type-graphql";
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ProductFood } from "./food_product";
 import UserFood from "./food_user";
 
 @ObjectType()
 @Entity()
-export class OrderFood {
+export class FavoriteFood {
   @Field((_type) => Number)
   @PrimaryGeneratedColumn()
   public id!: number;
@@ -20,4 +20,4 @@ export class OrderFood {
   @JoinColumn({ name: "product_food_id" })
   public product_food!: ProductFood;
 }
-export default OrderFood;
+export default FavoriteFood;

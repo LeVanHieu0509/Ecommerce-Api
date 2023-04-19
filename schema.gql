@@ -60,6 +60,11 @@ input CreateCheckoutInput {
   user_id: Float!
 }
 
+input CreateFavoriteInput {
+  product_id: Float!
+  user_id: Float!
+}
+
 input CreateOrderInput {
   product_id: Float!
   user_id: Float!
@@ -80,6 +85,16 @@ scalar DateTime
 
 input DeleteOrderInput {
   id_order: Float!
+}
+
+type FavoriteFood {
+  id: Float!
+  product_food: ProductFood!
+  user_food: UserFood!
+}
+
+input GetFavoriteInput {
+  user_id: Float!
 }
 
 input GetOrderInput {
@@ -105,6 +120,7 @@ input LoginInput {
 type Mutation {
   CreateCategory(data: CreateCategoryInput!): CategoryFood!
   createCheckout(data: CreateCheckoutInput!): CheckoutFood!
+  createFavorite(data: CreateFavoriteInput!): FavoriteFood!
   createOrder(data: CreateOrderInput!): OrderFood!
   createProduct(data: CreateProductInput!): ProductFood!
   deleteOrder(data: DeleteOrderInput!): OrderFood!
@@ -136,6 +152,7 @@ type ProductFood {
   category_food: CategoryFood!
   createdAt: DateTime!
   description: String!
+  favorite_food: [FavoriteFood!]!
   id: Float!
   image: String!
   order_food: [OrderFood!]!
@@ -146,6 +163,7 @@ type ProductFood {
 
 type Query {
   getCategories: [CategoryFood!]!
+  getFavorite(data: GetFavoriteInput!): [FavoriteFood!]!
   getOrders(data: GetOrderInput!): [OrderFood!]!
   getProducts: [ProductFood!]!
   login(data: LoginInput!): AuthResponse!
@@ -172,6 +190,7 @@ type User {
 type UserFood {
   createdAt: DateTime!
   email: String!
+  favorite_food: [FavoriteFood!]!
   id: Float!
   keys: [Keys!]!
   order_food: [OrderFood!]!

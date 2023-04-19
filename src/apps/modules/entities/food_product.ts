@@ -1,3 +1,4 @@
+import { FavoriteFood } from "./food_favorite";
 import { CategoryFood } from "./food_category";
 import { Service } from "typedi";
 import { IsNotEmpty } from "class-validator";
@@ -43,20 +44,17 @@ export class ProductFood {
   public price?: number;
 
   @Field((_type) => [OrderFood])
-  @OneToMany(
-    (_type) => OrderFood,
-    (order_food: OrderFood) => order_food.user_food
-  )
+  @OneToMany((_type) => OrderFood, (order_food: OrderFood) => order_food.product_food)
   public order_food!: OrderFood[];
 
+  @Field((_type) => [FavoriteFood])
+  @OneToMany((_type) => FavoriteFood, (favorite_food: FavoriteFood) => favorite_food.product_food)
+  public favorite_food!: FavoriteFood[];
+
   @Field((_type) => CategoryFood)
-  @ManyToOne(
-    () => CategoryFood,
-    (categoty_food) => categoty_food.product_food,
-    {
-      cascade: true,
-    }
-  )
+  @ManyToOne(() => CategoryFood, (categoty_food) => categoty_food.product_food, {
+    cascade: true,
+  })
   @JoinColumn({ name: "category_food_id" })
   public category_food?: CategoryFood;
 

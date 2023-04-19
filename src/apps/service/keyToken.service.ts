@@ -28,13 +28,14 @@ class KeyTokenService {
 
   public static findByUserId = async (userId: any) => {
     const keysRepository = getCustomRepository(KeysRepository);
-    const keys = await keysRepository.findOne({ user_food: userId });
+    const keys = await keysRepository.findOne({ where: { user_food: userId } });
     return keys;
   };
 
   public static removeKeyById = async (id) => {
     const keysRepository = getCustomRepository(KeysRepository);
-    const deleteKey = await keysRepository.remove(id);
+
+    const deleteKey = await keysRepository.delete({ id });
     return deleteKey;
   };
 }
