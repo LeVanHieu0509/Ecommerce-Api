@@ -2,6 +2,11 @@ import { getCustomRepository } from "typeorm";
 import { KeysRepository } from "../repositories/food-app/KeysRepositories";
 
 class KeyTokenService {
+  public static findByRefreshTokenUsed = async (refreshToken) => {
+    const keysRepository = getCustomRepository(KeysRepository);
+
+    return await keysRepository.findOne({ refreshToken: refreshToken });
+  };
   public static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
     try {
       //vip
@@ -36,6 +41,13 @@ class KeyTokenService {
     const keysRepository = getCustomRepository(KeysRepository);
 
     const deleteKey = await keysRepository.delete({ id });
+    return deleteKey;
+  };
+
+  public static deleteKeyById = async (userId) => {
+    const keysRepository = getCustomRepository(KeysRepository);
+
+    const deleteKey = await keysRepository.delete({ id: userId });
     return deleteKey;
   };
 }

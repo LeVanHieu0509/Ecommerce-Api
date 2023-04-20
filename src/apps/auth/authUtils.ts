@@ -9,7 +9,7 @@ import KeyTokenService from "../service/keyToken.service";
 interface RequestCustom extends Request {
   keyStore: any;
 }
-const HEADER = {
+export const HEADER = {
   API_KEY: "x-api-key",
   CLIENT_ID: "x-client-id",
   AUTHORIZATION: "authorization",

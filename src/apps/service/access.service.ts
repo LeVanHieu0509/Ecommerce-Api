@@ -1,8 +1,9 @@
+import { verifyJwt } from "./../../ultis/jwt";
 import bcrypt from "bcrypt";
 import { omit } from "lodash";
 import crypto from "node:crypto";
 import { getCustomRepository } from "typeorm";
-import { AuthFailureError, BadRequestError } from "../../core/error.response";
+import { AuthFailureError, BadRequestError, Forbidden } from "../../core/error.response";
 import { createTokenPair } from "../auth/authUtils";
 import ResponseTemplate from "../global/response";
 import APIError from "../global/response/apierror";
@@ -20,6 +21,25 @@ const RoleUser = {
 };
 
 class AccessService {
+  //AccessToken hết hạn thì dùng refreshToken để tạo ra cặp mới
+  public static handleRefreshToken = async (refreshToken) => {
+    const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken);
+
+    //new ma co thi phai check xem va xoa di khong cho no quyen truy cap
+    if (foundToken) {
+      //decode xem user nay la thang nao?
+      const { userId, email } = await verifyJwt(refreshToken, "JWT_ACCESS_PUBLIC_KEY");
+      console.log(userId, email);
+
+      //XXoa di boi vi refreshToken da het han
+      //Check va xoa tat ca cac token trong keyStore
+      await KeyTokenService.deleteKeyById(userId);
+      throw new Forbidden("Some thing wrong --- Please login");
+    }
+
+    //neu chua co thi se tim trong database
+  };
+
   public static logout = async (keystore) => {
     const delKey = await KeyTokenService.removeKeyById(keystore.id);
 
@@ -105,6 +125,28 @@ class AccessService {
       return {
         message: e,
         status: 404,
+      };
+    }
+  };
+
+  public static changePassword = async ({ email, password }, userId) => {
+    const userRepository = getCustomRepository(UserFoodRepository);
+    const user = await userRepository.findOne({ id: userId });
+    if (!user) return { status: "-1", message: "user in valid" };
+
+    if (user) {
+      const passwordHash = await bcrypt.hash(password, 10);
+
+      await userRepository.update(
+        {
+          id: userId,
+        },
+        { username: email, password: passwordHash, email: email }
+      );
+
+      return {
+        status: "1",
+        message: "Change success",
       };
     }
   };

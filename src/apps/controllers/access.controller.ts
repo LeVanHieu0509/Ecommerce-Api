@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { CREATED, SuccessResponse } from "../../core/success.response";
+import { HEADER } from "../auth/authUtils";
 import AccessService from "../service/access.service";
 
 interface RequestCustom extends Request {
@@ -40,6 +41,18 @@ class AccessController {
         options: {
           limit: 10,
         },
+      }).send(res);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public static changePassword = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    const userId = req.headers[HEADER.CLIENT_ID];
+    try {
+      new CREATED({
+        message: "Changed ok!",
+        metadata: await AccessService.changePassword(req.body, userId),
       }).send(res);
     } catch (error) {
       next(error);

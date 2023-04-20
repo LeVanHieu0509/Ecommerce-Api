@@ -11,4 +11,6 @@ router.post("/user/signup", asyncHandler(AccessController.signUp));
 router.use(authentication);
 router.post("/user/logout", asyncHandler(AccessController.logout));
 
+router.post("/user/changePassword", asyncHandler(AccessController.changePassword));
+
 export default router;
