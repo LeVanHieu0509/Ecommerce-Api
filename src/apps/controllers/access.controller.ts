@@ -6,10 +6,10 @@ import AccessService from "../service/access.service";
 interface RequestCustom extends Request {
   keyStore: any;
 }
+
 class AccessController {
   public static logout = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
-      console.log("req.keyStore", req.keyStore);
       new SuccessResponse({
         message: "Logout Success",
         statusCode: 200,
@@ -52,7 +52,7 @@ class AccessController {
     try {
       new CREATED({
         message: "Changed ok!",
-        metadata: await AccessService.changePassword(req.body, userId),
+        metadata: await AccessService.changePassword(req.body, Number(userId)),
       }).send(res);
     } catch (error) {
       next(error);

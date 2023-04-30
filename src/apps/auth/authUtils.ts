@@ -77,7 +77,7 @@ const authentication = asyncHandler(async (req: RequestCustom, res: Response, ne
   try {
     const decodeUser = verifyJwt(accessToken, "JWT_ACCESS_TOKEN_PRIVATE_KEY");
 
-    if (Number(userId) !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
+    // if (Number(userId) !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
 
     req.keyStore = keyStore;
     next();
