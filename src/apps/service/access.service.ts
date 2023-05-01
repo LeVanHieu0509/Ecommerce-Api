@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import crypto from "node:crypto";
 import { getCustomRepository } from "typeorm";
+import { Forbidden } from "../../core/error.response";
+import { verifyJwt } from "../../ultis/jwt";
 import { createTokenPair } from "../auth/authUtils";
 import { UserFoodRepository } from "../repositories/food-app/UserFoodRepositories";
 import { IUser } from "./../models/User";
@@ -19,17 +21,22 @@ class AccessService {
   public static handleRefreshToken = async (refreshToken) => {
     const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken);
 
-    //new ma co thi phai check xem va xoa di khong cho no quyen truy cap
-    // if (foundToken) {
-    //   //decode xem user nay la thang nao?
-    //   const { userId, email } = await verifyJwt(refreshToken, "JWT_ACCESS_PUBLIC_KEY");
-    //   console.log(userId, email);
+    //neu ma co thi phai check xem va xoa di khong cho no quyen truy cap
+    if (foundToken) {
+      //decode xem user nay la thang nao?
+      const { userId, email } = await verifyJwt(refreshToken, "JWT_ACCESS_PUBLIC_KEY");
+      console.log(userId, email);
 
-    //   //XXoa di boi vi refreshToken da het han
-    //   //Check va xoa tat ca cac token trong keyStore
-    //   await KeyTokenService.deleteKeyById(userId);
-    //   throw new Forbidden("Some thing wrong --- Please login");
-    // }
+      //XXoa di boi vi refreshToken da het han
+      //Check va xoa tat ca cac token trong keyStore
+      await KeyTokenService.deleteKeyById(userId);
+      throw new Forbidden("Some thing wrong --- Please login");
+    }
+
+    //Nếu chưa sài
+    const holderToken = await KeyTokenService.findByRefreshToken({ refreshToken });
+
+    //Nếu tìm được cái token mà chưa bị expried thì có thể sử dụng lại
 
     //neu chua co thi se tim trong database
   };

@@ -5,8 +5,15 @@ class KeyTokenService {
   public static findByRefreshTokenUsed = async (refreshToken) => {
     const keysRepository = getCustomRepository(KeysRepository);
 
+    return await keysRepository.findOne({ refreshTokensUsed: refreshToken });
+  };
+
+  public static findByRefreshToken = async (refreshToken) => {
+    const keysRepository = getCustomRepository(KeysRepository);
+
     return await keysRepository.findOne({ refreshToken: refreshToken });
   };
+
   public static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
     try {
       //vip
