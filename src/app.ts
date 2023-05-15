@@ -23,6 +23,7 @@ const bootstrap = async () => {
   try {
     var app = express();
 
+    // loaders(app);
     //init middleware
     //morgan: Là thư viện nó có thể in ra được các log khi mà một người dùng chạy một request.
     // /morgan("combined") -- //Trạng thái đầy đủ, bao gồm các thông tin, địa chỉ IP của client, ngày giờ yêu cầu được gửi tới server.

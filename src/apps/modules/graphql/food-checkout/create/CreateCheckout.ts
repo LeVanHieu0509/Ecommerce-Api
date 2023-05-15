@@ -42,17 +42,18 @@ export class CheckoutOrder {
     setTimeout(() => {
       SendNotification(sendingOrderMessage, (error, results) => {
         if (error) {
-          console.log(error);
+          console.log("error", error);
         }
-        console.log(results);
+        console.log("results", results);
       });
     }, 5000);
+
     setTimeout(() => {
       SendNotification(sentOrderMessage, (error, results) => {
         if (error) {
-          console.log(error);
+          console.log("error", error);
         }
-        console.log(results);
+        console.log("results", results);
       });
     }, 10000);
 

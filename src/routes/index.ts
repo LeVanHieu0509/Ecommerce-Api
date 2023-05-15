@@ -63,3 +63,17 @@ function route(app) {
 }
 
 export default route;
+
+//Cách 2:
+
+// module.exports = app => {
+//     app.use('/api/v1/auth', authRoute);
+//     app.use('/api/v1/orders', ordersRoute);
+//     app.use('/api/v1/sessions', sessionsRoute);
+//     app.use('/api/v1/assets', assetsRoute);
+//     app.use('/api/v1/kLineChart', kLineChartsRoute);
+//     app.use('/api/v1/reports', reportsRoute);
+//     app.use('/api/v1/stocks', stocksRoute);
+//     app.use('/api/v1/users', userRoute);
+//     app.use('/api/v1/internal_users', internalUserRoute);
+// };
