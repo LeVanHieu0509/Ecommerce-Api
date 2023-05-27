@@ -6,9 +6,11 @@ import { asyncHandler } from "../../helpers/asyncHandler";
 import { signJwt, verifyJwt } from "../../ultis/jwt";
 import KeyTokenService from "../service/keyToken.service";
 
-interface RequestCustom extends Request {
+export interface RequestCustom extends Request {
   keyStore: any;
+  user: any;
 }
+
 export const HEADER = {
   API_KEY: "x-api-key",
   CLIENT_ID: "x-client-id",
@@ -80,6 +82,7 @@ const authentication = asyncHandler(async (req: RequestCustom, res: Response, ne
     // if (Number(userId) !== decodeUser.userId) throw new AuthFailureError("Invalid User ID");
 
     req.keyStore = keyStore;
+    req.user = decodeUser;
     next();
   } catch (error) {
     throw error;

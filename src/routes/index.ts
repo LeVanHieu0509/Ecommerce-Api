@@ -1,6 +1,8 @@
 import { apiKey, permission } from "../apps/auth/checkAuth";
 import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
+import product from "./product/index";
+
 import auth from "./auth";
 import home from "./home";
 import post from "./post";
@@ -45,6 +47,14 @@ function route(app) {
       next();
     },
     access
+  );
+
+  app.use(
+    "/v1/api/product",
+    function (req, res, next) {
+      next();
+    },
+    product
   );
 
   app.use((req, res, next) => {
