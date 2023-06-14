@@ -2,7 +2,6 @@ import { ApolloServer } from "apollo-server-express";
 import * as dotenv from "dotenv";
 import express from "express";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
-import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import Container from "typedi";
@@ -12,7 +11,6 @@ import route from "./routes";
 import cors = require("cors");
 
 import compression from "compression";
-import APIError from "./apps/global/response/apierror";
 
 dotenv.config();
 // establish database connection

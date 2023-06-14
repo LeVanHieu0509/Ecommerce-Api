@@ -1,7 +1,7 @@
 import { Length } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { TipClothing, TipElectronics, TipProducts } from "./tip-product.entity";
+import { TipClothing, TipElectronics, TipFurniture, TipProducts } from "./tip-product.entity";
 
 @ObjectType()
 @Entity()
@@ -13,12 +13,12 @@ export class TipShop {
   @Field()
   @Column({ type: "varchar" })
   @Length(0, 100)
-  public title!: string;
+  public shop_title!: string;
 
   @Field()
   @Column({ type: "varchar" })
   @Length(4, 100)
-  public image!: string;
+  public shop_image!: string;
 
   @Field()
   @CreateDateColumn()
@@ -39,5 +39,9 @@ export class TipShop {
   @Field((_type) => [TipElectronics])
   @OneToMany((_type) => TipElectronics, (tip_product: TipElectronics) => tip_product.tip_shop)
   public tip_product_electronics!: TipElectronics[];
+
+  @Field((_type) => [TipFurniture])
+  @OneToMany((_type) => TipFurniture, (tip_product: TipFurniture) => tip_product.tip_shop)
+  public tip_product_furniture!: TipFurniture[];
 }
 export default TipShop;

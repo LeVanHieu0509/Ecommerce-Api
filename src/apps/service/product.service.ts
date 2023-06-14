@@ -7,6 +7,8 @@ import { TipProductsRepository } from "./../repositories/tip-js/TipProductsRepos
 
 //use design partern factory
 class ProductFactory {
+  //type
+  //payload
   static async createProduct(type: any, payload: any) {
     switch (type) {
       case "Electronics":
@@ -60,30 +62,42 @@ class Clothing extends Product {
   tipClothingRepository = getCustomRepository(TipClothingRepository);
 
   async createClothing() {
-    const newClothing = await this.tipClothingRepository.create(JSON.parse(this.attributes));
-    await this.tipClothingRepository.save(newClothing);
+    const newProduct = await super.createProduct();
+    if (!newProduct) throw new BadRequestError("Create new Product error");
+
+    const clothing = await this.tipClothingRepository.create({
+      ...JSON.parse(this.attributes),
+      tip_product: newProduct.id,
+      tip_shop: this.tip_shop,
+    });
+
+    const newClothing = await this.tipClothingRepository.save(clothing);
 
     if (!newClothing) throw new BadRequestError("Create new Clothing error");
-
-    const newProduct = await super.createProduct();
-
-    if (!newProduct) throw new BadRequestError("Create new Product error");
 
     return newProduct;
   }
 }
 
 //define sub class
+//id product la khoa ngoai cua bang electronic
+//id shop la khoa ngoai cua cua cua bang electronic
+
 class Electronics extends Product {
   tipElectronRepository = getCustomRepository(TipElectronicsRepository);
   async createElectronic() {
-    const newElectronic = await this.tipElectronRepository.create(this.attributes);
-    await this.tipElectronRepository.save(newElectronic);
-
-    if (!newElectronic) throw new BadRequestError("Create new Electronic error");
-
     const newProduct = await super.createProduct();
+
     if (!newProduct) throw new BadRequestError("Create new Electronic error");
+
+    const electronic = await this.tipElectronRepository.create({
+      ...JSON.parse(this.attributes),
+      tip_shop: this.tip_shop,
+      tip_product: newProduct.id,
+    });
+
+    const newElectronic = await this.tipElectronRepository.save(electronic);
+    if (!newElectronic) throw new BadRequestError("Create new Electronic error");
 
     return newProduct;
   }
