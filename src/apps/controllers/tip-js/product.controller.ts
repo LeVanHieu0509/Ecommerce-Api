@@ -21,6 +21,20 @@ class ProductController {
       }),
     }).send(res);
   };
+  /**
+   *
+   * @desc: get all
+   * @param {String} limit
+   * @param Number limit
+   * @param next
+   * @return {JSON}
+   */
+  public static getAllDraftsForShop = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "Query draft product success!",
+      metadata: await ProductFactoryLvXXX.findAllDraftsForShop({ tip_shop: req.user.userId }),
+    }).send(res);
+  };
 }
 
 export default ProductController;

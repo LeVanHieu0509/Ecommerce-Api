@@ -2,6 +2,7 @@ import { getCustomRepository } from "typeorm";
 import { BadRequestError } from "../../core/error.response";
 import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
 import { TipFurnitureRepository } from "../repositories/tip-js/TipFurnitureRepositories";
+import { findAllDraftsForShopRepo } from "./../modules/repos/product.repo";
 import { TipElectronicsRepository } from "./../repositories/tip-js/TipElectronicsRepositories";
 import { TipProductsRepository } from "./../repositories/tip-js/TipProductsRepositories";
 //define Factory class to create product
@@ -24,6 +25,12 @@ class ProductFactoryLvXXX {
     if (!productClass) throw new BadRequestError(`Invalid Product Types ${product_type}`);
 
     return new productClass(payload).createProduct();
+  }
+
+  //query
+  static async findAllDraftsForShop({ tip_shop, limit = 50, skip = 0 }) {
+    const query = { tip_shop, isDraft: true };
+    return await findAllDraftsForShopRepo({ query, limit, skip });
   }
 }
 
