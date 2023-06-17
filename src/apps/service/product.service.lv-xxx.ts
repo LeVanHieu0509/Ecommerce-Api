@@ -2,7 +2,15 @@ import { getCustomRepository } from "typeorm";
 import { BadRequestError } from "../../core/error.response";
 import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
 import { TipFurnitureRepository } from "../repositories/tip-js/TipFurnitureRepositories";
-import { findAllDraftsForShopRepo } from "./../modules/repos/product.repo";
+import {
+  findAllDraftsForShopRepo,
+  findAllProductsRepo,
+  findAllPublishedForShopRepo,
+  findProductsRepo,
+  publishProductByShopRepo,
+  searchProductByUser,
+  unPublishProductByShopRepo,
+} from "./../modules/repos/product.repo";
 import { TipElectronicsRepository } from "./../repositories/tip-js/TipElectronicsRepositories";
 import { TipProductsRepository } from "./../repositories/tip-js/TipProductsRepositories";
 //define Factory class to create product
@@ -27,11 +35,59 @@ class ProductFactoryLvXXX {
     return new productClass(payload).createProduct();
   }
 
+  //PUT
+  static async publishProductByShop({ tip_shop, product_id }) {
+    return await publishProductByShopRepo({ tip_shop, product_id });
+  }
+
+  static async unPublishProductByShop({ tip_shop, product_id }) {
+    return await unPublishProductByShopRepo({ tip_shop, product_id });
+  }
+
   //query
   static async findAllDraftsForShop({ tip_shop, limit = 50, skip = 0 }) {
     const query = { tip_shop, isDraft: true };
     return await findAllDraftsForShopRepo({ query, limit, skip });
   }
+
+  static async findAllPublishedForShop({ tip_shop, limit = 50, skip = 0 }) {
+    const query = { tip_shop, isPublished: true };
+    return await findAllPublishedForShopRepo({ query, limit, skip });
+  }
+
+  static async searchProduct({ keySearch }: any) {
+    return await searchProductByUser({ keySearch });
+  }
+
+  static async findAllProduct({
+    limit = 50,
+    sortOrder,
+    sortBy = "ctime",
+    page = 1,
+    filter = { isPublished: true },
+    select = ["product_name", "product_thumb", "product_price", "product_slug"],
+    priceMin,
+    priceMax,
+  }: any) {
+    return await findAllProductsRepo({
+      limit,
+      sortOrder,
+      sortBy,
+      page,
+      filter,
+      select,
+      priceMin,
+      priceMax,
+    });
+  }
+
+  static async getProduct({ product_id }) {
+    return await findProductsRepo({ product_id, unSelect: ["updatedAt"] });
+  }
+
+  // static async findProduct({ tip_shop, limit = 50, skip = 0 }: any) {
+  //   return await findAllProductsRepo({ tip_shop, limit = 50, skip = 0 });
+  // }
 }
 
 class Product {

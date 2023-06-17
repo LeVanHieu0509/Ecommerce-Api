@@ -2,4 +2,7 @@ export function env(key: string, defaulValue?: any) {
   return process.env[key] ?? defaulValue;
 }
 
-module.exports = { env };
+export const unGetSelectData = (select = []) => {
+  return Object.fromEntries(select.map((el) => [el, 0]));
+};
+

@@ -21,6 +21,27 @@ class ProductController {
       }),
     }).send(res);
   };
+
+  public static publishProductByShop = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "Create publish Product By Shop success!",
+      metadata: await ProductFactoryLvXXX.publishProductByShop({
+        product_id: req.params.id,
+        tip_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
+
+  public static unPublishProductByShop = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "Un-publish Product By Shop success!",
+      metadata: await ProductFactoryLvXXX.unPublishProductByShop({
+        product_id: req.params.id,
+        tip_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
+  /**
   /**
    *
    * @desc: get all
@@ -33,6 +54,36 @@ class ProductController {
     new SuccessResponse({
       message: "Query draft product success!",
       metadata: await ProductFactoryLvXXX.findAllDraftsForShop({ tip_shop: req.user.userId }),
+    }).send(res);
+  };
+
+  public static getAllPublishedForShop = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "Query published product success!",
+      metadata: await ProductFactoryLvXXX.findAllPublishedForShop({ tip_shop: req.user.userId }),
+    }).send(res);
+  };
+
+  public static getListSearchProduct = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "get list search product success!",
+      metadata: await ProductFactoryLvXXX.searchProduct(req.params),
+    }).send(res);
+  };
+
+  public static getListAllProduct = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "get list product success!",
+      metadata: await ProductFactoryLvXXX.findAllProduct(req.query),
+    }).send(res);
+  };
+
+  public static getProduct = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "get product success!",
+      metadata: await ProductFactoryLvXXX.getProduct({
+        product_id: req.params.product_id,
+      }),
     }).send(res);
   };
 }

@@ -37,6 +37,7 @@ export class TipProducts {
   public readonly id!: number;
 
   @Field()
+  @Index()
   @Column({ type: "nvarchar", nullable: true })
   public product_name!: string;
 
@@ -45,6 +46,7 @@ export class TipProducts {
   public product_thumb!: string;
 
   @Field()
+  @Index()
   @Column({ type: "nvarchar", nullable: true })
   public product_description!: string;
 
