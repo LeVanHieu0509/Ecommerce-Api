@@ -1,9 +1,7 @@
 import { getCustomRepository } from "typeorm";
-import { BadRequestError } from "../../core/error.response";
-import { updateNestedObjectParser } from "../../ultis";
-import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
-import { TipFurnitureRepository } from "../repositories/tip-js/TipFurnitureRepositories";
-import { insertInventory } from "./../modules/repos/inventory.repo";
+import { BadRequestError } from "../../../core/error.response";
+import { updateNestedObjectParser } from "./../../../ultis/index";
+import { insertInventory } from "./../../modules/repos/inventory.repo";
 import {
   findAllDraftsForShopRepo,
   findAllProductsRepo,
@@ -12,9 +10,12 @@ import {
   publishProductByShopRepo,
   searchProductByUser,
   unPublishProductByShopRepo,
-} from "./../modules/repos/product.repo";
-import { TipElectronicsRepository } from "./../repositories/tip-js/TipElectronicsRepositories";
-import { TipProductsRepository } from "./../repositories/tip-js/TipProductsRepositories";
+} from "./../../modules/repos/product.repo";
+import { TipClothingRepository } from "./../../repositories/tip-js/TipClothingRepositories";
+import { TipElectronicsRepository } from "./../../repositories/tip-js/TipElectronicsRepositories";
+import { TipFurnitureRepository } from "./../../repositories/tip-js/TipFurnitureRepositories";
+import { TipProductsRepository } from "./../../repositories/tip-js/TipProductsRepositories";
+
 //define Factory class to create product
 
 //use design partern factory
@@ -142,7 +143,7 @@ class Product {
   async createProduct() {
     const product = await this.tipProductsRepository.create(this); //this là những tham số ở trong contructor
     const newProduct = await this.tipProductsRepository.save(product);
-    console.log("newProduct", newProduct);
+
     if (newProduct) {
       await insertInventory({
         productId: newProduct.id,

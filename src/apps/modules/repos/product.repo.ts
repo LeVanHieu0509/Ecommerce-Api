@@ -67,7 +67,16 @@ export const unPublishProductByShopRepo = async ({ tip_shop, product_id }) => {
   return result.affected;
 };
 
-export const findAllProductsRepo = async ({ limit, sortOrder, sortBy, page, filter, select, priceMin, priceMax }) => {
+export const findAllProductsRepo = async ({
+  limit,
+  sortOrder,
+  sortBy,
+  page,
+  filter,
+  select,
+  priceMin,
+  priceMax,
+}: any) => {
   const tipProductsRepository = getCustomRepository(TipProductsRepository);
 
   const queryBuilder = tipProductsRepository.createQueryBuilder("tip_product");

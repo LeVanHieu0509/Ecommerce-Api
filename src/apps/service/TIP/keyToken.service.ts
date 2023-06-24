@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { KeysRepository } from "../repositories/food-app/KeysRepositories";
+import { KeysRepository } from "./../../repositories/food-app/KeysRepositories";
 
 class KeyTokenService {
   public static findByRefreshTokenUsed = async (refreshToken) => {

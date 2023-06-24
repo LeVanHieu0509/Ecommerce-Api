@@ -1,6 +1,7 @@
 import { Length } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TipDiscount } from "./tip-discount.entity";
 import { TipInventory } from "./tip-inventory.entity";
 import { TipClothing, TipElectronics, TipFurniture, TipProducts } from "./tip-product.entity";
 
@@ -48,5 +49,9 @@ export class TipShop {
   @Field((_type) => [TipInventory])
   @OneToMany((_type) => TipInventory, (tip_inventory: TipInventory) => tip_inventory.tip_shop)
   public tip_inventory!: TipInventory[];
+
+  @Field((_type) => [TipDiscount])
+  @OneToMany((_type) => TipDiscount, (tip_discount: TipDiscount) => tip_discount.tip_shop)
+  public tip_discount!: TipDiscount[];
 }
 export default TipShop;

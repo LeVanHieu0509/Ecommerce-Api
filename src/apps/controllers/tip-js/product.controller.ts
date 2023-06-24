@@ -1,8 +1,7 @@
 import { NextFunction, Response } from "express";
 import { SuccessResponse } from "../../../core/success.response";
 import { RequestCustom } from "../../auth/authUtils";
-import ProductFactoryLvXXX from "../../service/product.service.lv-xxx";
-
+import ProductFactoryLvXXX from "../../service/TIP/product.service.lv-xxx";
 class ProductController {
   public static createProduct = async (req: RequestCustom, res: Response, next: NextFunction) => {
     // new SuccessResponse({

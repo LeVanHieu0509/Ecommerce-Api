@@ -5,3 +5,8 @@ export enum TypeProduct {
   CLOTHING = "Clothings",
   FURNITURE = "Furniture",
 }
+
+export enum TypeDiscountApplyTo {
+  ALL = "All",
+  SPECIFIC = "Specific",
+}

@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
 import crypto from "node:crypto";
 import { getCustomRepository } from "typeorm";
-import { Forbidden } from "../../core/error.response";
-import { verifyJwt } from "../../ultis/jwt";
-import { createTokenPair } from "../auth/authUtils";
-import { UserFoodRepository } from "../repositories/food-app/UserFoodRepositories";
-import { IUser } from "./../models/User";
+import { Forbidden } from "../../../core/error.response";
+import { createTokenPair } from "../../auth/authUtils";
+import { findByEmail } from "../user.service";
+import { verifyJwt } from "./../../../ultis/jwt";
+import { IUser } from "./../../models/User";
+import { UserFoodRepository } from "./../../repositories/food-app/UserFoodRepositories";
 import KeyTokenService from "./keyToken.service";
-import { findByEmail } from "./user.service";
 
 const RoleUser = {
   USER: "USER",

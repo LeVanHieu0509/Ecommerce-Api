@@ -4,8 +4,7 @@ import { clone, defaults } from "lodash";
 import { AuthFailureError, NotFoundError } from "../../core/error.response";
 import { asyncHandler } from "../../helpers/asyncHandler";
 import { signJwt, verifyJwt } from "../../ultis/jwt";
-import KeyTokenService from "../service/keyToken.service";
-
+import KeyTokenService from "../service/TIP/keyToken.service";
 export interface RequestCustom extends Request {
   keyStore: any;
   user: any;

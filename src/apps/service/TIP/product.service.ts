@@ -1,8 +1,8 @@
 import { getCustomRepository } from "typeorm";
-import { BadRequestError } from "../../core/error.response";
-import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
-import { TipElectronicsRepository } from "./../repositories/tip-js/TipElectronicsRepositories";
-import { TipProductsRepository } from "./../repositories/tip-js/TipProductsRepositories";
+import { BadRequestError } from "../../../core/error.response";
+import { TipProductsRepository } from "../../repositories/tip-js/TipProductsRepositories";
+import { TipClothingRepository } from "./../../repositories/tip-js/TipClothingRepositories";
+import { TipElectronicsRepository } from "./../../repositories/tip-js/TipElectronicsRepositories";
 //define Factory class to create product
 
 //use design partern factory

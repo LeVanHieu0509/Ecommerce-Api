@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { CREATED, SuccessResponse } from "../../core/success.response";
 import { HEADER } from "../auth/authUtils";
-import AccessService from "../service/access.service";
+import AccessService from "../service/TIP/access.service";
 
 interface RequestCustom extends Request {
   keyStore: any;

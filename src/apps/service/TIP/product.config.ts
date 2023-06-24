@@ -1,4 +1,4 @@
-import { TipClothing, TipElectronics, TipFurniture } from "./../modules/entities/tip-product.entity";
+import { TipClothing, TipElectronics, TipFurniture } from "../../modules/entities/tip-product.entity";
 
 module.exports = {
   Electronics: TipElectronics,
