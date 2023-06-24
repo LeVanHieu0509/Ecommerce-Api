@@ -125,6 +125,25 @@ export const findProductsRepo = async ({ product_id, unSelect }) => {
   );
 };
 
+export const updateProductsByIdRepo = async ({
+  productId,
+  repository,
+  payload,
+  isNew = true,
+}: {
+  productId: number;
+  repository: any;
+  payload: any;
+  isNew?: any;
+}) => {
+  return await repository.update(
+    {
+      id: productId,
+    },
+    payload
+  );
+};
+
 export const queryProduct = async ({ query, limit, skip }) => {
   const tipProductsRepository = getCustomRepository(TipProductsRepository);
   return await tipProductsRepository.find(query, {

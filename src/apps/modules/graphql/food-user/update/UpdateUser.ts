@@ -1,9 +1,9 @@
-import { UserFoodRepository } from "./../../../../repositories/food-app/UserFoodRepositories";
-import { omit, set } from "lodash";
-import { Arg, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { omit } from "lodash";
+import { Arg, Mutation, Resolver } from "type-graphql";
 import { getCustomRepository } from "typeorm";
-import { UpdateUserInput } from "./UpdateUserInput";
+import { UserFoodRepository } from "../../../../repositories/food-app/UserFoodRepositories";
 import UserFood from "../../../entities/food_user";
+import { UpdateUserInput } from "./UpdateUserInput";
 
 @Resolver((_any) => UserFood)
 export class UpdateUser {

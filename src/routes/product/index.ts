@@ -5,7 +5,9 @@ import { asyncHandler } from "../../helpers/asyncHandler";
 const router = require("express").Router();
 
 router.use(authentication);
+
 router.post("", asyncHandler(ProductController.createProduct));
+router.patch("/:product_id", asyncHandler(ProductController.updateProduct));
 router.post("/publish/:id", asyncHandler(ProductController.publishProductByShop));
 router.post("/un-publish/:id", asyncHandler(ProductController.unPublishProductByShop));
 router.post("/search/:keySearch", asyncHandler(ProductController.getListSearchProduct));

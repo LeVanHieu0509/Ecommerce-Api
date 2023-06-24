@@ -1,5 +1,6 @@
 import { Max, Min } from "class-validator";
 import slugify from "slugify";
+import { TipInventory } from "./tip-inventory.entity";
 
 import { Field, ObjectType } from "type-graphql";
 import { Service } from "typedi";
@@ -133,6 +134,10 @@ export class TipProducts {
   @Field((_type) => [TipFurniture])
   @OneToMany((_type) => TipFurniture, (tip_product: TipFurniture) => tip_product.tip_product)
   public tip_product_furniture!: TipFurniture[];
+
+  @Field((_type) => [TipInventory])
+  @OneToMany((_type) => TipInventory, (tip_inventory: TipInventory) => tip_inventory.tip_product)
+  public tip_inventory!: TipInventory[];
 }
 
 ///

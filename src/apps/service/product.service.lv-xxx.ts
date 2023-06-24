@@ -1,5 +1,6 @@
 import { getCustomRepository } from "typeorm";
 import { BadRequestError } from "../../core/error.response";
+import { updateNestedObjectParser } from "../../ultis";
 import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
 import { TipFurnitureRepository } from "../repositories/tip-js/TipFurnitureRepositories";
 import {
@@ -33,6 +34,13 @@ class ProductFactoryLvXXX {
     if (!productClass) throw new BadRequestError(`Invalid Product Types ${product_type}`);
 
     return new productClass(payload).createProduct();
+  }
+
+  static async updateProduct(product_type: any, productId: any, payload: any) {
+    const productClass = ProductFactoryLvXXX.productRegistry[product_type];
+    if (!productClass) throw new BadRequestError(`Invalid Product Types ${product_type}`);
+
+    return new productClass(payload).updateProduct(productId);
   }
 
   //PUT
@@ -134,6 +142,24 @@ class Product {
     const product = await this.tipProductsRepository.create(this); //this là những tham số ở trong contructor
     return await this.tipProductsRepository.save(product);
   }
+
+  async updateProduct(productId) {
+    //this là những tham số ở trong contructor
+    // return await this.tipProductsRepository.update({ id: productId }, payload);
+
+    const product = await this.tipProductsRepository.update(
+      {
+        id: productId,
+      },
+      updateNestedObjectParser({
+        product_name: this.product_name,
+        product_price: this.product_price,
+        product_attributes: this.product_attributes,
+      })
+    );
+
+    return product;
+  }
 }
 
 //define sub class
@@ -157,6 +183,30 @@ class Clothing extends Product {
     const newClothing = await this.tipClothingRepository.save(clothing);
 
     if (!newClothing) throw new BadRequestError("Create new Clothing error");
+
+    return newProduct;
+  }
+
+  async updateProduct(productId) {
+    const newProduct = await super.updateProduct(productId);
+
+    if (!newProduct) throw new BadRequestError("UPDATE new Product error");
+
+    //1. remove attribute has null undefined
+
+    if (this.product_attributes) {
+      //update child
+      await this.tipClothingRepository.update(
+        {
+          tip_product: productId,
+        },
+        updateNestedObjectParser({
+          ...JSON.parse(this.product_attributes),
+        })
+      );
+
+      // await updateProductsByIdRepo({ productId, repository: , payload: objectParams });
+    }
 
     return newProduct;
   }

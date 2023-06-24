@@ -1,24 +1,15 @@
-import { UserFood } from "../../../entities/food_user";
-import { SigninInput } from "./SigninInput";
 import { bcrypt } from "bcryptjs";
-import { getCustomRepository } from "typeorm";
-import {
-  Arg,
-  Args,
-  Ctx,
-  Info,
-  Mutation,
-  Query,
-  Resolver,
-  Root,
-} from "type-graphql";
 import { GraphQLResolveInfo } from "graphql";
-import { signJwt } from "../../../../../ultis/jwt";
-import LoginInput from "./Logininput";
-import AuthResponse from "./AuthResponse";
 import { omit } from "lodash";
+import { Arg, Ctx, Info, Mutation, Query, Resolver } from "type-graphql";
+import { getCustomRepository } from "typeorm";
 import errorHandler from "../../../../../ultis/error";
+import { signJwt } from "../../../../../ultis/jwt";
 import { UserFoodRepository } from "../../../../repositories/food-app/UserFoodRepositories";
+import { UserFood } from "../../../entities/food_user";
+import AuthResponse from "./AuthResponse";
+import LoginInput from "./Logininput";
+import { SigninInput } from "./SigninInput";
 
 const accessTokenExpireIn = 15;
 const refreshTokenExpireIn = 60;
@@ -83,11 +74,7 @@ export function hashPassword(password: string) {
 @Resolver((_type: any) => UserFood)
 export class AuthFood {
   @Mutation((_type) => UserFood)
-  public async signup(
-    @Arg("data") inputData: SigninInput,
-    @Ctx() { conn }: any,
-    @Info() info: GraphQLResolveInfo
-  ) {
+  public async signup(@Arg("data") inputData: SigninInput, @Ctx() { conn }: any, @Info() info: GraphQLResolveInfo) {
     try {
       const { password, username } = inputData;
 
@@ -117,11 +104,7 @@ export class AuthFood {
   }
 
   @Query((_type) => AuthResponse)
-  public async login(
-    @Arg("data") inputData: LoginInput,
-    @Ctx() { res, req }: any,
-    @Info() info: GraphQLResolveInfo
-  ) {
+  public async login(@Arg("data") inputData: LoginInput, @Ctx() { res, req }: any, @Info() info: GraphQLResolveInfo) {
     try {
       const { username, password } = inputData;
       const userRepository = getCustomRepository(UserFoodRepository);

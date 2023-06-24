@@ -86,6 +86,16 @@ class ProductController {
       }),
     }).send(res);
   };
+
+  public static updateProduct = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "update product success!",
+      metadata: await ProductFactoryLvXXX.updateProduct(req.body.product_type, req.params.product_id, {
+        ...req.body,
+        tip_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
 }
 
 export default ProductController;

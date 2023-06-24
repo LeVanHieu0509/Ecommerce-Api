@@ -41,11 +41,11 @@ export function verify(token: string) {
 const createTokenPair = async (user, privateKey, publicKey) => {
   try {
     const accessToken = signJwt({ userId: user.userId }, "JWT_ACCESS_PRIVATE_KEY", {
-      expiresIn: "60m",
+      expiresIn: "60d",
     });
 
     const refreshToken = signJwt({ userId: user.userId }, "JWT_REFRESH_PRIVATE_KEY", {
-      expiresIn: "60m",
+      expiresIn: "60d",
     });
 
     return { accessToken, refreshToken };

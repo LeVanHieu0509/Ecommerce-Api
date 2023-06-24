@@ -1,10 +1,10 @@
+import bcrypt from "bcryptjs";
+import { omit } from "lodash";
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../../../../repositories/UserRepositories";
 import User from "../../../entities/User.entity";
 import { CreateUserInput } from "./CreateUserInput";
-import bcrypt from "bcryptjs";
-import { omit } from "lodash";
 
 function isHashed(password?: string) {
   if (typeof password !== "string" || !password) {

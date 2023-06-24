@@ -1,5 +1,5 @@
-import { User } from "../../../entities/User.entity";
 import { Field, InputType } from "type-graphql";
+import { User } from "../../../entities/User.entity";
 
 //Class này nhằm để định nghĩa được dữ liệu đầu vào của graphql
 @InputType() //@InputType sẽ sinh ra kiểu GraphQLInputType
