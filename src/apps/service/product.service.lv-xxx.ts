@@ -3,6 +3,7 @@ import { BadRequestError } from "../../core/error.response";
 import { updateNestedObjectParser } from "../../ultis";
 import { TipClothingRepository } from "../repositories/tip-js/TipClothingRepositories";
 import { TipFurnitureRepository } from "../repositories/tip-js/TipFurnitureRepositories";
+import { insertInventory } from "./../modules/repos/inventory.repo";
 import {
   findAllDraftsForShopRepo,
   findAllProductsRepo,
@@ -140,7 +141,17 @@ class Product {
 
   async createProduct() {
     const product = await this.tipProductsRepository.create(this); //this là những tham số ở trong contructor
-    return await this.tipProductsRepository.save(product);
+    const newProduct = await this.tipProductsRepository.save(product);
+    console.log("newProduct", newProduct);
+    if (newProduct) {
+      await insertInventory({
+        productId: newProduct.id,
+        shopId: this.tip_shop,
+        stock: this.product_quantity,
+        location: "",
+      });
+    }
+    return newProduct;
   }
 
   async updateProduct(productId) {

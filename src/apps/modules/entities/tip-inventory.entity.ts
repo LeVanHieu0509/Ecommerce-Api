@@ -19,16 +19,16 @@ export class TipInventory {
   public id!: number;
 
   @Field()
-  @Column({ type: "varchar" })
-  public inven_location!: string;
+  @Column({ type: "varchar", default: "unKnow" })
+  public inven_location?: string;
 
   @Field()
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   public inven_stock!: number;
 
   @Field()
-  @Column({ type: "varchar" })
-  public inven_reservations!: string;
+  @Column({ type: "varchar", nullable: true })
+  public inven_reservations?: string;
 
   @Field()
   @CreateDateColumn()

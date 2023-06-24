@@ -13,9 +13,6 @@ export const searchProductByUser = async ({ keySearch }): Promise<TipProducts[]>
   const regexSearch = new RegExp(keySearch);
   const result = await tipProductsRepository.find({});
 
-  console.log("regexSearch", regexSearch);
-  console.log("keySearch", keySearch);
-
   const queryBuilder = tipProductsRepository.createQueryBuilder("tip_product");
   const products = await queryBuilder
     .where("tip_product.product_name LIKE :product_name", { product_name: `%${keySearch}%` })
