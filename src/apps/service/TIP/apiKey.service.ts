@@ -1,8 +1,8 @@
 import { getCustomRepository } from "typeorm";
-import APIError from '../../global/response/apierror';
-import { ApiKeysRepository } from './../../repositories/food-app/ApiKeyRepositories';
+import APIError from "../../global/response/apierror";
+import { ApiKeysRepository } from "./../../repositories/food-app/ApiKeyRepositories";
 
-const findById = async (key: string) => {
+export const findById = async (key: string) => {
   try {
     const apiKeyRepository = getCustomRepository(ApiKeysRepository);
 
@@ -20,5 +20,3 @@ const findById = async (key: string) => {
     return new APIError(error, -2, 404);
   }
 };
-
-export default findById;

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import findById from "../service/apiKey.service";
+import { findById } from "../service/TIP/apiKey.service";
 
 interface RequestCustom extends Request {
   objKey: any;

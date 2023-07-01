@@ -1,4 +1,5 @@
-import { unGetSelectData } from "../../../ultis";
+import { In } from "typeorm";
+import { getSelectData, unGetSelectData } from "../../../ultis";
 import { TipProductsRepository } from "../../repositories/tip-js/TipProductsRepositories";
 import { TipProducts } from "./../entities/tip-product.entity";
 const { getCustomRepository } = require("typeorm");
@@ -105,7 +106,13 @@ export const findAllProductsRepo = async ({
 
   // Filter by isPublished
   if (filter) {
-    queryBuilder.andWhere("tip_product.isPublished = :isPublished", filter);
+    let { isPublished, id } = filter ?? {};
+    if (id) {
+      queryBuilder.andWhere("tip_product.id = :id", { id: filter.id });
+    }
+    if (isPublished) {
+      queryBuilder.andWhere("tip_product.isPublished = :isPublished", { isPublished: filter.isPublished });
+    }
   }
 
   // Limit and offset
@@ -114,6 +121,48 @@ export const findAllProductsRepo = async ({
 
   // Execute query and count total records
   const [products, total] = await queryBuilder.getManyAndCount();
+
+  return [products, total];
+};
+
+//cach 2
+export const findAllProducts = async ({ limit, sortOrder, sortBy, page, filter, select, priceMin, priceMax }: any) => {
+  const productRepository = getCustomRepository(TipProductsRepository);
+
+  const where: any = {};
+
+  if (priceMin && priceMax) {
+    where.product_price = { between: [priceMin, priceMax] };
+  } else if (priceMin) {
+    where.product_price = { gte: priceMin };
+  } else if (priceMax) {
+    where.product_price = { lte: priceMax };
+  }
+
+  if (filter) {
+    const { isPublished, id } = filter;
+    if (id) {
+      where.id = In(id);
+    }
+    if (isPublished) {
+      where.isPublished = isPublished;
+    }
+  }
+
+  const order: any = {};
+  if (sortBy && sortOrder) {
+    order[sortBy] = sortOrder.toUpperCase();
+  }
+
+  const options = {
+    select: getSelectData(select),
+    where,
+    order,
+    skip: (page - 1) * limit,
+    take: limit,
+  };
+
+  const [products, total] = await productRepository.findAndCount(options);
 
   return [products, total];
 };

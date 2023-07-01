@@ -1,6 +1,6 @@
-import { apiKey, permission } from "../apps/auth/checkAuth";
 import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
+import discount from "./discount/index";
 import product from "./product/index";
 
 import auth from "./auth";
@@ -55,6 +55,14 @@ function route(app) {
       next();
     },
     product
+  );
+
+  app.use(
+    "/v1/api/discount",
+    function (req, res, next) {
+      next();
+    },
+    discount
   );
 
   app.use((req, res, next) => {
