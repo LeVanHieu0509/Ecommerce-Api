@@ -1,6 +1,8 @@
 import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
+import cart from "./cart/index";
 import discount from "./discount/index";
+
 import product from "./product/index";
 
 import auth from "./auth";
@@ -63,6 +65,14 @@ function route(app) {
       next();
     },
     discount
+  );
+
+  app.use(
+    "/v1/api/cart",
+    function (req, res, next) {
+      next();
+    },
+    cart
   );
 
   app.use((req, res, next) => {

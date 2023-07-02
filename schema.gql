@@ -174,6 +174,16 @@ input SigninInput {
   username: String!
 }
 
+type TipCart {
+  cart_count_product: String!
+  cart_products: String!
+  cart_state: String!
+  createdAt: DateTime!
+  id: Float!
+  updatedAt: DateTime!
+  user_food: UserFood!
+}
+
 type User {
   artcles: Article!
   comments: Comment!
@@ -195,6 +205,7 @@ type UserFood {
   keys: [Keys!]!
   order_food: [OrderFood!]!
   password: String!
+  tip_cart: [TipCart!]!
   updatedAt: DateTime!
   username: String!
 }

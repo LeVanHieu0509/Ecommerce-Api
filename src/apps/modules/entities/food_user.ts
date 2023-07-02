@@ -1,12 +1,11 @@
-import { FavoriteFood } from "./food_favorite";
-import { CategoryFood } from "./food_category";
-import { ProductFood } from "./food_product";
 import * as bcrypt from "bcryptjs";
-import { IsNotEmpty, Length } from "class-validator";
+import { Length } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { FavoriteFood } from "./food_favorite";
 import OrderFood from "./food_order";
 import { Keys } from "./keys.entity";
+import { TipCart } from "./tip-cart.entity";
 
 @ObjectType()
 @Entity()
@@ -51,6 +50,10 @@ export class UserFood {
   @Field((_type) => [Keys])
   @OneToMany((_type) => Keys, (key: Keys) => key.user_food)
   public keys!: Keys[];
+
+  @Field((_type) => [TipCart])
+  @OneToMany((_type) => TipCart, (tip_cart: TipCart) => tip_cart.user_food)
+  public tip_cart!: TipCart[];
 
   public hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);

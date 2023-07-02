@@ -199,6 +199,12 @@ export const updateProductsByIdRepo = async ({
   );
 };
 
+export const getProductById = async ({ productId }) => {
+  const tipProductsRepository = getCustomRepository(TipProductsRepository);
+
+  return await tipProductsRepository.find({ id: productId });
+};
+
 export const queryProduct = async ({ query, limit, skip }) => {
   const tipProductsRepository = getCustomRepository(TipProductsRepository);
   return await tipProductsRepository.find(query, {
