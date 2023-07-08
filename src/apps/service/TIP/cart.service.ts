@@ -87,7 +87,8 @@ class CartService {
       userId,
       product: {
         productId,
-        quantity: quantity - old_quantity,
+        quantity: quantity,
+        old_quantity: old_quantity,
       },
     });
   }
@@ -110,7 +111,10 @@ class CartService {
   static async getListUserCart({ userId }: any) {
     const tipCartRepository = getCustomRepository(TipCartRepository);
 
-    return await tipCartRepository.findOne({ user_food: userId });
+    const result = await tipCartRepository.findOne({ user_food: userId });
+    result.cart_products = JSON.parse(result.cart_products);
+
+    return result;
   }
 }
 

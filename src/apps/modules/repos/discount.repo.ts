@@ -1,4 +1,4 @@
-import { getSelectData, unGetSelectData } from "../../../ultis";
+import { unGetSelectData } from "../../../ultis";
 
 export const findAllDiscountCodesUnselect = async ({
   limit = 50,
@@ -22,8 +22,6 @@ export const findAllDiscountCodesUnselect = async ({
 };
 
 export const findAllDiscountCodesSelect = async ({ limit = 50, page = 1, sort = "ctime", filter, select, modal }) => {
-  console.log(getSelectData(select));
-
   const skip = (page - 1) * limit;
   const sortBy = sort === "ctime" ? { _id: -1 } : { id: 1 };
   const documents = await modal.find({

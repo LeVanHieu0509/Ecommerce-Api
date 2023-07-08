@@ -10,5 +10,6 @@ export const insertInventory = async ({ productId, shopId, stock, location }) =>
     tip_shop: shopId,
     inven_location: location,
   }); //this là những tham số ở trong contructor
+
   return await tipInventoryRepository.save(inventory);
 };

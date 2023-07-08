@@ -202,7 +202,23 @@ export const updateProductsByIdRepo = async ({
 export const getProductById = async ({ productId }) => {
   const tipProductsRepository = getCustomRepository(TipProductsRepository);
 
-  return await tipProductsRepository.find({ id: productId });
+  return await tipProductsRepository.findOne({ id: productId });
+};
+
+export const checkProductByServer = async (products: any) => {
+  return await Promise.all(
+    products.map(async (product) => {
+      const foundProduct = await getProductById({ productId: product.productId });
+
+      if (foundProduct) {
+        return {
+          price: foundProduct.product_price,
+          quantity: product.quantity,
+          productId: product.productId,
+        };
+      }
+    })
+  );
 };
 
 export const queryProduct = async ({ query, limit, skip }) => {

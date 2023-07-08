@@ -1,8 +1,8 @@
 import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
 import cart from "./cart/index";
+import checkout from "./checkout/index";
 import discount from "./discount/index";
-
 import product from "./product/index";
 
 import auth from "./auth";
@@ -73,6 +73,14 @@ function route(app) {
       next();
     },
     cart
+  );
+
+  app.use(
+    "/v1/api/checkout",
+    function (req, res, next) {
+      next();
+    },
+    checkout
   );
 
   app.use((req, res, next) => {
