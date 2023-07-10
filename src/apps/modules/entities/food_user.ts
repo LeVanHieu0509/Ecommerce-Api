@@ -6,6 +6,7 @@ import { FavoriteFood } from "./food_favorite";
 import OrderFood from "./food_order";
 import { Keys } from "./keys.entity";
 import { TipCart } from "./tip-cart.entity";
+import { TipOrder } from "./tip-order";
 
 @ObjectType()
 @Entity()
@@ -54,6 +55,10 @@ export class UserFood {
   @Field((_type) => [TipCart])
   @OneToMany((_type) => TipCart, (tip_cart: TipCart) => tip_cart.user_food)
   public tip_cart!: TipCart[];
+
+  @Field((_type) => [TipOrder])
+  @OneToMany((_type) => TipOrder, (tip_order: TipOrder) => tip_order.user_food)
+  public tip_order!: TipOrder[];
 
   public hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);

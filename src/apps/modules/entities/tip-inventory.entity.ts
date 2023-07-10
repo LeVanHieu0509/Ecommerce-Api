@@ -19,7 +19,7 @@ export class TipInventory {
   public id!: number;
 
   @Field()
-  @Column({ type: "varchar", default: "unKnow" })
+  @Column({ type: "varchar" })
   public inven_location?: string;
 
   @Field()

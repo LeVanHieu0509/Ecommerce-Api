@@ -1,7 +1,10 @@
+import { getCustomRepository } from "typeorm";
 import { BadRequestError } from "../../../core/error.response";
 import { findCartById } from "./../../modules/repos/cart.repo";
 import { checkProductByServer } from "./../../modules/repos/product.repo";
+import { TipOrderRepository } from "./../../repositories/tip-js/TipOrderRepositories";
 import DiscountService from "./discount.service";
+import { acquireLock, releaseLock } from "./redis.service";
 
 class CheckoutService {
   /*
@@ -35,7 +38,7 @@ class CheckoutService {
                 }
             ]
         }
-    */
+  z  */
 
   static async checkoutReview({ cartId, userId, shop_order_ids }) {
     //check cartId ton tai khong
@@ -101,6 +104,66 @@ class CheckoutService {
       checkout_order,
     };
   }
+
+  public static async orderByUser({ shop_order_ids, cartId, userId, user_address, user_payment }) {
+    const tipOrderRepository = getCustomRepository(TipOrderRepository);
+
+    const { shop_order_ids_new, checkout_order } = await this.checkoutReview({
+      cartId,
+      userId,
+      shop_order_ids,
+    });
+
+    //check lai mot lan nua co ton kho hay khong
+    //get new array products
+
+    const products = shop_order_ids_new.flatMap((order) => order.item_products);
+    const accquireProduct = [];
+    for (let i = 0; i < products.length; i++) {
+      const { productId, quantity } = products[i];
+
+      const keyLock = await acquireLock(productId, quantity, cartId);
+
+      accquireProduct.push(keyLock ? true : false);
+
+      if (keyLock) {
+        await releaseLock(keyLock);
+      }
+      if (accquireProduct.includes(false)) {
+        throw new BadRequestError("Mot so san pham dang duoc cap nhat, vui long quay lai gio hang...");
+      }
+
+      const newOrder = await tipOrderRepository.create({
+        user_food: userId,
+        order_checkout: JSON.stringify(checkout_order),
+        order_shipping: JSON.stringify(user_address),
+        order_payment: JSON.stringify(user_payment),
+        order_product: JSON.stringify(shop_order_ids_new),
+      });
+
+      if (newOrder) {
+        //remove
+      }
+    }
+  }
+
+  //1. query orders [USER]
+  static async getOrdersByUser() {}
+
+  //1. query orders use Id [USER]
+  static async getOneOrdersByUser() {}
+
+  //1. cancel orders [USER]
+  static async getCancelOrdersByUser() {}
+
+  //1. update orders [USER] [ADMIN]
+  static async updateOrdersByUser() {}
 }
 
 export default CheckoutService;
+
+//Làm thêm để luyện
+//1. Review sản phẩm
+//2. Comment 1 sản phẩm
+//3. Quyền truy cập của user
+//4.

@@ -184,6 +184,19 @@ type TipCart {
   user_food: UserFood!
 }
 
+type TipOrder {
+  createdAt: DateTime!
+  id: Float!
+  order_checkout: String!
+  order_payment: String!
+  order_product: String!
+  order_shipping: String!
+  order_status: String!
+  order_trackingNumber: String!
+  updatedAt: DateTime!
+  user_food: UserFood!
+}
+
 type User {
   artcles: Article!
   comments: Comment!
@@ -206,6 +219,7 @@ type UserFood {
   order_food: [OrderFood!]!
   password: String!
   tip_cart: [TipCart!]!
+  tip_order: [TipOrder!]!
   updatedAt: DateTime!
   username: String!
 }

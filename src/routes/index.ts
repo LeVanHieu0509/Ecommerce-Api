@@ -3,6 +3,9 @@ import access from "./access/index";
 import cart from "./cart/index";
 import checkout from "./checkout/index";
 import discount from "./discount/index";
+import inventory from "./inventory/index";
+import redis from "./redis/index";
+
 import product from "./product/index";
 
 import auth from "./auth";
@@ -81,6 +84,22 @@ function route(app) {
       next();
     },
     checkout
+  );
+
+  app.use(
+    "/v1/api/inventory",
+    function (req, res, next) {
+      next();
+    },
+    inventory
+  );
+
+  app.use(
+    "/v1/api/redis",
+    function (req, res, next) {
+      next();
+    },
+    redis
   );
 
   app.use((req, res, next) => {
