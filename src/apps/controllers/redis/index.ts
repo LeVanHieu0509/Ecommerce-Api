@@ -14,6 +14,18 @@ class RedisController {
       }).send(res);
     } catch (e) {}
   };
+
+  public static getPromise = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    try {
+      const { key } = req.body;
+
+      return new SuccessResponse({
+        message: "Redis get value success",
+        statusCode: 200,
+        metadata: await RedisService.getPromise({ key }),
+      }).send(res);
+    } catch (e) {}
+  };
 }
 
 export default RedisController;
