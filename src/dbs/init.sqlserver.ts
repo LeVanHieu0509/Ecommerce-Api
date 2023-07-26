@@ -15,7 +15,7 @@ class Database {
     await TypeORM.createConnection()
       .then(() => console.log("Connect Database Success", countConnect()))
       .catch((err) => {
-        console.log("FAILLL", err);
+        console.log("Connect Database Failed", err);
       });
   }
 

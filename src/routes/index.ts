@@ -5,6 +5,8 @@ import checkout from "./checkout/index";
 import discount from "./discount/index";
 import inventory from "./inventory/index";
 import redis from "./redis/index";
+import discord from "./discord/index";
+
 
 import product from "./product/index";
 
@@ -100,6 +102,14 @@ function route(app) {
       next();
     },
     redis
+  );
+
+  app.use(
+    "/v1/api/discord",
+    function (req, res, next) {
+      next();
+    },
+    discord
   );
 
   app.use((req, res, next) => {
