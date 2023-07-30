@@ -38,8 +38,8 @@ class LoggerService {
     }
 
     async sendToMessage(message = 'message') {
-        const channel: any = await this.client.channels.cache.get(this.channelId);
-        console.log(this.client.channels.cache)
+        const channel: any = this.client.channels.cache.get(this.channelId);
+        console.log(this.client)
         if (!this.client) {
             console.error('Client chưa được khởi tạo');
             return;

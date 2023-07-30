@@ -3,7 +3,7 @@ import LoggerService from "../../apps/loggers/discord-v2.log"
 export const pushToLogDiscord = async (req, res, next) => {
     try {
         let logger = new LoggerService()
-        await logger.sendToMessage(req.get('host'));
+        logger.sendToMessage(req.get('host'));
 
         return next()
     }

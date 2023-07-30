@@ -11,7 +11,7 @@ const client = new Client({
 client.on("ready", () => {
     console.log(`Logger is as ${client.user.tag}`);
 })
-const token = "MTEzMzY1Mzk3Mjc4ODQ1NzU4NA.GfFRRQ.wcGtb1azmPwzxbQeIWdVve2B_0sGCijRbyeimQ"
+const token = "MTEzMzY1Mzk3Mjc4ODQ1NzU4NA.GIsyi-.AflMSv8xmDlnMp6AaxR3fO8uH6FB7b0Nqaedaw"
 client.login(token);
 
 client.on("messageCreate", (msg) => {
@@ -23,6 +23,6 @@ client.on("messageCreate", (msg) => {
         msg.reply("ơ con cạc cái địt cụ mày");
     }
 })
-
-console.log(client)
+const channel = client.channels.cache.get("1133659773963882578");
+channel.send("message").catch(e => console.log(e))
 

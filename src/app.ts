@@ -11,6 +11,8 @@ import route from "./routes";
 import cors = require("cors");
 
 import compression from "compression";
+import ProductServiceTest from "./apps/tests/product.test";
+import InventoryServiceTest from "./apps/tests/inventory.test";
 
 dotenv.config();
 // establish database connection
@@ -40,6 +42,12 @@ const bootstrap = async () => {
 
     // create init database
     require("./dbs/init.sqlserver.ts");
+
+    //test redis pub/sub
+    // const inventory = new InventoryServiceTest()
+    // const product = new ProductServiceTest()
+    // product.purchaseProduct("product:1", 10)
+
 
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
