@@ -1,16 +1,12 @@
-import RedisPubSubService from "../service/redis/redisPubsub.service"
+import RedisSubService from "../service/redis/redisSub.service"
 
 class InventoryServiceTest {
-    constructor() {
-        const redisPubSubService = new RedisPubSubService()
-        redisPubSubService.subscriberRedis("purchase_events", (channel, message) => {
-            console.log("receiver redis:", message)
-            InventoryServiceTest.updateInventory(message)
-        })
-    }
+    async subscriberRedis() {
+        const redisPubSubService = new RedisSubService()
 
-    static updateInventory({ productId, quantity }) {
-        console.log(`Update inventory: ${productId} with quantity: ${quantity}`)
+        await redisPubSubService.subscriberRedis("purchase_events", (channel, message) => {
+            console.log("receiver redis:", message)
+        })
     }
 }
 

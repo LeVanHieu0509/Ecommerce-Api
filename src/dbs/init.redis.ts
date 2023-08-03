@@ -1,14 +1,10 @@
 import { createClient } from "redis";
-
-const redis = require("redis");
 //check san pham ton kho phai lon hon so luong user dat (sẽ sử dụng khoá bi quan để sài)
 
-let client;
-
-(async () => {
+const redisClient: any = async () => {
   // client = redis.createClient({ url: process.env.REDIS_URI, legacyMode: true });
 
-  client = createClient({
+  let client = createClient({
     password: "AQYsqtdaIM2tYXCV7KOpoOWB3IC8tF4r",
     socket: {
       host: "redis-11856.c295.ap-southeast-1-1.ec2.cloud.redislabs.com",
@@ -30,11 +26,14 @@ let client;
     console.log("Redis client has disconnected");
   });
 
-  client.ping((e, value) => {
-    console.log("ping", value);
-  });
+  // client.ping((e, value) => {
+  //   console.log("ping", value);
+  // });
 
   await client.connect().catch((e) => console.log(e));
-})();
+  return client
+};
 
-export default client;
+
+
+export default redisClient;

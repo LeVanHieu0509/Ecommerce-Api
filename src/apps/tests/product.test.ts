@@ -1,15 +1,16 @@
-import RedisPubSubService from "../service/redis/redisPubsub.service"
+import RedisPubService from "../service/redis/redisPub.service"
+import RedisPubSubService from "../service/redis/redisPub.service"
 
 class ProductServiceTest {
-    purchaseProduct(productId, quantity) {
+    async purchaseProduct(productId, quantity) {
         const order = {
             productId,
             quantity
         }
         console.log("order", order)
-        const redisPubSubService = new RedisPubSubService()
+        const redisPubSubService = new RedisPubService()
 
-        redisPubSubService.publishRedis("purchase_events", JSON.stringify(order))
+        await redisPubSubService.publishRedis("purchase_events", JSON.stringify(order))
     }
 }
 

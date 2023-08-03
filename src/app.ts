@@ -41,12 +41,14 @@ const bootstrap = async () => {
     app.use(express.static(path.join(__dirname, "public")));
 
     // create init database
-    require("./dbs/init.sqlserver.ts");
+    // require("./dbs/init.sqlserver.ts");
 
     //test redis pub/sub
     // const inventory = new InventoryServiceTest()
     // const product = new ProductServiceTest()
-    // product.purchaseProduct("product:1", 10)
+    // await inventory.subscriberRedis()
+    // await product.purchaseProduct("product:11", 10)
+
 
 
     //Kiểm tra server quá tải
