@@ -12,19 +12,29 @@ class RedisController {
         statusCode: 200,
         metadata: await RedisService.setPromise({ key, value: JSON.stringify(payload) }),
       }).send(res);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   public static getPromise = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
       const { key } = req.body;
-
       return new SuccessResponse({
         message: "Redis get value success",
         statusCode: 200,
         metadata: await RedisService.getPromise({ key }),
       }).send(res);
-    } catch (e) {}
+    } catch (e) { }
+  };
+
+  public static publishRedis = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    try {
+      const { key, value } = req.body;
+      return new SuccessResponse({
+        message: "Redis publish value success",
+        statusCode: 200,
+        metadata: await RedisService.publishRedis({ key, value }),
+      }).send(res);
+    } catch (e) { }
   };
 }
 

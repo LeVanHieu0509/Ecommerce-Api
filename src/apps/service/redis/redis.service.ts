@@ -1,16 +1,10 @@
-import redisClient from "../../../dbs/init.redis";
-import ProductServiceTest from "../../tests/product.test";
+import { get, publish, sadd, set } from "../../../dbs/init.redis";
 
 class RedisService {
   public static setPromise = async ({ key, value }) => {
     try {
+      return await set({ key, value });
 
-      return new Promise((isOkey, isError) => {
-        redisClient.set(key, value, (error, res) => {
-          return !error ? isOkey(res) : isError(error);
-        });
-
-      });
     } catch (e) {
       console.log(e);
     }
@@ -18,15 +12,28 @@ class RedisService {
 
   public static getPromise = async ({ key }) => {
     try {
-      return new Promise((isOkey, isError) => {
-        redisClient.get(key, (error, res) => {
-          return !error ? isOkey(res) : isError(error);
-        });
-      });
+      return await get({ key })
     } catch (e) {
       console.log(e);
     }
   };
+
+  public static sADD = async ({ key, value }) => {
+    try {
+      return await sadd(key, value)
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  public static publishRedis = async ({ key, value }) => {
+    try {
+      return await publish("MESSAGES", { key, value })
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
 }
 
 export default RedisService;

@@ -9,15 +9,35 @@ import * as TypeORM from "typeorm";
 import buildSchema from "./apps/modules/graphql/schema";
 import route from "./routes";
 import cors = require("cors");
+const session = require("express-session");
 
 import compression from "compression";
-import ProductServiceTest from "./apps/tests/product.test";
-import InventoryServiceTest from "./apps/tests/inventory.test";
+import RedisStore from "connect-redis";
+import { cli, clientSub } from "./dbs/init.redis";
+const { Server } = require("socket.io");
+const io = new Server({ /* options */ });
+const redis = require("redis");
 
 dotenv.config();
 // establish database connection
 
 TypeORM.useContainer(Container);
+
+const sessionMiddleware = session({
+  store: new RedisStore({ client: cli }),
+  secret: "keyboard cat",
+  saveUninitialized: true,
+  resave: true,
+});
+
+
+const initSubscribe = async () => {
+  const redis = await clientSub()
+
+  await redis.subscribe('MESSAGES', (message) => {
+    console.log("MESSAGES RECEIVER", message); // 'message'
+  });
+};
 
 const bootstrap = async () => {
   try {
@@ -41,19 +61,13 @@ const bootstrap = async () => {
     app.use(express.static(path.join(__dirname, "public")));
 
     // create init database
-    // require("./dbs/init.sqlserver.ts");
-
-    //test redis pub/sub
-    // const inventory = new InventoryServiceTest()
-    // const product = new ProductServiceTest()
-    // await inventory.subscriberRedis()
-    // await product.purchaseProduct("product:11", 10)
-
-
+    // app.use(sessionMiddleware);
+    initSubscribe()
+    require("./dbs/init.sqlserver.ts");
 
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
-    // checkOverLoad();
+    // checkOverLoad(); 
 
     const schema = await buildSchema(Container);
 

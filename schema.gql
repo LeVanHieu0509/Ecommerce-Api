@@ -174,6 +174,10 @@ input SigninInput {
   username: String!
 }
 
+type SlugtifiedProductName {
+  product_slug: String!
+}
+
 type TipCart {
   cart_count_product: String!
   cart_products: String!
@@ -182,6 +186,80 @@ type TipCart {
   id: Float!
   updatedAt: DateTime!
   user_food: UserFood!
+}
+
+type TipClothing {
+  brand: String!
+  id: Float!
+  material: String!
+  size: String!
+  tip_product: TipProducts!
+  tip_shop: TipShop!
+}
+
+type TipComment {
+  comment_content: String!
+  comment_left: Float!
+  comment_parentId: String!
+  comment_right: String!
+  createdAt: DateTime!
+  id: Float!
+  is_deleted: Boolean!
+  tip_product: TipProducts!
+  updatedAt: DateTime!
+  user_food: UserFood!
+}
+
+type TipDiscount {
+  createdAt: DateTime!
+  discount_applies_to: String!
+  discount_code: String!
+  discount_description: String!
+  discount_end_date: DateTime!
+  discount_is_active: Boolean!
+  discount_max_uses: Float!
+  discount_max_uses_per_user: Float!
+  discount_max_value: Float!
+  discount_min_order_value: Float!
+  discount_name: String!
+  discount_product_ids: String!
+  discount_start_date: DateTime!
+  discount_type: String!
+  discount_users_used: String!
+  discount_uses_count: Float!
+  discount_value: Float!
+  id: Float!
+  tip_shop: TipShop!
+  updatedAt: DateTime!
+}
+
+type TipElectronics {
+  color: String!
+  id: Float!
+  manufacturer: String!
+  modal: String!
+  tip_product: TipProducts!
+  tip_shop: TipShop!
+}
+
+type TipFurniture {
+  brand: String!
+  id: Float!
+  material: String!
+  size: String!
+  tip_product: TipProducts!
+  tip_shop: TipShop!
+}
+
+type TipInventory {
+  createdAt: DateTime!
+  id: Float!
+  inven_location: String!
+  inven_reservations: String!
+  inven_stock: Float!
+  tip_product: TipProducts!
+  tip_shop: TipShop!
+  updatedAt: DateTime!
 }
 
 type TipOrder {
@@ -195,6 +273,45 @@ type TipOrder {
   order_trackingNumber: String!
   updatedAt: DateTime!
   user_food: UserFood!
+}
+
+type TipProducts {
+  createdAt: DateTime!
+  id: Float!
+  isDraft: Boolean!
+  isPublished: Boolean!
+  product_attributes: String!
+  product_description: String!
+  product_name: String!
+  product_price: Float!
+  product_quantity: Float!
+  product_ratingsAverage: Float!
+  product_slug: SlugtifiedProductName!
+  product_thumb: String!
+  product_type: String!
+  product_variations: String!
+  tip_comment: [TipComment!]!
+  tip_inventory: [TipInventory!]!
+  tip_product_clothes: [TipClothing!]!
+  tip_product_electronics: [TipElectronics!]!
+  tip_product_furniture: [TipFurniture!]!
+  tip_shop: TipShop!
+  updatedAt: DateTime!
+}
+
+type TipShop {
+  createdAt: DateTime!
+  id: Float!
+  shop_image: String!
+  shop_title: String!
+  tip_comment: [TipComment!]!
+  tip_discount: [TipDiscount!]!
+  tip_inventory: [TipInventory!]!
+  tip_product: [TipProducts!]!
+  tip_product_clothes: [TipClothing!]!
+  tip_product_electronics: [TipElectronics!]!
+  tip_product_furniture: [TipFurniture!]!
+  updatedAt: DateTime!
 }
 
 type User {
@@ -219,6 +336,7 @@ type UserFood {
   order_food: [OrderFood!]!
   password: String!
   tip_cart: [TipCart!]!
+  tip_comment: [TipComment!]!
   tip_order: [TipOrder!]!
   updatedAt: DateTime!
   username: String!

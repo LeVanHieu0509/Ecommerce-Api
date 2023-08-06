@@ -8,6 +8,8 @@ const router = require("express").Router();
 // Get all users
 router.use(authentication);
 router.put("/set-promise", asyncHandler(RedisController.setPromise));
-router.get("/get-promise", asyncHandler(RedisController.getPromise));
+router.post("/get-promise", asyncHandler(RedisController.getPromise));
+router.post("/publish", asyncHandler(RedisController.publishRedis));
+
 
 export default router;

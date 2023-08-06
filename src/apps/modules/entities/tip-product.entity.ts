@@ -19,6 +19,7 @@ import {
 } from "typeorm";
 import { TypeProduct } from "./../../@custom-type/enum";
 import { TipShop } from "./tip-shop.entity";
+import TipComment from "./tip-comment.entity";
 
 @ObjectType()
 class SlugtifiedProductName {
@@ -138,6 +139,10 @@ export class TipProducts {
   @Field((_type) => [TipInventory])
   @OneToMany((_type) => TipInventory, (tip_inventory: TipInventory) => tip_inventory.tip_product)
   public tip_inventory!: TipInventory[];
+
+  @Field((_type) => [TipComment])
+  @OneToMany((_type) => TipComment, (tip_comment: TipComment) => tip_comment.tip_product)
+  public tip_comment!: TipComment[];
 }
 
 ///
