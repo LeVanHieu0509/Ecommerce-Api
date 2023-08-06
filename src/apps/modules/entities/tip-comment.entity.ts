@@ -13,7 +13,7 @@ import { TipProducts } from "./tip-product.entity";
 
 @ObjectType()
 @Entity()
-export class TipComment {
+export class TipComments {
   @Field((_type) => Number)
   @PrimaryGeneratedColumn()
   public id!: number;
@@ -60,4 +60,4 @@ export class TipComment {
   @JoinColumn({ name: "tip_user_id" })
   public user_food?: UserFood;
 }
-export default TipComment;
+export default TipComments;

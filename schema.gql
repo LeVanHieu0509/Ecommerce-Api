@@ -197,7 +197,7 @@ type TipClothing {
   tip_shop: TipShop!
 }
 
-type TipComment {
+type TipComments {
   comment_content: String!
   comment_left: Float!
   comment_parentId: String!
@@ -290,7 +290,7 @@ type TipProducts {
   product_thumb: String!
   product_type: String!
   product_variations: String!
-  tip_comment: [TipComment!]!
+  tip_comment: [TipComments!]!
   tip_inventory: [TipInventory!]!
   tip_product_clothes: [TipClothing!]!
   tip_product_electronics: [TipElectronics!]!
@@ -304,7 +304,7 @@ type TipShop {
   id: Float!
   shop_image: String!
   shop_title: String!
-  tip_comment: [TipComment!]!
+  tip_comment: [TipComments!]!
   tip_discount: [TipDiscount!]!
   tip_inventory: [TipInventory!]!
   tip_product: [TipProducts!]!
@@ -336,7 +336,7 @@ type UserFood {
   order_food: [OrderFood!]!
   password: String!
   tip_cart: [TipCart!]!
-  tip_comment: [TipComment!]!
+  tip_comment: [TipComments!]!
   tip_order: [TipOrder!]!
   updatedAt: DateTime!
   username: String!

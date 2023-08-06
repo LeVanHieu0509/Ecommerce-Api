@@ -1,11 +1,15 @@
-import LoggerService from "../../apps/loggers/discord-v2.log"
-
+// import LoggerService from "../../apps/loggers/discord-v2.log"
+import { SuccessResponse } from "../../core/success.response";
+import LoggerService from "../../apps/loggers/discord-v2.log";
 export const pushToLogDiscord = async (req, res, next) => {
     try {
-        let logger = new LoggerService()
-        logger.sendToMessage(req.get('host'));
+        let logger = LoggerService.getInstance()
 
-        return next()
+        new SuccessResponse({
+            message: "",
+            statusCode: 200,
+            metadata: await logger.sendToMessage(req.body.message)
+        }).send(res)
     }
     catch (e) {
         next(e)

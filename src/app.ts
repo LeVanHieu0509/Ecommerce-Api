@@ -14,6 +14,7 @@ const session = require("express-session");
 import compression from "compression";
 import RedisStore from "connect-redis";
 import { cli, clientSub } from "./dbs/init.redis";
+import LoggerService from "./apps/loggers/discord-v2.log";
 const { Server } = require("socket.io");
 const io = new Server({ /* options */ });
 const redis = require("redis");
@@ -39,6 +40,11 @@ const initSubscribe = async () => {
   });
 };
 
+const initDiscord = async () => {
+  const discord = LoggerService.getInstance()
+  // discord.commandsMessage()
+}
+
 const bootstrap = async () => {
   try {
     var app = express();
@@ -63,7 +69,10 @@ const bootstrap = async () => {
     // create init database
     // app.use(sessionMiddleware);
     initSubscribe()
+    initDiscord()
     require("./dbs/init.sqlserver.ts");
+
+
 
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
