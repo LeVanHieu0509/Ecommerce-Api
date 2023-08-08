@@ -9,10 +9,9 @@ import * as TypeORM from "typeorm";
 import buildSchema from "./apps/modules/graphql/schema";
 import route from "./routes";
 import cors = require("cors");
-const session = require("express-session");
+// const session = require("express-session");
 
 import compression from "compression";
-import RedisStore from "connect-redis";
 import { cli, clientSub } from "./dbs/init.redis";
 import LoggerService from "./apps/loggers/discord-v2.log";
 const { Server } = require("socket.io");
@@ -23,14 +22,6 @@ dotenv.config();
 // establish database connection
 
 TypeORM.useContainer(Container);
-
-const sessionMiddleware = session({
-  store: new RedisStore({ client: cli }),
-  secret: "keyboard cat",
-  saveUninitialized: true,
-  resave: true,
-});
-
 
 const initSubscribe = async () => {
   const redis = await clientSub()

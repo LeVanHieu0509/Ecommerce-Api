@@ -5,7 +5,7 @@ import { CreateCheckoutInput } from "./CreateCheckoutInput";
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { getCustomRepository } from "typeorm";
 import { CheckoutFoodRepository } from "../../../../repositories/food-app/CheckoutFoodRepositories";
-import { SendNotification } from "../../../../service/push-notification.service";
+// import { SendNotification } from "../../../../service/push-notification.service";
 
 @Resolver((_type) => CheckoutFood) //sẽ biến class CreateGroup thành một rest API
 export class CheckoutOrder {
@@ -39,23 +39,23 @@ export class CheckoutOrder {
     let sendingOrderMessage = `Đơn hàng ${order.id} đang được giao đến cho ${order.user_food.title};`;
     let sentOrderMessage = `Đơn hàng ${order.id} đã được giao đến cho ${order.user_food.title}`;
 
-    setTimeout(() => {
-      SendNotification(sendingOrderMessage, (error, results) => {
-        if (error) {
-          console.log("error", error);
-        }
-        console.log("results", results);
-      });
-    }, 5000);
+    // setTimeout(() => {
+    //   SendNotification(sendingOrderMessage, (error, results) => {
+    //     if (error) {
+    //       console.log("error", error);
+    //     }
+    //     console.log("results", results);
+    //   });
+    // }, 5000);
 
-    setTimeout(() => {
-      SendNotification(sentOrderMessage, (error, results) => {
-        if (error) {
-          console.log("error", error);
-        }
-        console.log("results", results);
-      });
-    }, 10000);
+    // setTimeout(() => {
+    //   SendNotification(sentOrderMessage, (error, results) => {
+    //     if (error) {
+    //       console.log("error", error);
+    //     }
+    //     console.log("results", results);
+    //   });
+    // }, 10000);
 
     await orderRepository.save(order);
 

@@ -1,11 +1,6 @@
-FROM node:14.15.4-alpine3.12
-
-RUN mkdir -p /opt/app
-
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/app.ts"]
 EXPOSE 3000
-
-WORKDIR /opt
-COPY package.json package-lock.json ./
-RUN npm install && npm cache clean --force
-
-CMD [ "node", "app.js" ]
