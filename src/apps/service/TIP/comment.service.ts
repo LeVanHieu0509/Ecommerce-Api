@@ -61,6 +61,47 @@ class CommentServices {
 
         return res;
     }
+
+    static async getCommentsByParentId({
+        productId,
+        parentCommentId = null,
+        limit = 50,
+        offset = 0 //skip
+    }: any) {
+        const tipCommentRepository = getCustomRepository(TipCommentsRepository);
+        console.log("productId", productId)
+        console.log("parentCommentId", parentCommentId)
+
+        if (parentCommentId) {
+            const parent = await tipCommentRepository.findOne({
+                where: { id: parentCommentId }
+            })
+
+            if (!parent) throw new NotFoundError("Không tìm thấy parent comment");
+            const comments = await tipCommentRepository.find({
+                where: {
+                    tip_product: productId,
+
+                    comment_left: MoreThan(parent.comment_left),
+                    comment_right: LessThanOrEqual(parent.comment_right),
+                },
+                select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
+                order: { comment_left: "ASC" },
+            })
+
+            return comments
+        }
+
+        const comments = await tipCommentRepository.find({
+            where: {
+                tip_product: productId,
+
+            },
+            select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
+            order: { comment_left: "ASC" },
+        })
+        return comments
+    }
 }
 
 export default CommentServices

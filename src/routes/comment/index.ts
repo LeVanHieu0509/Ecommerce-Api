@@ -9,5 +9,7 @@ const router = require("express").Router();
 // Get all users
 router.use(authentication);
 router.post("", asyncHandler(CommentsController.createComment));
+router.get("/", asyncHandler(CommentsController.getComments));
+
 
 export default router;

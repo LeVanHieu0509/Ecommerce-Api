@@ -11,5 +11,12 @@ class CommentsController {
       metadata: await CommentServices.createComment(req.body),
     }).send(res);
   };
+
+  public static getComments = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "get list comment success",
+      metadata: await CommentServices.getCommentsByParentId(req.query),
+    }).send(res);
+  };
 }
 export default CommentsController;
