@@ -27,12 +27,12 @@ export class TipComments {
   public comment_left!: number;
 
   @Field()
-  @Column({ type: "varchar", nullable: true })
-  public comment_right?: string;
+  @Column({ type: "int", nullable: true })
+  public comment_right!: number;
 
   @Field()
   @Column({ type: "varchar", nullable: true })
-  public comment_parentId?: string;
+  public comment_parentId!: string;
 
   @Field()
   @Column({ type: "bit", nullable: true, default: false })

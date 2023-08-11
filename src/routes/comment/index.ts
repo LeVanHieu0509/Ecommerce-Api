@@ -1,6 +1,6 @@
 import { authentication } from "../../apps/auth/authUtils";
 import CommentsController from "../../apps/controllers/tip-js/comment.controller";
-
+import InventoryController from "../../apps/controllers/tip-js/inventory.controller";
 
 import { asyncHandler } from "../../helpers/asyncHandler";
 

@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
-import TipInventory from "../../modules/entities/tip-inventory.entity";
+import TipComments from "../../modules/entities/tip-comment.entity";
 
-@EntityRepository(TipInventory)
-export class TipInventoryRepository extends Repository<TipInventory> {}
+@EntityRepository(TipComments)
+export class TipCommentsRepository extends Repository<TipComments> { }

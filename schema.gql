@@ -201,7 +201,7 @@ type TipComments {
   comment_content: String!
   comment_left: Float!
   comment_parentId: String!
-  comment_right: String!
+  comment_right: Float!
   createdAt: DateTime!
   id: Float!
   is_deleted: Boolean!

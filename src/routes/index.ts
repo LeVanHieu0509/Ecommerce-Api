@@ -6,6 +6,8 @@ import discount from "./discount/index";
 import inventory from "./inventory/index";
 import redis from "./redis/index";
 import discord from "./discord/index";
+import comment from "./comment/index";
+
 
 
 import product from "./product/index";
@@ -110,6 +112,14 @@ function route(app) {
       next();
     },
     discord
+  );
+
+  app.use(
+    "/v1/api/comment",
+    function (req, res, next) {
+      next();
+    },
+    comment
   );
 
   app.use((req, res, next) => {
