@@ -10,6 +10,8 @@ const router = require("express").Router();
 router.use(authentication);
 router.post("", asyncHandler(CommentsController.createComment));
 router.get("/", asyncHandler(CommentsController.getComments));
+router.delete("/", asyncHandler(CommentsController.deleteComment));
+
 
 
 export default router;

@@ -2,12 +2,16 @@ import { FindConditions, LessThanOrEqual, MoreThan, MoreThanOrEqual, ObjectID, g
 import { TipCommentsRepository } from "../../repositories/tip-js/TipCommentsRepositories";
 import { NotFoundError } from "../../../core/error.response";
 import TipComments from "../../modules/entities/tip-comment.entity";
+import { findProductsRepo } from "../../modules/repos/product.repo";
+import { getSelectData } from "../../../ultis";
 
 class CommentServices {
-
-
     static async createComment({ productId, userId, content, parentCommentId = null }) {
         const tipCommentRepository = getCustomRepository(TipCommentsRepository);
+
+        //1. check product exists
+        const foundProduct = findProductsRepo({ product_id: productId, unSelect: [] })
+        if (!foundProduct) throw new NotFoundError("Product not found")
 
         const newComment = await tipCommentRepository.create({
             comment_content: content,
@@ -21,8 +25,7 @@ class CommentServices {
             const parentComment = await tipCommentRepository.findOne(parentCommentId)
             if (!parentComment) throw new NotFoundError("Parent Comment Not Fount");
 
-            rightValue = parentComment.comment_right //10
-            console.log("rightValue1", rightValue)
+            rightValue = parentComment.comment_right
 
             await tipCommentRepository.update(
                 { tip_product: productId, comment_right: MoreThanOrEqual(rightValue) },
@@ -43,7 +46,7 @@ class CommentServices {
             // const maxRightValue = await tipCommentRepository.findOne({
             //     where: { tip_product: productId },
             //     order: { comment_right: "DESC" },
-            //     select: ["comment_right"],
+            //     select: getSelectData(["comment_right"]),
             // });
 
             if (maxRightValue) {
@@ -69,8 +72,6 @@ class CommentServices {
         offset = 0 //skip
     }: any) {
         const tipCommentRepository = getCustomRepository(TipCommentsRepository);
-        console.log("productId", productId)
-        console.log("parentCommentId", parentCommentId)
 
         if (parentCommentId) {
             const parent = await tipCommentRepository.findOne({
@@ -85,8 +86,10 @@ class CommentServices {
                     comment_left: MoreThan(parent.comment_left),
                     comment_right: LessThanOrEqual(parent.comment_right),
                 },
+
                 select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
                 order: { comment_left: "ASC" },
+                skip: limit
             })
 
             return comments
@@ -95,12 +98,55 @@ class CommentServices {
         const comments = await tipCommentRepository.find({
             where: {
                 tip_product: productId,
-
             },
             select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
             order: { comment_left: "ASC" },
         })
         return comments
+    }
+
+    static async deleteComment({ commentId, productId }) {
+        // Muốn xoá được comment thì buộc phải xác định được viền trái và viền phải
+        // Độ rộng là bao nhiêu viền
+        // Lựa chọn node có giá trị lớn hơn right, nhưng right của node > right delete thì update - width 
+
+        //check the product exists in the database
+        const tipCommentRepository = getCustomRepository(TipCommentsRepository);
+
+        const foundProduct = findProductsRepo({ product_id: productId, unSelect: [] })
+        if (!foundProduct) throw new NotFoundError("Product not found")
+
+        //1. Xac dinh gia tri left va right cua comment can xoa
+        const comment = await tipCommentRepository.findOne(commentId)
+        if (!comment) throw new NotFoundError("Comment not found")
+
+        const leftValue = comment.comment_left
+        const rightValue = comment.comment_right
+
+        //2. Tinh width
+        const width = rightValue - leftValue + 1
+        //3. Xoa tat ca comment id con
+
+        const deletedItem = await tipCommentRepository.delete({
+            tip_product: productId,
+            comment_right: LessThanOrEqual(rightValue),
+            comment_left: MoreThanOrEqual(leftValue)
+        })
+        //4. Cap nhat cac gia tri left va right con lai
+
+        await tipCommentRepository.update(
+            { tip_product: productId, comment_right: MoreThanOrEqual(rightValue) },
+            { comment_right: () => `comment_right - ${width}` }
+        );
+
+        await tipCommentRepository.update(
+            { tip_product: productId, comment_left: MoreThan(rightValue) },
+            { comment_left: () => `comment_left - ${width}` }
+        );
+
+        return {
+            deletedRow: deletedItem.affected
+        }
     }
 }
 

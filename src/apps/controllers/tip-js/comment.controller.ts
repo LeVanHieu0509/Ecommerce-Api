@@ -18,5 +18,12 @@ class CommentsController {
       metadata: await CommentServices.getCommentsByParentId(req.query),
     }).send(res);
   };
+
+  public static deleteComment = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      message: "get list comment success",
+      metadata: await CommentServices.deleteComment(req.body),
+    }).send(res);
+  };
 }
 export default CommentsController;
