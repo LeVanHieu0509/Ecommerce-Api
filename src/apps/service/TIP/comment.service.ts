@@ -60,9 +60,7 @@ class CommentServices {
         newComment.comment_left = rightValue;
         newComment.comment_right = rightValue + 1;
 
-        const res = await tipCommentRepository.save(newComment);
-
-        return res;
+        return await tipCommentRepository.save(newComment);
     }
 
     static async getCommentsByParentId({
@@ -89,7 +87,6 @@ class CommentServices {
 
                 select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
                 order: { comment_left: "ASC" },
-                skip: limit
             })
 
             return comments
@@ -102,6 +99,7 @@ class CommentServices {
             select: ["comment_left", "comment_right", "comment_content", "comment_parentId"],
             order: { comment_left: "ASC" },
         })
+
         return comments
     }
 

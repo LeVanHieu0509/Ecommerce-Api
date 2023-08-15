@@ -66,12 +66,11 @@ class DiscountService {
       tip_shop: shopId,
       discount_product_ids: JSON.stringify(product_ids),
     });
-    const res = await tipDiscountRepository.save(newDiscount);
 
-    return res;
+    return await tipDiscountRepository.save(newDiscount);
   }
 
-  public static async updateDiscountCode(payload) {}
+  public static async updateDiscountCode(payload) { }
 
   //get all discount codes available with products
 

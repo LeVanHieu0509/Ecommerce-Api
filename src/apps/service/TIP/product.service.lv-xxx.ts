@@ -15,6 +15,7 @@ import { TipClothingRepository } from "./../../repositories/tip-js/TipClothingRe
 import { TipElectronicsRepository } from "./../../repositories/tip-js/TipElectronicsRepositories";
 import { TipFurnitureRepository } from "./../../repositories/tip-js/TipFurnitureRepositories";
 import { TipProductsRepository } from "./../../repositories/tip-js/TipProductsRepositories";
+import { pushNotiToSystem } from "./notification.service";
 
 //define Factory class to create product
 
@@ -151,7 +152,16 @@ class Product {
         stock: this.product_quantity,
         location: "",
       });
+
+      //push noti pto system collection
+      pushNotiToSystem({
+        type: "SHOP-001", receivedId: 1, senderId: this.tip_shop, options: {
+          productName: this.product_name,
+          shop_name: this.tip_shop
+        }
+      }).then(res => console.log("res", res)).catch(e => console.log(e))
     }
+
     return newProduct;
   }
 

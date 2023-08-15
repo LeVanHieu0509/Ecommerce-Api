@@ -7,9 +7,7 @@ import inventory from "./inventory/index";
 import redis from "./redis/index";
 import discord from "./discord/index";
 import comment from "./comment/index";
-
-
-
+import notification from "./notification/index";
 import product from "./product/index";
 
 import auth from "./auth";
@@ -120,6 +118,14 @@ function route(app) {
       next();
     },
     comment
+  );
+
+  app.use(
+    "/v1/api/notification",
+    function (req, res, next) {
+      next();
+    },
+    notification
   );
 
   app.use((req, res, next) => {
