@@ -22,6 +22,6 @@
    },
    "compileOnSave": true,
    "exclude": ["node_modules"],
-   "include": ["src/**/*.ts", "src/apps/service/push-notification.service.js"],
+   "include": ["src/**/*.ts", "src/message_queue/kafka/consumer.js", "src/message_queue/rabbitMQ/consumer.ts", "src/message_queue/rabbitMQ/producer.ts"],
  }
  
