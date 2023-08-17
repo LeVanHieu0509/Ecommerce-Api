@@ -68,9 +68,9 @@ export const get = ({ key = "key" }: { key: string }) =>
   });
 
 export const set = ({ key = "key", value, option = "xx" }: any) =>
-  new Promise((a, b) => {
-    cli.set(key, value, option, resolvePromise(a, b))
-  });
+  new Promise((a, b) =>
+    cli.set(key, value, resolvePromise(a, b))
+  );
 
 export const incr = (key = "key") =>
   new Promise((a, b) => cli.incr(key, resolvePromise(a, b)));
