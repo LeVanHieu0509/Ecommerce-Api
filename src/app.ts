@@ -62,9 +62,6 @@ const bootstrap = async () => {
     initSubscribe()
     initDiscord()
     require("./dbs/init.sqlserver.ts");
-
-
-
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
     // checkOverLoad(); 
