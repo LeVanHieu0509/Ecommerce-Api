@@ -1,6 +1,16 @@
-FROM node:18-alpine
+FROM node:18
+
+EXPOSE 8080
 WORKDIR /app
+
+RUN npm i npm@lastest -g
+
+COPY package.json package-lock.json ./
+
+COPY yarn.lock ./
+
+RUN yarn install 
+
 COPY . .
-RUN yarn install --production
-CMD ["node", "src/app.ts"]
-EXPOSE 3000
+
+CMD ["node", "./src/app.ts"]
