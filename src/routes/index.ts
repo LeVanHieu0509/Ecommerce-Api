@@ -2,13 +2,13 @@ import APIError from "../apps/global/response/apierror";
 import access from "./access/index";
 import cart from "./cart/index";
 import checkout from "./checkout/index";
+import comment from "./comment/index";
+import discord from "./discord/index";
 import discount from "./discount/index";
 import inventory from "./inventory/index";
-import redis from "./redis/index";
-import discord from "./discord/index";
-import comment from "./comment/index";
 import notification from "./notification/index";
 import product from "./product/index";
+import upload from "./upload/index";
 
 import auth from "./auth";
 import home from "./home";
@@ -96,13 +96,13 @@ function route(app) {
     inventory
   );
 
-  app.use(
-    "/v1/api/redis",
-    function (req, res, next) {
-      next();
-    },
-    redis
-  );
+  // app.use(
+  //   "/v1/api/redis",
+  //   function (req, res, next) {
+  //     next();
+  //   },
+  //   redis
+  // );
 
   app.use(
     "/v1/api/discord",
@@ -126,6 +126,14 @@ function route(app) {
       next();
     },
     notification
+  );
+
+  app.use(
+    "/v1/api/upload",
+    function (req, res, next) {
+      next();
+    },
+    upload
   );
 
   app.use((req, res, next) => {

@@ -12,10 +12,12 @@ import cors = require("cors");
 // const session = require("express-session");
 
 import compression from "compression";
-import { cli, clientSub } from "./dbs/init.redis";
+// import { cli, clientSub } from "./dbs/init.redis";
 import LoggerService from "./apps/loggers/discord-v2.log";
 const { Server } = require("socket.io");
-const io = new Server({ /* options */ });
+const io = new Server({
+  /* options */
+});
 const redis = require("redis");
 
 dotenv.config();
@@ -24,17 +26,16 @@ dotenv.config();
 TypeORM.useContainer(Container);
 
 const initSubscribe = async () => {
-  const redis = await clientSub()
-
-  await redis.subscribe('MESSAGES', (message) => {
-    console.log("MESSAGES RECEIVER", message); // 'message'
-  });
+  // const redis = await clientSub();
+  // await redis.subscribe("MESSAGES", (message) => {
+  //   console.log("MESSAGES RECEIVER", message); // 'message'
+  // });
 };
 
 const initDiscord = async () => {
-  const discord = LoggerService.getInstance()
+  const discord = LoggerService.getInstance();
   // discord.commandsMessage()
-}
+};
 
 const bootstrap = async () => {
   try {
@@ -59,12 +60,12 @@ const bootstrap = async () => {
 
     // create init database
     // app.use(sessionMiddleware);
-    initSubscribe()
-    initDiscord()
+    // initSubscribe()
+    initDiscord();
     require("./dbs/init.sqlserver.ts");
     //Kiểm tra server quá tải
     // const { checkOverLoad } = require("./helpers/check.connect");
-    // checkOverLoad(); 
+    // checkOverLoad();
 
     const schema = await buildSchema(Container);
 
