@@ -27,9 +27,6 @@ class UploadController {
 
   public static uploadMultiThump = async (req: RequestCustom, res: Response, next: NextFunction) => {
     const { files } = req;
-    console.log("file", files);
-    const file1 = req.files["file1"];
-    const file2 = req.files["file2"];
 
     if (!files) {
       throw new BadRequestError("Upload File Not Found");
@@ -37,7 +34,7 @@ class UploadController {
 
     new SuccessResponse({
       message: "Upload File Local Process",
-      metadata: await uploadImageFromLocalMulti({ files: files, folderName: "thumb" }),
+      metadata: await uploadImageFromLocalMulti({ files: files, folderName: "profile" }),
     }).send(res);
   };
 }
