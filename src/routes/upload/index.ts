@@ -10,4 +10,7 @@ router.post("/product", asyncHandler(UploadController.uploadFile));
 router.post("/product/thumb", uploadDisk.single("file"), asyncHandler(UploadController.uploadThump));
 router.post("/product/thumb-multi", uploadDisk.array("files", 3), asyncHandler(UploadController.uploadMultiThump));
 
+//Upload S3
+router.post("/product/thumb-s3", uploadDisk.single("file"), asyncHandler(UploadController.uploadThumpS3));
+
 export default router;

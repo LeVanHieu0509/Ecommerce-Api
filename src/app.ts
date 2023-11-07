@@ -96,7 +96,7 @@ const bootstrap = async () => {
 
     server.applyMiddleware({ app, cors: corsConfig });
     route(app);
-    let port = 3000;
+    let port = 3001;
     const serverVip = app.listen({ port }, () => {
       console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
     });

@@ -70,7 +70,7 @@ class DiscountService {
     return await tipDiscountRepository.save(newDiscount);
   }
 
-  public static async updateDiscountCode(payload) { }
+  public static async updateDiscountCode(payload) {}
 
   //get all discount codes available with products
 

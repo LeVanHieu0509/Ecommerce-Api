@@ -1,7 +1,12 @@
 import { NextFunction, Response } from "express";
 import { BadRequestError } from "../../../core/error.response";
 import { SuccessResponse } from "../../../core/success.response";
-import { uploadImageFromLocal, uploadImageFromLocalMulti, uploadImageFromUrl } from "../../service/TIP/upload.service";
+import {
+  uploadImageFromLocal,
+  uploadImageFromLocalMulti,
+  uploadImageFromLocalS3,
+  uploadImageFromUrl,
+} from "../../service/TIP/upload.service";
 import { RequestCustom } from "./../../auth/authUtils";
 
 class UploadController {
@@ -35,6 +40,20 @@ class UploadController {
     new SuccessResponse({
       message: "Upload File Local Process",
       metadata: await uploadImageFromLocalMulti({ files: files, folderName: "profile" }),
+    }).send(res);
+  };
+
+  //S3
+  public static uploadThumpS3 = async (req: RequestCustom, res: Response, next: NextFunction) => {
+    const { file } = req;
+
+    if (!file) {
+      throw new BadRequestError("Upload File Not Found");
+    }
+
+    new SuccessResponse({
+      message: "Upload File Local Process",
+      metadata: await uploadImageFromLocalS3({ file: file }),
     }).send(res);
   };
 }

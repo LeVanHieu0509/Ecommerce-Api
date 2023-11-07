@@ -1,4 +1,42 @@
+import { PutObjectCommand, s3 } from "../../config/s3.config";
+import crypto from "node:crypto";
 import cloudinary from "../../config/cloudinary.config";
+
+//upload file use s3Client ///
+
+// 3. upload from image local
+
+export const uploadImageFromLocalS3 = async ({ file }) => {
+  try {
+    const randomImageName = () => crypto.randomBytes(16).toString("hex");
+
+    const commandObj = {
+      Bucket: process.env.AWS_BUCKET_NAME, //để ý tên này phải giống với tên được tạo trong bucket trên aws, không là bị lỗi Access Denied
+      Key: randomImageName() || file.originalname,
+      Body: file.path,
+      ContentType: "image/jpeg",
+    };
+
+    const command = new PutObjectCommand(commandObj);
+
+    const result = await s3.send(command);
+
+    if (result.$metadata.httpStatusCode == 200) {
+      return {
+        status: "1",
+        message: "Upload File Success",
+      };
+    }
+  } catch (error) {
+    return {
+      status: "-1",
+      message: error,
+    };
+  }
+};
+
+//END S3CLIENT
+/// ----------//
 
 export const uploadImageFromUrl = async ({ urlImage }) => {
   try {
