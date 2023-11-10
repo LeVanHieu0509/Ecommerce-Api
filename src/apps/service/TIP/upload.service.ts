@@ -1,6 +1,7 @@
-import { PutObjectCommand, s3 } from "../../config/s3.config";
+import { PutObjectCommand, GetObjectCommand, s3 } from "../../config/s3.config";
 import crypto from "node:crypto";
 import cloudinary from "../../config/cloudinary.config";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 //upload file use s3Client ///
 
@@ -9,10 +10,10 @@ import cloudinary from "../../config/cloudinary.config";
 export const uploadImageFromLocalS3 = async ({ file }) => {
   try {
     const randomImageName = () => crypto.randomBytes(16).toString("hex");
-
+    const imageName = randomImageName();
     const commandObj = {
       Bucket: process.env.AWS_BUCKET_NAME, //để ý tên này phải giống với tên được tạo trong bucket trên aws, không là bị lỗi Access Denied
-      Key: randomImageName() || file.originalname,
+      Key: imageName || file.originalname,
       Body: file.path,
       ContentType: "image/jpeg",
     };
@@ -21,9 +22,19 @@ export const uploadImageFromLocalS3 = async ({ file }) => {
 
     const result = await s3.send(command);
 
+    //tu s3 muon public ra cong dong thi can phai export ra url
+
     if (result.$metadata.httpStatusCode == 200) {
+      const signedUrl = new GetObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: imageName,
+      });
+
+      const url = await getSignedUrl(s3, signedUrl, { expiresIn: 3600 });
+
       return {
         status: "1",
+        url: url,
         message: "Upload File Success",
       };
     }
