@@ -9,13 +9,22 @@ import inventory from "./inventory/index";
 import notification from "./notification/index";
 import product from "./product/index";
 import upload from "./upload/index";
+import profile from "./profile/index";
 
 import auth from "./auth";
 import home from "./home";
 import post from "./post";
 import user from "./user";
+import rbac from "./rbac";
 
 function route(app) {
+  app.use(
+    "/v1/rbac",
+    function (req, res, next) {
+      next();
+    },
+    rbac
+  );
   app.use(
     "/v1/auth",
     function (req, res, next) {
@@ -134,6 +143,14 @@ function route(app) {
       next();
     },
     upload
+  );
+
+  app.use(
+    "/v1/api/profile",
+    function (req, res, next) {
+      next();
+    },
+    profile
   );
 
   app.use((req, res, next) => {

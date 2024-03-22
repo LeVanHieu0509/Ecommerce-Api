@@ -155,11 +155,16 @@ class Product {
 
       //push noti pto system collection
       pushNotiToSystem({
-        type: "SHOP-001", receivedId: 1, senderId: this.tip_shop, options: {
+        type: "SHOP-001",
+        receivedId: 1,
+        senderId: this.tip_shop,
+        options: {
           productName: this.product_name,
-          shop_name: this.tip_shop
-        }
-      }).then(res => console.log("res", res)).catch(e => console.log(e))
+          shop_name: this.tip_shop,
+        },
+      })
+        .then((res) => console.log("res", res))
+        .catch((e) => console.log(e));
     }
 
     return newProduct;

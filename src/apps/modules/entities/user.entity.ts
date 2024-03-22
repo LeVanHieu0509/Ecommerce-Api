@@ -1,15 +1,7 @@
 import * as bcrypt from "bcryptjs";
 import { IsNotEmpty, Length } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  Unique,
-  UpdateDateColumn,
-} from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import Article from "./article.entity";
 import Comment from "./comment.entity";
 import { Post } from "./post.entity";

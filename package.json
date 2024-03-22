@@ -15,6 +15,7 @@
       "@types/bcrypt": "^5.0.0",
       "@types/lodash": "^4.14.192",
       "@types/multer": "^1.4.9",
+      "accesscontrol": "^2.2.1",
       "amqplib": "^0.10.3",
       "apollo-server-express": "^2.9.16",
       "bcrypt": "^5.1.0",

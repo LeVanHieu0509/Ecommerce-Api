@@ -13,7 +13,7 @@ const RoleUser = {
   USER: "USER",
   WRITER: "WRITER",
   EDITOR: "EDITOR",
-  ADMIN: "ADMIN",
+  ADMINIE: "ADMINIE",
 };
 
 class AccessService {
