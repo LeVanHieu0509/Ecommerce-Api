@@ -22,6 +22,7 @@ const redis = require("redis");
 import { v4 as uuidv4 } from "uuid";
 import { RequestCustom } from "./apps/auth/authUtils";
 import MyLogger from "./loggers/mylogger.log";
+import { configBot } from "./apps/loggers/telegram.log";
 uuidv4();
 
 dotenv.config();
@@ -61,6 +62,9 @@ const bootstrap = async () => {
 
     // Static file
     app.use(express.static(path.join(__dirname, "public")));
+    // bot tele
+    configBot();
+
     app.use((req: RequestCustom, res, next) => {
       const requestId = req.headers["x-request-id"];
       req.requestId = requestId ? requestId : uuidv4();
