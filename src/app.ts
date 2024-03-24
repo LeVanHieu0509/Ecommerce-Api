@@ -19,6 +19,10 @@ const io = new Server({
   /* options */
 });
 const redis = require("redis");
+import { v4 as uuidv4 } from "uuid";
+import { RequestCustom } from "./apps/auth/authUtils";
+import MyLogger from "./loggers/mylogger.log";
+uuidv4();
 
 dotenv.config();
 // establish database connection
@@ -57,6 +61,21 @@ const bootstrap = async () => {
 
     // Static file
     app.use(express.static(path.join(__dirname, "public")));
+    app.use((req: RequestCustom, res, next) => {
+      const requestId = req.headers["x-request-id"];
+      req.requestId = requestId ? requestId : uuidv4();
+
+      const myLogger = new MyLogger();
+      myLogger.log("input params", [
+        req.path,
+        {
+          requestId: req.requestId,
+        },
+        req.method == "POST" ? req.body : req.query,
+      ]);
+
+      next();
+    });
 
     // create init database
     // app.use(sessionMiddleware);

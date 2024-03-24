@@ -1,3 +1,6 @@
+import MyLogger from "../loggers/mylogger.log";
+import { logger } from "../loggers/winston.log";
+
 const StatusCode = {
   FORBIDDEN: 403,
   CONFLICT: 409,
@@ -14,10 +17,20 @@ const ReasonStatusCode = {
 
 class ErrorResponse extends Error {
   status: any;
+  now: any;
 
   constructor(message, status) {
     super(message);
     this.status = status;
+    this.now = Date.now();
+    //Log the error use winston
+    // logger.error(`${this.status} - ${this.message}`);
+
+    const logger = new MyLogger();
+    // logger.error(this.message, { context: "/path", requestId: "aa", message: this.message, metadata: {} });
+
+    // logger.log(this.message, ["api/vi/login", "vv2342423", { error: "BAD REQUEST ERROR" }]);
+    // logger.log(this.message, ["api/vi/login", "vv2342423", { error: "BAD REQUEST ERROR" }]);
   }
 }
 

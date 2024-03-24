@@ -16,6 +16,8 @@ import home from "./home";
 import post from "./post";
 import user from "./user";
 import rbac from "./rbac";
+import MyLogger from "../loggers/mylogger.log";
+import { RequestCustom } from "../apps/auth/authUtils";
 
 function route(app) {
   app.use(
@@ -158,8 +160,12 @@ function route(app) {
     next(error);
   });
 
-  app.use((error, req, res, next) => {
+  app.use((error, req: RequestCustom, res, next) => {
     const statusCode = error.status || 500;
+    const resMessage = `${error.status} - ${Date.now() - error.now}ms - Response: ${JSON.stringify(error)}`;
+    const myLogger = new MyLogger();
+    myLogger.error(resMessage, [req.path, { requestId: req.requestId }, { message: error.message }]);
+
     return res.status(statusCode).json({
       status: "error",
       code: statusCode,

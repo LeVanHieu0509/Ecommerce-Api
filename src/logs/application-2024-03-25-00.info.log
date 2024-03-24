@@ -1,0 +1,24 @@
+2024-03-25 00:34:53 AM::info::/v1/api/user/login::b284f1b4-cb27-4244-b7f0-1782611576f5::input params::{"email":"","password":"123123"}
+2024-03-25 00:34:53 AM::error::/v1/api/user/login::b284f1b4-cb27-4244-b7f0-1782611576f5::403 - 2ms - Response: {"status":403,"now":1711301693213}::{"message":"Email missing"}
+2024-03-25 00:36:24 AM::info::/v1/api/user/login::f367a30e-b04d-40b4-b765-eddd78af89cb::input params::{"email":"","password":"123123"}
+2024-03-25 00:36:24 AM::error::/v1/api/user/login::f367a30e-b04d-40b4-b765-eddd78af89cb::403 - 3ms - Response: {"status":403,"now":1711301784389}::{"message":"Email missing"}
+2024-03-25 00:36:31 AM::info::/v1/api/user/login::161c031b-04df-43dc-adfd-fceca3453f84::input params::{"email":"hieu12","password":"123123"}
+2024-03-25 00:38:14 AM::info::/v1/api/user/login::111::input params::{"email":"","password":"123123"}
+2024-03-25 00:38:14 AM::error::/v1/api/user/login::111::403 - 2ms - Response: {"status":403,"now":1711301894814}::{"message":"Email missing"}
+2024-03-25 00:38:37 AM::info::/v1/api/user/login::111::input params::{"email":"hieu12","password":"123123"}
+2024-03-25 00:39:09 AM::info::/v1/api/profile/viewAny::e267f906-f529-4636-973c-a0f6ec508007::input params::{"role":"admin "}
+2024-03-25 00:39:17 AM::info::/v1/api/profile/viewAny::111::input params::{"role":"admin "}
+2024-03-25 00:39:31 AM::info::/v1/api/profile/viewAny::111::input params::{"role":"admin "}
+2024-03-25 00:39:43 AM::info::/v1/api/profile/viewAny::111::input params::{"role":"admin "}
+2024-03-25 00:40:10 AM::info::/v1/rbac/resources::111::input params::{}
+2024-03-25 00:40:43 AM::info::/v1/api/discord/test::111::input params::{"message":"HIẾU TEST BOT NOTI"}
+2024-03-25 00:41:15 AM::info::/v1/api/discord/test::111::input params::{"message":"CHECk LOG"}
+2024-03-25 00:41:55 AM::info::/v1/api/discord/test::111::input params::{"message":"BOME/USDT TO THE MOON"}
+2024-03-25 00:42:30 AM::info::/v1/api/discord/test::111::input params::{"message":"NAM BÚ CU"}
+2024-03-25 00:42:40 AM::info::/v1/api/discord/test::111::input params::{"message":"NAM BÚ CU HIẾU"}
+2024-03-25 00:44:04 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}
+2024-03-25 00:45:15 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}
+2024-03-25 00:45:50 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}
+2024-03-25 00:45:52 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}
+2024-03-25 00:45:54 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}
+2024-03-25 00:45:56 AM::info::/v1/api/discord/test::111::input params::{"message":"BOT LỎ VCL"}

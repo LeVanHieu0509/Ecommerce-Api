@@ -8,6 +8,7 @@ import KeyTokenService from "../service/TIP/keyToken.service";
 export interface RequestCustom extends Request {
   keyStore: any;
   user: any;
+  requestId?: any;
 }
 
 export const HEADER = {

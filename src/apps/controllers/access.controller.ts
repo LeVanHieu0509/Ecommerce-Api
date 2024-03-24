@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { CREATED, SuccessResponse } from "../../core/success.response";
 import { HEADER } from "../auth/authUtils";
 import AccessService from "../service/TIP/access.service";
+import { BadRequestError } from "../../core/error.response";
 
 interface RequestCustom extends Request {
   keyStore: any;
+  requestId?: string;
 }
 
 class AccessController {
@@ -24,10 +26,25 @@ class AccessController {
 
   public static login = async (req: RequestCustom, res: Response, next: NextFunction) => {
     try {
-      new SuccessResponse({
-        message: "Login ok!",
-        metadata: await AccessService.login(req.body),
-      }).send(res);
+      const { email } = req.body;
+      if (!email) {
+        throw new BadRequestError("Email missing");
+      }
+
+      const sendData = Object.assign(
+        {
+          requestId: req.requestId,
+        },
+        req.body
+      );
+
+      const { status, ...result } = await AccessService.login(req.body);
+      if (status == "1") {
+        new SuccessResponse({
+          message: "Login ok!",
+          metadata: await AccessService.login(req.body),
+        }).send(res);
+      }
     } catch (error) {
       next(error);
     }
