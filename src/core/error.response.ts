@@ -6,6 +6,7 @@ const StatusCode = {
   CONFLICT: 409,
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
+  ERROR: 400,
 };
 
 const ReasonStatusCode = {
@@ -13,6 +14,7 @@ const ReasonStatusCode = {
   CONFLICT: "conflict error",
   UNAUTHORIZED: "unauthorized",
   NOT_FOUND: "not found",
+  ERROR: "error",
 };
 
 class ErrorResponse extends Error {
@@ -64,4 +66,10 @@ class Forbidden extends ErrorResponse {
   }
 }
 
-export { ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, Forbidden };
+class ErrorResponseCustom extends ErrorResponse {
+  constructor(message = ReasonStatusCode.ERROR, statusCode = StatusCode.ERROR) {
+    super(message, statusCode);
+  }
+}
+
+export { ConflictRequestError, BadRequestError, AuthFailureError, NotFoundError, Forbidden, ErrorResponseCustom };

@@ -10,6 +10,8 @@ import notification from "./notification/index";
 import product from "./product/index";
 import upload from "./upload/index";
 import profile from "./profile/index";
+import email from "./email/index";
+import userMail from "./user/index";
 
 import auth from "./auth";
 import home from "./home";
@@ -153,6 +155,20 @@ function route(app) {
       next();
     },
     profile
+  );
+  app.use(
+    "/v1/api/email",
+    function (req, res, next) {
+      next();
+    },
+    email
+  );
+  app.use(
+    "/v1/api/user",
+    function (req, res, next) {
+      next();
+    },
+    userMail
   );
 
   app.use((req, res, next) => {

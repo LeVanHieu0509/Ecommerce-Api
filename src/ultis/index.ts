@@ -27,3 +27,12 @@ export const updateNestedObjectParser = (obj: any) => {
 
   return final;
 };
+
+export const replacePlaceHolder = (template, params) => {
+  Object.keys(params).forEach((k) => {
+    const placeholder = `{{${k}}}`; // {verify key}
+    template = template.replace(new RegExp(placeholder, "g"), params[k]);
+  });
+
+  return template;
+};

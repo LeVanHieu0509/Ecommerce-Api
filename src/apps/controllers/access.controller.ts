@@ -30,7 +30,6 @@ class AccessController {
       const { email } = req.body;
       if (!email) {
         botNotiRequest(`User  vừa yêu cầu NẠP TIỀN nha @daddycool1002 @PHESUB🔥🔥🔥 *****  *****`);
-
         throw new BadRequestError("Email missing");
       }
 
@@ -42,12 +41,12 @@ class AccessController {
       );
 
       const { status, ...result } = await AccessService.login(req.body);
-      if (status == "1") {
-        new SuccessResponse({
-          message: "Login ok!",
-          metadata: await AccessService.login(req.body),
-        }).send(res);
-      }
+      console.log({ status });
+
+      new SuccessResponse({
+        message: "Login ok!",
+        metadata: await AccessService.login(req.body),
+      }).send(res);
     } catch (error) {
       next(error);
     }
