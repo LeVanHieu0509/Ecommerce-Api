@@ -1,8 +1,12 @@
 import nodemailer from "nodemailer";
 
 export const transport = nodemailer.createTransport({
-  host: "",
+  service: "gmail",
+  host: "smtp.gmail.com",
   port: 465,
   secure: true,
-  auth: {},
+  auth: {
+    user: "levanhieu.workspace@gmail.com",
+    pass: "xznvcyhlnfxxikwz",
+  },
 });

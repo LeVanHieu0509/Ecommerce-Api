@@ -1,0 +1,11 @@
+2024-05-10 10:14:44 AM::info::/v1/api/email/new-template::51a28283-f893-48e2-a47b-db8636ef4ce2::input params::{"tem_name":"HTML EMAIL TOKEN"}
+2024-05-10 10:16:20 AM::info::/v1/api/user/new-user::0fe94017-6898-45c0-9ee8-fad7163ae9a2::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:19:23 AM::info::/v1/api/user/new-user::8515fbc1-1f5d-4715-85e2-4afaea57f9ce::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:19:24 AM::info::/v1/api/user/new-user::6461e935-7677-42e9-93bb-3c47bc312b52::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:21:18 AM::info::/v1/api/user/new-user::acae9109-e4e2-464f-9c23-3c2eae727831::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:22:31 AM::info::/v1/api/user/new-user::578aaf80-dee7-4461-a6f2-1a14feac2417::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:26:09 AM::info::/v1/api/user/new-user::7b5cb5e1-5090-4fb1-a2f0-54b0f02c4565::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:29:37 AM::info::/v1/api/user/new-user::14e225e9-ade6-4eb5-b8fe-29b26ed00f9c::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:34:51 AM::info::/v1/api/user/new-user::d9bc1ddf-8805-4d51-ac59-cfbf005ac30a::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:35:39 AM::info::/v1/api/user/new-user::1bc59206-f859-4b9e-88e4-0ddd827cb77a::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 10:37:05 AM::info::/v1/api/user/new-user::8964937d-1491-4bb3-9325-68060b831f53::input params::{"email":"levanhieu.hex@gmail.com"}

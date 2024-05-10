@@ -170,6 +170,8 @@ const htmlEmailToken = `<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:
                                                                             <b><i>Bitback Team.
                                                                                 </i></b>
                                                                         </p>
+
+                                                                        <a href="{{link_verify}}" target="_blank">Call To Action</a>
                                                                     </div>
                                                                     <br />
                                                                     <hr style="border-top: 2px solid #f579ce4f">

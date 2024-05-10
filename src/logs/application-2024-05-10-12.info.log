@@ -1,0 +1,12 @@
+2024-05-10 12:05:59 PM::info::/v1/api/user/new-user::5ba4029e-55d5-4f10-9007-14ce98e821aa::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:08:00 PM::info::/v1/api/user/new-user::02d4a418-1256-4d3d-ac95-0ca3c55e0e09::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:10:43 PM::info::/v1/api/user/new-user::60bda5f6-c132-4b92-90ca-6c35c228f495::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:13:53 PM::info::/v1/api/email/new-template::a3f429fa-4583-4345-968f-59976167c867::input params::{"tem_name":"HTML EMAIL TOKEN NEW"}
+2024-05-10 12:14:29 PM::info::/v1/api/user/new-user::5013300a-d372-402e-a88a-229767a02ab7::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:18:19 PM::info::/v1/api/email/new-template::7f2a5a92-369f-49bf-aa99-764097897940::input params::{"tem_name":"HTML EMAIL TOKEN NEW 1"}
+2024-05-10 12:18:44 PM::info::/v1/api/user/new-user::712ae879-0e6a-4860-929c-d387f17aece6::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:20:50 PM::info::/v1/api/user/new-user::d630ae64-662b-4b20-a222-863cb727737f::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 12:21:11 PM::info::/cgp/welcom-back::f29ad805-131c-4b46-862e-18f17a2c28d6::input params::{"token":"1559699411"}
+2024-05-10 12:21:11 PM::error::/cgp/welcom-back::f29ad805-131c-4b46-862e-18f17a2c28d6::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 12:21:12 PM::info::/favicon.ico::c11be134-2819-4621-87e4-9ba61ae8d71f::input params::{}
+2024-05-10 12:21:12 PM::error::/favicon.ico::c11be134-2819-4621-87e4-9ba61ae8d71f::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}

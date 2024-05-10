@@ -7,10 +7,10 @@ import { getTemplate } from "./template.service";
 const sendEmailLinkVerify = async ({ html, toEmail, subject = "Xác nhận Email đăng ký!", text = "Xác nhận ..." }) => {
   try {
     const mailOptions = {
-      from: '"SHOP DEV <levanhieu.hex@gmail.com>',
+      from: "BITBACK <levanhieu.workspace@gmail.com>",
       to: toEmail,
       subject,
-      text,
+      text: "",
       html,
     };
 
@@ -18,7 +18,8 @@ const sendEmailLinkVerify = async ({ html, toEmail, subject = "Xác nhận Email
       if (err) {
         return console.log(err);
       }
-      console.log("Message sent::", info.messageId);
+
+      return console.log("Message %s sent: %s", info.messageId, info.response);
     });
   } catch (error) {
     console.log(`error with email`, error);
@@ -32,7 +33,7 @@ const sendEmailToken = async ({ email = null }) => {
 
     //2. get Template
     const template = await getTemplate({
-      tem_name: "HTML EMAIL TOKEN",
+      tem_name: "HTML EMAIL TOKEN NEW 1",
     });
 
     if (!template) {
@@ -41,11 +42,11 @@ const sendEmailToken = async ({ email = null }) => {
     //3. replace placeholder with params
 
     const content = replacePlaceHolder(template.tem_html, {
-      link_verify: `https://localhost:3001/cgp/welcom-back?token=${token.otp_token}`,
+      link_verify: `http://localhost:3000/cgp/welcom-back?token=${token.otp_token}`,
     });
 
     //4. send email (AWS tiến hành sắp xếp phà kiểm duyệt send email)
-    sendEmailLinkVerify({
+    await sendEmailLinkVerify({
       html: content,
       toEmail: email,
       subject: "Vui lòng xác nhận địa chỉ Email đăng ký SHOPDEV.com",

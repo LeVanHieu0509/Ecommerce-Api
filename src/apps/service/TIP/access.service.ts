@@ -9,7 +9,7 @@ import { IUser } from "./../../models/User";
 import { UserFoodRepository } from "./../../repositories/food-app/UserFoodRepositories";
 import KeyTokenService from "./keyToken.service";
 
-const RoleUser = {
+export const RoleUser = {
   USER: "USER",
   WRITER: "WRITER",
   EDITOR: "EDITOR",

@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { getCustomRepository } from "typeorm";
 import { TipOtpRepository } from "../../repositories/tip-js/TipOtpRepositories";
+import { ErrorResponseCustom } from "../../../core/error.response";
 
 const newOtp = async ({ email }) => {
   const tipOtpRepository = getCustomRepository(TipOtpRepository);
@@ -22,4 +23,21 @@ const generatorTokenRandom = () => {
   return token;
 };
 
-export { newOtp };
+const checkTokenEmail = async ({ token }) => {
+  //1. check token Email
+  const tipOtpRepository = getCustomRepository(TipOtpRepository);
+  const foundToken = await tipOtpRepository.findOne({
+    otp_token: token,
+  });
+
+  if (!foundToken) throw new ErrorResponseCustom("Token Not Found ");
+
+  //delete token
+
+  await tipOtpRepository.delete({
+    otp_token: token,
+  });
+
+  return foundToken;
+};
+export { newOtp, checkTokenEmail };
