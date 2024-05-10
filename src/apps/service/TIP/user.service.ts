@@ -1,9 +1,8 @@
-import { bcrypt } from "bcryptjs";
-import crypto from "crypto";
-import { getCustomRepository } from "typeorm";
+import bcrypt from "bcrypt";
+import crypto from "node:crypto";
 import { ErrorResponseCustom } from "../../../core/error.response";
 import { createTokenPair } from "../../auth/authUtils";
-import { UserFoodRepository } from "../../repositories/food-app/UserFoodRepositories";
+import { createUser } from "../../modules/repos/user.repo";
 import { findByEmail } from "../user.service";
 import { RoleUser } from "./access.service";
 import { sendEmailToken } from "./email.service";
@@ -33,8 +32,7 @@ const newUser = async ({ email = null, capcha = null }) => {
 
 const checkTokenEmailTokenService = async ({ token }) => {
   try {
-    const userRepository = getCustomRepository(UserFoodRepository);
-
+    console.log({ token });
     // 1. Check token in db
     const { otp_email: email, otp_token } = await checkTokenEmail({ token });
 
@@ -42,39 +40,41 @@ const checkTokenEmailTokenService = async ({ token }) => {
     if (!email) throw new ErrorResponseCustom("Token Not Found");
     // 2. check email exists in user modal
     const foundUser = await findByEmail({ email });
-
     //3. if exists
-    if (foundUser) return new ErrorResponseCustom("Email already exists");
+    if (foundUser) return new Error("Email already exists");
 
     //4. New user
 
     const passwordHash = await bcrypt.hash(email, 10);
 
-    const newUser = userRepository.create({
+    const newUser = await createUser({
       username: email,
       password: passwordHash,
       email: email,
       roles: [RoleUser.USER],
     });
 
-    await userRepository.save(newUser);
-
     if (newUser) {
       //create tokened pair
-      const privateKey = crypto.randomBytes(64).toString("hex");
-      const publicKey = crypto.randomBytes(64).toString("hex");
-
-      const { accessToken, refreshToken } = await createTokenPair(
-        {
-          userId: newUser.id,
-          email: newUser.email,
-        },
-        privateKey,
-        publicKey
-      );
+      // const privateKey = crypto.randomBytes(64).toString("hex");
+      // const publicKey = crypto.randomBytes(64).toString("hex");
+      // console.log({
+      //   privateKey,
+      //   publicKey,
+      // });
+      // const tokens = await createTokenPair(
+      //   {
+      //     userId: newUser.id,
+      //     email: newUser.email,
+      //   },
+      //   "",
+      //   ""
+      // );
 
       return {
-        message: "Register success",
+        metadata: {
+          user: { id: foundUser.id, email: foundUser.email, username: foundUser.username },
+        },
         status: "1",
       };
     } else {

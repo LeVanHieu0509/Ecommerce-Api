@@ -1,2 +1,8 @@
 2024-05-10 15:09:23 PM::info::/::b051cdaf-21b8-468a-8f37-d2e4c0bce9b7::input params::{}
 2024-05-10 15:09:23 PM::error::/::b051cdaf-21b8-468a-8f37-d2e4c0bce9b7::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 15:57:48 PM::info::/v1/api/user/welcome-back::f5c3b057-d088-44b3-8626-2b3f6c3f4a8e::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 15:58:28 PM::info::/cgp/welcom-back::f87b8dbb-19e9-4a33-8b1f-01991673b1a2::input params::{"token":"1559699411"}
+2024-05-10 15:58:28 PM::error::/cgp/welcom-back::f87b8dbb-19e9-4a33-8b1f-01991673b1a2::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 15:58:28 PM::info::/favicon.ico::40ba9bbe-6708-45bc-8bf9-783cd3594195::input params::{}
+2024-05-10 15:58:28 PM::error::/favicon.ico::40ba9bbe-6708-45bc-8bf9-783cd3594195::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 15:58:41 PM::info::/v1/api/user/welcome-back::f95b9dfb-4b7c-4ada-92ed-89b1be275786::input params::{"email":"levanhieu.hex@gmail.com"}

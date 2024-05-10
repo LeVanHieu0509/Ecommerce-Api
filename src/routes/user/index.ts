@@ -6,5 +6,6 @@ const router = require("express").Router();
 
 // Get all users
 router.post("/new-user", asyncHandler(TipUserController.newUser));
+router.post("/welcome-back", asyncHandler(TipUserController.checkLoginEmailToken));
 
 export default router;

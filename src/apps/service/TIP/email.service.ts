@@ -42,7 +42,7 @@ const sendEmailToken = async ({ email = null }) => {
     //3. replace placeholder with params
 
     const content = replacePlaceHolder(template.tem_html, {
-      link_verify: `http://localhost:3000/cgp/welcom-back?token=${token.otp_token}`,
+      link_verify: `http://localhost:3000/v1/api/user/welcom-back?token=${token.otp_token}`,
     });
 
     //4. send email (AWS tiến hành sắp xếp phà kiểm duyệt send email)

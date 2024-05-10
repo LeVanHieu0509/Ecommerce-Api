@@ -1,0 +1,38 @@
+2024-05-10 16:06:53 PM::info::/v1/api/user/welcome-back::96fb1438-5752-457f-96d0-b117ca082387::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:06:53 PM::error::/v1/api/user/welcome-back::96fb1438-5752-457f-96d0-b117ca082387::undefined - NaNms - Response: {"message":"No metadata for \"Keys\" was found."}::{"message":"No metadata for \"Keys\" was found."}
+2024-05-10 16:06:55 PM::info::/v1/api/user/welcome-back::c8df52f3-f22f-43bb-8b59-88b05203025b::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:07:19 PM::info::/v1/api/user/welcome-back::317ed3c5-5619-43c3-863a-43da34855992::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:08:05 PM::info::/v1/api/user/welcome-back::3620cf6e-165f-4578-8457-746d47cf213c::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:26:56 PM::info::/v1/api/user/new-user::4e8f1baa-7382-4055-83f1-38232bc72da0::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:27:15 PM::info::/cgp/welcom-back::26a5fee2-4dc8-46aa-88e8-5bab9fecbc00::input params::{"token":"1559699411"}
+2024-05-10 16:27:15 PM::error::/cgp/welcom-back::26a5fee2-4dc8-46aa-88e8-5bab9fecbc00::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 16:27:15 PM::info::/favicon.ico::f4554918-dfde-4202-8d64-8b5c0c408b95::input params::{}
+2024-05-10 16:27:15 PM::error::/favicon.ico::f4554918-dfde-4202-8d64-8b5c0c408b95::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 16:27:38 PM::info::/v1/api/user/welcome-back::046f4f54-3db7-4660-b822-7eabe9f64145::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:28:18 PM::info::/v1/api/user/welcom-back::93722f5b-7be1-48dc-8e3c-c8fd650b8a1b::input params::{"token":"196229040"}
+2024-05-10 16:28:18 PM::error::/v1/api/user/welcom-back::93722f5b-7be1-48dc-8e3c-c8fd650b8a1b::401 - 4ms - Response: {"status":401,"now":1715333298515}::{"message":"Invalid Request"}
+2024-05-10 16:28:18 PM::info::/favicon.ico::1a6daccf-c475-4a4c-8ef5-118053593eea::input params::{}
+2024-05-10 16:28:18 PM::error::/favicon.ico::1a6daccf-c475-4a4c-8ef5-118053593eea::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 16:28:26 PM::info::/v1/api/user/welcome-back::5777f774-845b-46db-bb4f-77fde60f9040::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:30:51 PM::info::/v1/api/user/welcome-back::6cbe09fb-b45a-44a0-9a0e-8cc0502db8bb::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:31:21 PM::info::/v1/api/user/welcome-back::8b34453c-73af-4bb2-a0b2-2915e817cfa2::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:32:53 PM::info::/v1/api/user/welcome-back::cc62ac58-0ac2-41bc-a04c-7f1da7dfd910::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:34:09 PM::info::/v1/api/user/welcome-back::ac151222-a10d-43c7-8ca2-42fe41baa08d::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:34:53 PM::info::/v1/api/user/welcome-back::648bb23d-73d6-4066-8a65-b19465d58583::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:35:16 PM::info::/v1/api/user/welcome-back::852ccd9a-7c15-4a66-9d09-4d6be61c6d56::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:36:50 PM::info::/v1/api/user/welcome-back::9e9388d0-5265-4e1c-ad6c-df91f61fe516::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:37:30 PM::info::/v1/api/user/welcome-back::17705f70-1db7-44ad-a7bf-d024dcdbb3fb::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:37:31 PM::info::/v1/api/user/welcome-back::ac536868-282e-40bd-ba31-2a60bdbe2bbf::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:38:12 PM::info::/v1/api/user/welcome-back::ccf15f46-9416-41d5-8dcd-2eada636b0c7::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:38:16 PM::info::/v1/api/user/welcome-back::4319f4b8-53b3-4fa2-b74d-57e9c013b460::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:39:07 PM::info::/v1/api/user/welcome-back::1ed65528-7fa2-4d6c-852d-e62c38b7a78d::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:39:44 PM::info::/v1/api/user/welcome-back::c3f98c97-1579-4c9f-bf65-e3ffbe63d0b5::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:40:43 PM::info::/v1/api/user/welcome-back::b243a8ee-57ca-4e29-bc14-2b52ceeeae4e::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:41:29 PM::info::/v1/api/user/welcome-back::758232c1-ed27-4b83-850f-fb7ce119d353::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:42:08 PM::info::/v1/api/user/welcome-back::3548f843-d633-4dc9-9490-3d52fc0d3166::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:42:55 PM::info::/v1/api/user/welcome-back::f213e6f2-df8e-477c-8c3c-4b80c3229e23::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:43:06 PM::info::/v1/api/user/welcome-back::0f36f417-c38d-45a0-918b-52adc19e68df::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:43:12 PM::info::/v1/api/user/welcome-back::1c3ec2b2-40c5-4b46-9c70-85b9eb9f2a83::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:43:43 PM::info::/v1/api/user/welcome-back::49995070-ca4f-445a-a58c-475a942f643e::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:46:31 PM::info::/v1/api/user/welcome-back::9740fdb6-baae-4dce-93e4-983b27437e12::input params::{"email":"levanhieu.hex@gmail.com"}
+2024-05-10 16:47:40 PM::info::/v1/api/user/new-user::da37f6e8-3b28-4265-898c-81764df25532::input params::{"email":"levanhieu.hex@gmail.com"}

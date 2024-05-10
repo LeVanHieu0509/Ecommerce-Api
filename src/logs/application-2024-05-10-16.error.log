@@ -1,0 +1,5 @@
+2024-05-10 16:06:53 PM::error::/v1/api/user/welcome-back::96fb1438-5752-457f-96d0-b117ca082387::undefined - NaNms - Response: {"message":"No metadata for \"Keys\" was found."}::{"message":"No metadata for \"Keys\" was found."}
+2024-05-10 16:27:15 PM::error::/cgp/welcom-back::26a5fee2-4dc8-46aa-88e8-5bab9fecbc00::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 16:27:15 PM::error::/favicon.ico::f4554918-dfde-4202-8d64-8b5c0c408b95::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
+2024-05-10 16:28:18 PM::error::/v1/api/user/welcom-back::93722f5b-7be1-48dc-8e3c-c8fd650b8a1b::401 - 4ms - Response: {"status":401,"now":1715333298515}::{"message":"Invalid Request"}
+2024-05-10 16:28:18 PM::error::/favicon.ico::1a6daccf-c475-4a4c-8ef5-118053593eea::undefined - NaNms - Response: {"name":"api error","message":"Not Found","ErrorID":1237,"data":404}::{"message":"Not Found"}
