@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+import { BadRequestError } from "../../core/error.response";
 import { CREATED, SuccessResponse } from "../../core/success.response";
 import { HEADER } from "../auth/authUtils";
+import { botNotiRequest, getGroupChatHistory } from "../loggers/telegram.log";
 import AccessService from "../service/TIP/access.service";
-import { BadRequestError } from "../../core/error.response";
-import { botNotiRequest } from "../loggers/telegram.log";
 
 interface RequestCustom extends Request {
   keyStore: any;
@@ -29,7 +29,8 @@ class AccessController {
     try {
       const { email } = req.body;
       if (!email) {
-        botNotiRequest(`User  vừa yêu cầu NẠP TIỀN nha @daddycool1002 @PHESUB🔥🔥🔥 *****  *****`);
+        // botNotiRequest(`@j2team_gpt_bot alo`);
+        getGroupChatHistory();
         throw new BadRequestError("Email missing");
       }
 
